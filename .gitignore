@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/ConsoleApplication/Debug
+/ConsoleApplication/x64/Debug
+/Debug
+/ConsoleApplication/x64/Debug
+/LMDBWindows/.vs/LMDBWindows/v15

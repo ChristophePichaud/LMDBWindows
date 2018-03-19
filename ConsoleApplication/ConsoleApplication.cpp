@@ -51,7 +51,7 @@ int main(int argc, char * argv[])
 	E(mdb_env_create(&env));
 	E(mdb_env_set_maxreaders(env, 1));
 	E(mdb_env_set_mapsize(env, 10485760));
-	E(mdb_env_open(env, "c:\\temp", MDB_FIXEDMAP /*|MDB_NOSYNC*/, 0664));
+	E(mdb_env_open(env, "c:\\temp", MDB_CREATE/*|MDB_NOSYNC*/, 0664));
 
 	E(mdb_txn_begin(env, NULL, 0, &txn));
 	E(mdb_dbi_open(txn, NULL, 0, &dbi));
