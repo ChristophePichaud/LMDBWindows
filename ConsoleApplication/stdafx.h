@@ -14,6 +14,9 @@
 #include <stdlib.h>
 #include <time.h>
 
+#include <Windows.h>
+#include <string>
+
 #ifdef STATIC
 #include "lmdb.h"
 #pragma comment (lib, "LMDBWindows.lib")
@@ -24,6 +27,6 @@
 #include "..\Include\lmdb-dll.h"
 #include "..\Include\midl-dll.h"
 
-#pragma comment (lib, "..\\Lib\\LMDBWindowsDll.lib")
+#pragma comment (lib, "..\\Lib\\LMDBWindowsDll64.lib")
 
 // TODO: reference additional headers your program requires here
