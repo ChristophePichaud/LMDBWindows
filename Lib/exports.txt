@@ -1,0 +1,89 @@
+Microsoft (R) COFF/PE Dumper Version 14.10.25017.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+Dump of file LMDBWindowsDll.dll
+
+File Type: DLL
+
+  Section contains the following exports for LMDBWindowsDll.dll
+
+    00000000 characteristics
+    5AAFE2D5 time date stamp Mon Mar 19 17:18:29 2018
+        0.00 version
+           1 ordinal base
+          58 number of functions
+          58 number of names
+
+    ordinal hint RVA      name
+
+          1    0 000113A2 ?fnLMDBWindowsDll@@YAHXZ
+          2    1 00011564 mdb_cmp
+          3    2 00011505 mdb_cursor_close
+          4    3 00011519 mdb_cursor_count
+          5    4 00011073 mdb_cursor_dbi
+          6    5 00011078 mdb_cursor_del
+          7    6 00011082 mdb_cursor_get
+          8    7 00011109 mdb_cursor_open
+          9    8 0001106E mdb_cursor_put
+         10    9 000114E7 mdb_cursor_renew
+         11    A 00011064 mdb_cursor_txn
+         12    B 000112AD mdb_dbi_close
+         13    C 0001128F mdb_dbi_flags
+         14    D 00011014 mdb_dbi_open
+         15    E 00011271 mdb_dcmp
+         16    F 00011541 mdb_del
+         17   10 00011276 mdb_drop
+         18   11 000114B5 mdb_env_close
+         19   12 000112D0 mdb_env_copy
+         20   13 000114A6 mdb_env_copy2
+         21   14 0001105F mdb_env_copyfd
+         22   15 000113CF mdb_env_copyfd2
+         23   16 0001105A mdb_env_create
+         24   17 0001137F mdb_env_get_fd
+         25   18 00011050 mdb_env_get_flags
+         26   19 000113DE mdb_env_get_maxkeysize
+         27   1A 000113AC mdb_env_get_maxreaders
+         28   1B 000114CE mdb_env_get_path
+         29   1C 0001119A mdb_env_get_userctx
+         30   1D 0001125D mdb_env_info
+         31   1E 00011258 mdb_env_open
+         32   1F 00011334 mdb_env_set_assert
+         33   20 0001120D mdb_env_set_flags
+         34   21 000112D5 mdb_env_set_mapsize
+         35   22 00011514 mdb_env_set_maxdbs
+         36   23 000112DF mdb_env_set_maxreaders
+         37   24 000114FB mdb_env_set_userctx
+         38   25 0001126C mdb_env_stat
+         39   26 000112B2 mdb_env_sync
+         40   27 000114B0 mdb_env_sync0
+         41   28 00011573 mdb_get
+         42   29 00011005 mdb_put
+         43   2A 0001151E mdb_reader_check
+         44   2B 0001143D mdb_reader_list
+         45   2C 000113E3 mdb_set_compare
+         46   2D 0001139D mdb_set_dupsort
+         47   2E 00011055 mdb_set_relctx
+         48   2F 000113D9 mdb_set_relfunc
+         49   30 00011280 mdb_stat
+         50   31 00011550 mdb_strerror
+         51   32 0001145B mdb_txn_abort
+         52   33 00011456 mdb_txn_begin
+         53   34 0001154B mdb_txn_commit
+         54   35 000112EE mdb_txn_env
+         55   36 0001149C mdb_txn_id
+         56   37 00011433 mdb_txn_renew
+         57   38 00011451 mdb_txn_reset
+         58   39 0001155F mdb_version
+
+  Summary
+
+        1000 .00cfg
+        1000 .data
+        1000 .idata
+        4000 .rdata
+        1000 .reloc
+        1000 .rsrc
+       22000 .text
+       10000 .textbss
+        1000 .tls
