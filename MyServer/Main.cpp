@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "MyServer.h"
+#include "DataHandler.h"
+#include "WorkerItemHandler.h"
 
 using namespace web;
 using namespace http;
@@ -7,6 +9,26 @@ using namespace utility;
 using namespace http::experimental::listener;
 
 std::unique_ptr<MyServer> g_http;
+
+
+CString GetIP()
+{
+	// Init WinSock
+	WSADATA wsa_Data;
+	int wsa_ReturnCode = WSAStartup(0x101, &wsa_Data);
+
+	// Get the local hostname
+	char szHostName[255];
+	gethostname(szHostName, 255);
+	struct hostent *host_entry;
+	host_entry = gethostbyname(szHostName);
+	char * szLocalIP;
+	szLocalIP = inet_ntoa(*(struct in_addr *)*host_entry->h_addr_list);
+	WSACleanup();
+
+	CString ip(szLocalIP);
+	return ip;
+}
 
 int wmain(int argc, wchar_t *argv[])
 {
@@ -22,8 +44,18 @@ int wmain(int argc, wchar_t *argv[])
 		port = argv[2];
 	}
 
+	//CoInitializeEx(0, COINIT_MULTITHREADED);
+	//WorkerItemHandler wih;
+	//CString strIP = wih.GetNetworkAdapterInformation2();
+	//std::wstring ip = (LPCTSTR)strIP;
+	//std::wcout << L"IP : " << ip << std::endl;
+
+	CString strIP = GetIP();
+	std::wstring ip = (LPCTSTR)strIP;
+	std::wcout << L"IP : " << ip << std::endl;
+
 	std::wstring address = _T("http://");
-	address.append(defaultAddress);
+	address.append(ip); // defaultAddress); //ip
 	address.append(_T(":"));
 	address.append(port);
 	address.append(_T("/MyServer/LMDB/"));

@@ -1,0 +1,8 @@
+#FROM microsoft/nanoserver
+
+FROM microsoft/windowsservercore
+COPY *.* c:/
+
+EXPOSE 7001	
+RUN md c:\temp
+#ENTRYPOINT myserver.exe

@@ -32,10 +32,45 @@
 #ifndef NOMINMAX
 #define NOMINMAX
 #endif
-#include <Windows.h>
+//#include <Windows.h>
 #else
 # include <sys/time.h>
 #endif
+
+#include <stdio.h>
+#include <tchar.h>
+#define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS      // some CString constructors will be explicit
+#define _AFX_NO_MFC_CONTROLS_IN_DIALOGS         // remove support for MFC controls in dialogs
+
+#ifndef VC_EXTRALEAN
+#define VC_EXTRALEAN            // Exclude rarely-used stuff from Windows headers
+#endif
+
+#include <afx.h>
+#include <afxwin.h>         // MFC core and standard components
+#include <afxext.h>         // MFC extensions
+#ifndef _AFX_NO_OLE_SUPPORT
+#include <afxdtctl.h>           // MFC support for Internet Explorer 4 Common Controls
+#endif
+#ifndef _AFX_NO_AFXCMN_SUPPORT
+#include <afxcmn.h>                     // MFC support for Windows Common Controls
+#endif // _AFX_NO_AFXCMN_SUPPORT
+
+#include <afxdisp.h>        // MFC Automation classes
+#include <afxole.h>
+#include <afxpriv2.h>
+
+#include <atlstr.h>
+#include <atlbase.h>
+#include <atlcom.h>
+#include <atlcomcli.h>
+
+#include <comdef.h>
+
+#include <Wbemidl.h>
+#pragma comment(lib, "wbemuuid.lib")
+
+#include <winerror.h>
 
 #include "..\Include\LMDBWindowsDll.h" 
 #include "..\Include\lmdb-dll.h"
