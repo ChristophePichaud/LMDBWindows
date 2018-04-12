@@ -6,12 +6,24 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LMDBWindows", "LMDBWindows.vcxproj", "{F47EBEC8-E205-4CB4-BB98-74CD66F046EF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConsoleApplication", "..\ConsoleApplication\ConsoleApplication.vcxproj", "{315F7207-D40B-4B5A-B3D7-F6A381DA6AC5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F47EBEC8-E205-4CB4-BB98-74CD66F046EF} = {F47EBEC8-E205-4CB4-BB98-74CD66F046EF}
+		{FC20EECA-88C8-4219-A3AC-283E81B39126} = {FC20EECA-88C8-4219-A3AC-283E81B39126}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LMDBWindowsDll", "..\LMDBWindowsDll\LMDBWindowsDll.vcxproj", "{FC20EECA-88C8-4219-A3AC-283E81B39126}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MyServer", "..\MyServer\MyServer.vcxproj", "{94D11B8E-26CB-4555-9BBB-3D338F62CD6C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F47EBEC8-E205-4CB4-BB98-74CD66F046EF} = {F47EBEC8-E205-4CB4-BB98-74CD66F046EF}
+		{FC20EECA-88C8-4219-A3AC-283E81B39126} = {FC20EECA-88C8-4219-A3AC-283E81B39126}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MyClient", "..\MyClient\MyClient.vcxproj", "{C36073AF-CEDB-4CF6-A345-780EE5322EC7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F47EBEC8-E205-4CB4-BB98-74CD66F046EF} = {F47EBEC8-E205-4CB4-BB98-74CD66F046EF}
+		{FC20EECA-88C8-4219-A3AC-283E81B39126} = {FC20EECA-88C8-4219-A3AC-283E81B39126}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

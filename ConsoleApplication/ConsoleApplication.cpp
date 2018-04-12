@@ -40,6 +40,30 @@ int main()
 	char sval[32] = "";
 	char szDebug[255];
 
+	//_tprintf(_T("sizeof int %d\n"), sizeof(int));
+	//_tprintf(_T("sizeof long %d\n"), sizeof(long));
+	//_tprintf(_T("sizeof size_t %d\n"), sizeof(size_t));
+	
+	//std::string a1 = "A1";
+	//std::wstring u1 = _T("U1");
+	//std::wstring u2(a1.begin(), a1.end());
+	//std::wcout << u2 << std::endl;
+	//std::string a2(u1.begin(), u1.end());
+	//std::cout << a2 << std::endl;
+	//
+
+	//char sz[255];
+	//sprintf(sz, "Elapsed ms since Windows is up: %ld ms\n", GetTickCount());
+	//printf(sz);
+	//
+	//TCHAR sz2[255];
+	//_stprintf(sz2, _T("Elapsed ms since Windows is up: %ld ms\n"), GetTickCount());
+	//_tprintf(sz2);
+
+	//std::wstring sz3 = _T("hello world !");
+	//std::wcout << sz3 << std::endl;
+	//return 0;
+
 	count = 10000;
 
 	values = (int *)malloc(count * sizeof(int));

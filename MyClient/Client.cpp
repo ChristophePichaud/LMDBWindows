@@ -8,19 +8,31 @@
 
 int wmain(int argc, wchar_t *argv[])
 {
+	std::wstring defaultAddress = _T("localhost");
 	std::wstring port = _T("7001");
 	if (argc == 2)
 	{
 		port = argv[1];
 	}
+	if (argc == 3)
+	{
+		defaultAddress = argv[1];
+		port = argv[2];
+	}
 
-	std::wstring address = U("http://localhost:");
+	std::wstring address = _T("http://");
+	address.append(defaultAddress);
+	address.append(_T(":"));
 	address.append(port);
+	address.append(_T("/MyServer/LMDB/"));
 	http::uri uri = http::uri(address);
+	auto addr = uri.to_string();
 
-	http_client client(http::uri_builder(uri).append_path(_T("/MyServer/LMDB/")).to_uri());
+	std::wcout << L"Client " << addr << std::endl;
 
-	int count = 100;
+	http_client client(uri);
+
+	int count = 2; // 100;
 
 	DWORD dwStart = GetTickCount();
 	for (int i = 0; i < count; i++)
@@ -34,7 +46,7 @@ int wmain(int argc, wchar_t *argv[])
 		v << _T("value_") << i;
 
 		key = k.str();
-		value = v.str();;
+		value = v.str();
 
 		std::wostringstream buf;
 		buf << _T("?request=") << method
@@ -44,7 +56,7 @@ int wmain(int argc, wchar_t *argv[])
 		http_response response;
 		response = client.request(methods::GET, buf.str()).get();
 
-		//wcout << response.to_string() << endl;
+		wcout << response.to_string() << endl;
 	}
 	DWORD dwStop = GetTickCount();
 	TCHAR sz[255];
@@ -67,10 +79,12 @@ int wmain(int argc, wchar_t *argv[])
 		buf << _T("?request=") << method
 			<< _T("&key=") << key;
 
+		wcout << buf.str() << endl;
+
 		http_response response;
 		response = client.request(methods::GET, buf.str()).get();
 
-		//wcout << response.to_string() << endl;
+		wcout << response.to_string() << endl;
 
 		json::value jdata = json::value::array();
 		jdata = response.extract_json().get();

@@ -11,21 +11,30 @@ std::unique_ptr<MyServer> g_http;
 int wmain(int argc, wchar_t *argv[])
 {
     utility::string_t port = U("7001");
-    if(argc == 2)
+	std::wstring defaultAddress = _T("localhost");
+	if(argc == 2)
     {
         port = argv[1];
     }
+	if (argc == 3)
+	{
+		defaultAddress = argv[1];
+		port = argv[2];
+	}
 
-    utility::string_t address = U("http://localhost:");
-    address.append(port);
-	uri_builder uri(address);
-	uri.append_path(U("MyServer/LMDB/"));
-
-	auto addr = uri.to_uri().to_string();
+	std::wstring address = _T("http://");
+	address.append(defaultAddress);
+	address.append(_T(":"));
+	address.append(port);
+	address.append(_T("/MyServer/LMDB/"));
+	http::uri uri = http::uri(address);
+	auto addr = uri.to_string();
 
 	//
 	// Create the server instance
 	//
+
+	std::wcout << L"Server " << addr << std::endl;
 
 	g_http = std::unique_ptr<MyServer>(new MyServer(addr));
 	g_http->Init_LMDB();

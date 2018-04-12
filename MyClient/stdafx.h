@@ -56,3 +56,20 @@ using namespace utility;
 using namespace http;
 using namespace http::client;
 
+#ifdef _WIN64
+	#ifdef _DEBUG
+		#pragma comment (lib, "..\\Lib\\LMDBWindowsDllD64.lib")
+		#pragma comment (lib, "..\\Lib\\cpprest141d_2_10.lib")
+	#else
+		#pragma comment (lib, "..\\Lib\\LMDBWindowsDll64.lib")
+		#pragma comment (lib, "..\\Lib\\cpprest141_2_10.lib")
+	#endif
+#else
+	#ifdef _DEBUG
+		#pragma comment (lib, "..\\Lib\\LMDBWindowsDllD.lib")
+		#pragma comment (lib, "..\\Lib\\cpprest141d_2_10.lib")
+	#else
+		#pragma comment (lib, "..\\Lib\\LMDBWindowsDll.lib")
+		#pragma comment (lib, "..\\Lib\\cpprest141_2_10.lib")
+	#endif
+#endif

@@ -54,31 +54,31 @@ void MyServer::handle_put(http_request message)
 
 void MyServer::handle_get(http_request message)
 {
-	//ucout << U("Message") << U(" ") << message.to_string() << endl;
-	//ucout << U("Relative URI") << U(" ") << message.relative_uri().to_string() << endl;
+	ucout << U("Message") << U(" ") << message.to_string() << endl;
+	ucout << U("Relative URI") << U(" ") << message.relative_uri().to_string() << endl;
 
-	//auto paths = uri::split_path(uri::decode(message.relative_uri().path()));
-	//for (auto it1 = paths.begin(); it1 != paths.end(); it1++)
-	//{
-	//	ucout << U("Path") << U(" ") << *it1 << endl;
-	//}
+	auto paths = uri::split_path(uri::decode(message.relative_uri().path()));
+	for (auto it1 = paths.begin(); it1 != paths.end(); it1++)
+	{
+		ucout << U("Path") << U(" ") << *it1 << endl;
+	}
 
 	auto query = uri::split_query(uri::decode(message.relative_uri().query()));
-	//for (auto it2 = query.begin(); it2 != query.end(); it2++)
-	//{
-	//	ucout << U("Query") << U(" ") << it2->first << U(" ") << it2->second << endl;
-	//}
+	for (auto it2 = query.begin(); it2 != query.end(); it2++)
+	{
+		ucout << U("Query") << U(" ") << it2->first << U(" ") << it2->second << endl;
+	}
 
 	auto queryItr = query.find(U("request"));
 	utility::string_t request = queryItr->second;
-	//ucout << U("Request") << U(" ") << request << endl;
+	ucout << U("Request") << U(" ") << request << endl;
 
 	auto keyItr = query.find(U("key"));
 	utility::string_t key; 
 	if (keyItr != query.end())
 	{
 		key = keyItr->second;
-		//ucout << U("key") << U(" ") << key << endl;
+		ucout << U("key") << U(" ") << key << endl;
 	}
 
 	auto valueItr = query.find(U("value"));
@@ -86,7 +86,7 @@ void MyServer::handle_get(http_request message)
 	if (valueItr != query.end())
 	{
 		value = valueItr->second;
-		//ucout << U("value") << U(" ") << value << endl;
+		ucout << U("value") << U(" ") << value << endl;
 	}
 
 	if (request == U("get-data"))
@@ -117,7 +117,7 @@ void MyServer::handle_get(http_request message)
 			data.value = U("");
 
 			utility::string_t response = data.AsJSON().serialize();
-			//ucout << response << endl;
+			ucout << response << endl;
 
 			message.reply(status_codes::OK, data.AsJSON());
 		}
@@ -128,7 +128,7 @@ void MyServer::handle_get(http_request message)
 			data.value = (TCHAR *)VData.mv_data;
 
 			utility::string_t response = data.AsJSON().serialize();
-			//ucout << response << endl;
+			ucout << response << endl;
 
 			message.reply(status_codes::OK, data.AsJSON());
 		}
@@ -150,7 +150,7 @@ void MyServer::handle_get(http_request message)
 		VKey.mv_data = szKey;
   		VData.mv_size = sizeof(szValue);
 		VData.mv_data = szValue;
-		//printf("Add Key:%s Data:%s\n", key.mv_data, data.mv_data);
+		_tprintf(_T("Add Key:%s Data:%s\n"), szKey, szValue);
 		mdb_txn_begin(m_lmdb.m_env, NULL, 0, &m_lmdb.m_txn);
 		mdb_dbi_open(m_lmdb.m_txn, NULL, 0, &m_lmdb.m_dbi);
 		mdb_put(m_lmdb.m_txn, m_lmdb.m_dbi, &VKey, &VData, MDB_NOOVERWRITE);
@@ -162,7 +162,7 @@ void MyServer::handle_get(http_request message)
 		data.value = szValue;
 
 		utility::string_t response = data.AsJSON().serialize();
-		//ucout << response << endl;
+		ucout << response << endl;
 
 		message.reply(status_codes::OK, data.AsJSON());
 		return;

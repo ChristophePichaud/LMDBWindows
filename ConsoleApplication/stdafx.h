@@ -16,6 +16,7 @@
 
 #include <Windows.h>
 #include <string>
+#include <iostream>
 
 #ifdef STATIC
 #include "lmdb.h"
@@ -27,6 +28,20 @@
 #include "..\Include\lmdb-dll.h"
 #include "..\Include\midl-dll.h"
 
-#pragma comment (lib, "..\\Lib\\LMDBWindowsDll64.lib")
-
-// TODO: reference additional headers your program requires here
+#ifdef _WIN64
+	#ifdef _DEBUG
+		#pragma comment (lib, "..\\Lib\\LMDBWindowsDllD64.lib")
+		#pragma comment (lib, "..\\Lib\\cpprest141d_2_10.lib")
+	#else
+		#pragma comment (lib, "..\\Lib\\LMDBWindowsDll64.lib")
+		#pragma comment (lib, "..\\Lib\\cpprest141_2_10.lib")
+	#endif
+#else
+	#ifdef _DEBUG
+		#pragma comment (lib, "..\\Lib\\LMDBWindowsDllD.lib")
+		#pragma comment (lib, "..\\Lib\\cpprest141d_2_10.lib")
+	#else
+		#pragma comment (lib, "..\\Lib\\LMDBWindowsDll.lib")
+		#pragma comment (lib, "..\\Lib\\cpprest141_2_10.lib")
+	#endif
+#endif
