@@ -1,7 +1,5 @@
 #include "stdafx.h"
 #include "MyServer.h"
-#include "DataHandler.h"
-#include "WorkerItemHandler.h"
 
 using namespace web;
 using namespace http;
@@ -11,8 +9,10 @@ using namespace http::experimental::listener;
 std::unique_ptr<MyServer> g_http;
 
 
-CString GetIP()
+std::wstring GetIP()
 {
+	USES_CONVERSION;
+
 	// Init WinSock
 	WSADATA wsa_Data;
 	int wsa_ReturnCode = WSAStartup(0x101, &wsa_Data);
@@ -26,7 +26,7 @@ CString GetIP()
 	szLocalIP = inet_ntoa(*(struct in_addr *)*host_entry->h_addr_list);
 	WSACleanup();
 
-	CString ip(szLocalIP);
+	std::wstring ip = A2W(szLocalIP);
 	return ip;
 }
 
@@ -44,14 +44,7 @@ int wmain(int argc, wchar_t *argv[])
 		port = argv[2];
 	}
 
-	//CoInitializeEx(0, COINIT_MULTITHREADED);
-	//WorkerItemHandler wih;
-	//CString strIP = wih.GetNetworkAdapterInformation2();
-	//std::wstring ip = (LPCTSTR)strIP;
-	//std::wcout << L"IP : " << ip << std::endl;
-
-	CString strIP = GetIP();
-	std::wstring ip = (LPCTSTR)strIP;
+	std::wstring ip = GetIP();
 	std::wcout << L"IP : " << ip << std::endl;
 
 	std::wstring address = _T("http://");

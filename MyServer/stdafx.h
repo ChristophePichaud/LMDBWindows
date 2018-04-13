@@ -32,10 +32,14 @@
 #ifndef NOMINMAX
 #define NOMINMAX
 #endif
-//#include <Windows.h>
 #else
 # include <sys/time.h>
 #endif
+
+#include <WinSock2.h>
+#include <ws2tcpip.h>
+#include <Windows.h>
+#pragma comment(lib, "ws2_32.lib")
 
 #include <stdio.h>
 #include <tchar.h>
@@ -46,26 +50,12 @@
 #define VC_EXTRALEAN            // Exclude rarely-used stuff from Windows headers
 #endif
 
-#include <afx.h>
-#include <afxwin.h>         // MFC core and standard components
-#include <afxext.h>         // MFC extensions
-#ifndef _AFX_NO_OLE_SUPPORT
-#include <afxdtctl.h>           // MFC support for Internet Explorer 4 Common Controls
-#endif
-#ifndef _AFX_NO_AFXCMN_SUPPORT
-#include <afxcmn.h>                     // MFC support for Windows Common Controls
-#endif // _AFX_NO_AFXCMN_SUPPORT
-
-#include <afxdisp.h>        // MFC Automation classes
-#include <afxole.h>
-#include <afxpriv2.h>
-
 #include <atlstr.h>
 #include <atlbase.h>
 #include <atlcom.h>
 #include <atlcomcli.h>
 
-#include <comdef.h>
+#include <comutil.h>
 
 #include <Wbemidl.h>
 #pragma comment(lib, "wbemuuid.lib")
