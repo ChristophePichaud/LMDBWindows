@@ -28,6 +28,7 @@ MyServer::MyServer(utility::string_t url) : m_listener(url)
 
 void MyServer::Init_LMDB()
 {
+	std::wcout << _T("Init LMDB") << std::endl;
 	mdb_env_create(&m_lmdb.m_env);
 	mdb_env_set_maxreaders(m_lmdb.m_env, 1);
 	mdb_env_set_mapsize(m_lmdb.m_env, 10485760);

@@ -25,7 +25,8 @@
 #define CHECK(test, msg) ((test) ? (void)0 : ((void)fprintf(stderr, \
 	"%s:%d: %s: %s\n", __FILE__, __LINE__, msg, mdb_strerror(rc)), abort()))
 
-int main()
+//int main()
+int main(int argc, char * argv[])
 {
 	int i = 0, j = 0, rc;
 	MDB_env *env;
@@ -64,7 +65,13 @@ int main()
 	//std::wcout << sz3 << std::endl;
 	//return 0;
 
-	count = 10000;
+	count = 50000;
+
+	if (argc == 2)
+	{
+		count = atoi(argv[1]);
+	}
+
 
 	values = (int *)malloc(count * sizeof(int));
 
@@ -74,7 +81,7 @@ int main()
 
 	E(mdb_env_create(&env));
 	E(mdb_env_set_maxreaders(env, 1));
-	E(mdb_env_set_mapsize(env, 10485760));
+	E(mdb_env_set_mapsize(env, 10485760 * 1000));
 	E(mdb_env_open(env, "c:\\temp", MDB_CREATE/*|MDB_NOSYNC*/, 0664));
 
 	E(mdb_txn_begin(env, NULL, 0, &txn));
@@ -102,7 +109,7 @@ int main()
 		}
 	}
 	DWORD dwStop = GetTickCount();
-	sprintf_s(szDebug, ("Elapsed: %ld ms\n"), dwStop - dwStart);
+	sprintf_s(szDebug, ("Elapsed for put: %ld ms\n"), dwStop - dwStart);
 	printf(szDebug);
 
 	dwStart = GetTickCount();
@@ -121,7 +128,7 @@ int main()
 		//printf("Get Key:%s Data:%s\n", key.mv_data, data.mv_data);
 	}
 	dwStop = GetTickCount();
-	sprintf_s(szDebug, ("Elapsed: %ld ms\n"), dwStop - dwStart);
+	sprintf_s(szDebug, ("Elapsed for get: %ld ms\n"), dwStop - dwStart);
 	printf(szDebug);
 
 	return 0;

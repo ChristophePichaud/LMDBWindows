@@ -1,31 +1,22 @@
 ﻿  stdafx.cpp
   ConsoleApplication.cpp
-d:\dev\github_lmdbwindows\consoleapplication\consoleapplication.cpp(58): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+d:\dev\github_lmdbwindows\consoleapplication\consoleapplication.cpp(84): warning C4307: '*': integral constant overflow
+d:\dev\github_lmdbwindows\consoleapplication\consoleapplication.cpp(96): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.14393.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
-d:\dev\github_lmdbwindows\consoleapplication\consoleapplication.cpp(35): warning C4101: 'mst': unreferenced local variable
-d:\dev\github_lmdbwindows\consoleapplication\consoleapplication.cpp(36): warning C4101: 'cur2': unreferenced local variable
-d:\dev\github_lmdbwindows\consoleapplication\consoleapplication.cpp(37): warning C4101: 'op': unreferenced local variable
-d:\dev\github_lmdbwindows\consoleapplication\consoleapplication.cpp(36): warning C4101: 'cursor': unreferenced local variable
-d:\dev\github_lmdbwindows\consoleapplication\consoleapplication.cpp(90): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-d:\dev\github_lmdbwindows\consoleapplication\consoleapplication.cpp(112): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+d:\dev\github_lmdbwindows\consoleapplication\consoleapplication.cpp(97): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.14393.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
-d:\dev\github_lmdbwindows\consoleapplication\consoleapplication.cpp(143): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+d:\dev\github_lmdbwindows\consoleapplication\consoleapplication.cpp(120): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.14393.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
-ConsoleApplication.obj : error LNK2001: unresolved external symbol __imp_mdb_env_create
-ConsoleApplication.obj : error LNK2001: unresolved external symbol __imp_mdb_strerror
-ConsoleApplication.obj : error LNK2001: unresolved external symbol __imp_mdb_env_set_maxreaders
-ConsoleApplication.obj : error LNK2001: unresolved external symbol __imp_mdb_env_set_mapsize
-ConsoleApplication.obj : error LNK2001: unresolved external symbol __imp_mdb_env_open
-ConsoleApplication.obj : error LNK2001: unresolved external symbol __imp_mdb_txn_begin
-ConsoleApplication.obj : error LNK2001: unresolved external symbol __imp_mdb_dbi_open
-ConsoleApplication.obj : error LNK2001: unresolved external symbol __imp_mdb_put
-ConsoleApplication.obj : error LNK2001: unresolved external symbol __imp_mdb_txn_commit
-ConsoleApplication.obj : error LNK2001: unresolved external symbol __imp_mdb_env_stat
-ConsoleApplication.obj : error LNK2001: unresolved external symbol __imp_mdb_cursor_open
-ConsoleApplication.obj : error LNK2001: unresolved external symbol __imp_mdb_cursor_get
-ConsoleApplication.obj : error LNK2001: unresolved external symbol __imp_mdb_cursor_close
-ConsoleApplication.obj : error LNK2001: unresolved external symbol __imp_mdb_txn_abort
-ConsoleApplication.obj : error LNK2001: unresolved external symbol __imp_mdb_del
-ConsoleApplication.obj : error LNK2001: unresolved external symbol __imp_mdb_dbi_close
-ConsoleApplication.obj : error LNK2001: unresolved external symbol __imp_mdb_env_close
-D:\Dev\GitHub_LMDBWindows\LMDBWindows\x64\Release\ConsoleApplication.exe : fatal error LNK1120: 17 unresolved externals
+d:\dev\github_lmdbwindows\consoleapplication\consoleapplication.cpp(36): warning C4101: 'mst': unreferenced local variable
+d:\dev\github_lmdbwindows\consoleapplication\consoleapplication.cpp(37): warning C4101: 'cur2': unreferenced local variable
+d:\dev\github_lmdbwindows\consoleapplication\consoleapplication.cpp(38): warning C4101: 'op': unreferenced local variable
+d:\dev\github_lmdbwindows\consoleapplication\consoleapplication.cpp(37): warning C4101: 'cursor': unreferenced local variable
+d:\dev\github_lmdbwindows\consoleapplication\consoleapplication.cpp(151): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\dev\github_lmdbwindows\consoleapplication\consoleapplication.cpp(173): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.14393.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+d:\dev\github_lmdbwindows\consoleapplication\consoleapplication.cpp(204): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.14393.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+  Generating code
+  All 13 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  ConsoleApplication.vcxproj -> D:\Dev\GitHub_LMDBWindows\LMDBWindows\x64\Release\ConsoleApplication.exe

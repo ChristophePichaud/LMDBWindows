@@ -10,6 +10,8 @@ int wmain(int argc, wchar_t *argv[])
 {
 	std::wstring defaultAddress = _T("localhost");
 	std::wstring port = _T("7001");
+	int count = 2;
+
 	if (argc == 2)
 	{
 		port = argv[1];
@@ -18,6 +20,13 @@ int wmain(int argc, wchar_t *argv[])
 	{
 		defaultAddress = argv[1];
 		port = argv[2];
+	}
+
+	if (argc == 4)
+	{
+		defaultAddress = argv[1];
+		port = argv[2];
+		count = _wtoi(argv[3]);
 	}
 
 	std::wstring address = _T("http://");
@@ -29,10 +38,9 @@ int wmain(int argc, wchar_t *argv[])
 	auto addr = uri.to_string();
 
 	std::wcout << L"Client " << addr << std::endl;
+	std::wcout << L"count: " << count << std::endl;
 
 	http_client client(uri);
-
-	int count = 2; // 100;
 
 	DWORD dwStart = GetTickCount();
 	for (int i = 0; i < count; i++)
@@ -90,8 +98,8 @@ int wmain(int argc, wchar_t *argv[])
 		jdata = response.extract_json().get();
 		Data data = Data::FromJSON(jdata.as_object());
 
-		//_stprintf(sz, _T("Data key:%s value:%s\n"), data.key.c_str(), data.value.c_str());
-		//_tprintf(sz);
+		_stprintf(sz, _T("Data key:%s value:%s\n"), data.key.c_str(), data.value.c_str());
+		_tprintf(sz);
 	}
 	dwStop = GetTickCount();
 	_stprintf(sz, _T("get-data for %d elements - Elapsed ms = %ld ms\n"), count, dwStop - dwStart);
