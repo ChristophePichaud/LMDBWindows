@@ -27,6 +27,8 @@
 #include "cpprest/http_listener.h"
 #include "cpprest/uri.h"
 #include "cpprest/asyncrt_utils.h"
+#include "cpprest/http_client.h"
+#include "cpprest/http_msg.h"
 
 #ifdef _WIN32
 #ifndef NOMINMAX

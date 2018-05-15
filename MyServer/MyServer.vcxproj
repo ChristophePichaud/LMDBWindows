@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Helper.cpp" />
     <ClCompile Include="LMDBData.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MyServer.cpp" />

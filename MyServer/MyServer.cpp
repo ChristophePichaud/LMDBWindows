@@ -1,16 +1,18 @@
 #include "stdafx.h"
 #include "MyServer\\messagetypes.h"
 #include "MyServer.h"
+#include "Helper.h"
 
 using namespace std;
 using namespace web; 
 using namespace utility;
 using namespace http;
+using namespace http::client;
 using namespace web::http::experimental::listener;
 
 LMDBData MyServer::m_lmdb;
 
-MyServer::MyServer(utility::string_t url) : m_listener(url)
+MyServer::MyServer(std::wstring url) : m_listener(url)
 {
 	std::function<void(http_request)> fnGet = &MyServer::handle_get;
 	m_listener.support(methods::GET, fnGet);
@@ -98,7 +100,7 @@ void MyServer::handle_get(http_request message)
 		MDB_val VKey;
 		MDB_val VData;
 
-		_tcscpy(szKey, key.c_str());
+		_tcscpy_s(szKey, key.c_str());
 
 		VKey.mv_size = sizeof(szKey);
 		VKey.mv_data = szKey;
@@ -144,8 +146,8 @@ void MyServer::handle_get(http_request message)
 		MDB_val VKey;
 		MDB_val VData;
 
-		_tcscpy(szKey, key.c_str());
-		_tcscpy(szValue, value.c_str());
+		_tcscpy_s(szKey, key.c_str());
+		_tcscpy_s(szValue, value.c_str());
 
 		VKey.mv_size = sizeof(szKey);
 		VKey.mv_data = szKey;
@@ -172,3 +174,56 @@ void MyServer::handle_get(http_request message)
 	message.reply(status_codes::OK);
 };
 
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// NodeClient class
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+NodeClient::NodeClient(std::wstring url) : m_listener(url)
+{
+	std::function<void(http_request)> fnGet =	&NodeClient::handle_get;
+	m_listener.support(methods::GET, fnGet);
+	_url = url;
+}
+
+void NodeClient::Init()
+{
+	this->_http = std::unique_ptr<NodeClient>(new NodeClient(this->_url));
+	this->_http->open().wait();
+}
+
+void NodeClient::Close()
+{
+	this->_http->close().wait();
+}
+
+bool NodeClient::RegisterToMaster()
+{
+	std::wstring ip = CHelper::GetIP();
+	std::wcout << L"IP : " << ip << std::endl;
+
+	int port = 7001;
+	TCHAR sz[255];
+	_stprintf_s(sz, _T("http://%s:%d/MyServer/LMDB/"), ip, port);
+
+	std::wstring address = sz;
+
+	std::wostringstream buf;
+	buf << _T("?request=") << _T("RegisterNode")
+		<< _T("&url=") << address;
+
+	http_response response;
+	http_client client(address);
+	response = client.request(methods::GET, buf.str()).get();
+	wcout << response.to_string() << endl;
+
+	return true;
+}
+
+void NodeClient::handle_get(http_request message)
+{
+	std::wcout << _T("handle_get") << std::endl;
+}
