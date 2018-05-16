@@ -22,6 +22,7 @@
 #include <iostream>
 #include <fstream>
 #include <random>
+#include <memory>
 
 #include "cpprest/json.h"
 #include "cpprest/http_listener.h"

@@ -11,6 +11,7 @@ using namespace http::client;
 using namespace web::http::experimental::listener;
 
 LMDBData MyServer::m_lmdb;
+std::vector<std::shared_ptr<NodeAttributes>> MyServer::_nodes;
 
 MyServer::MyServer(std::wstring url) : m_listener(url)
 {
@@ -26,6 +27,14 @@ MyServer::MyServer(std::wstring url) : m_listener(url)
 	std::function<void(http_request)> fnDel = &MyServer::handle_delete;
     m_listener.support(methods::DEL, fnDel);
    
+	_url = url;
+}
+
+void MyServer::Init()
+{
+	this->_http = std::unique_ptr<MyServer>(new MyServer(this->_url));
+	//this->_http->Init_LMDB();
+	this->_http->open().wait();
 }
 
 void MyServer::Init_LMDB()
@@ -37,62 +46,96 @@ void MyServer::Init_LMDB()
 	mdb_env_open(m_lmdb.m_env, "c:\\temp", MDB_CREATE/*|MDB_NOSYNC*/, 0664);
 }
 
+void MyServer::Close()
+{
+	this->_http->close().wait();
+}
+
 void MyServer::handle_post(http_request message)
 {
-    ucout <<  message.to_string() << endl;
+	std::wcout <<  message.to_string() << endl;
 	message.reply(status_codes::OK);
 };
 
 void MyServer::handle_delete(http_request message)
 {
-	ucout << message.to_string() << endl;
+	std::wcout << message.to_string() << endl;
 	message.reply(status_codes::OK);
 }
 
 void MyServer::handle_put(http_request message)
 {
-	ucout << message.to_string() << endl;
+	std::wcout << message.to_string() << endl;
 	message.reply(status_codes::OK);
 };
 
 void MyServer::handle_get(http_request message)
 {
-	ucout << U("Message") << U(" ") << message.to_string() << endl;
-	ucout << U("Relative URI") << U(" ") << message.relative_uri().to_string() << endl;
+	std::wcout << _T("Message") << _T(" ") << message.to_string() << endl;
+	std::wcout << _T("Relative URI") << _T(" ") << message.relative_uri().to_string() << endl;
 
 	auto paths = uri::split_path(uri::decode(message.relative_uri().path()));
 	for (auto it1 = paths.begin(); it1 != paths.end(); it1++)
 	{
-		ucout << U("Path") << U(" ") << *it1 << endl;
+		std::wcout << _T("Path") << _T(" ") << *it1 << endl;
 	}
 
 	auto query = uri::split_query(uri::decode(message.relative_uri().query()));
 	for (auto it2 = query.begin(); it2 != query.end(); it2++)
 	{
-		ucout << U("Query") << U(" ") << it2->first << U(" ") << it2->second << endl;
+		std::wcout << _T("Query") << _T(" ") << it2->first << _T(" ") << it2->second << endl;
 	}
 
-	auto queryItr = query.find(U("request"));
-	utility::string_t request = queryItr->second;
-	ucout << U("Request") << U(" ") << request << endl;
+	auto queryItr = query.find(_T("request"));
+	std::wstring request = queryItr->second;
+	std::wcout << _T("Request") << _T(" ") << request << endl;
 
-	auto keyItr = query.find(U("key"));
-	utility::string_t key; 
+	auto keyItr = query.find(_T("key"));
+	std::wstring key;
 	if (keyItr != query.end())
 	{
 		key = keyItr->second;
-		ucout << U("key") << U(" ") << key << endl;
+		std::wcout << _T("key") << _T(" ") << key << endl;
 	}
 
-	auto valueItr = query.find(U("value"));
-	utility::string_t value;
+	auto valueItr = query.find(_T("value"));
+	std::wstring value;
 	if (valueItr != query.end())
 	{
 		value = valueItr->second;
-		ucout << U("value") << U(" ") << value << endl;
+		std::wcout << _T("value") << _T(" ") << value << endl;
 	}
 
-	if (request == U("get-data"))
+	auto serverItr = query.find(_T("server"));
+	std::wstring server;
+	if (serverItr != query.end())
+	{
+		server = serverItr->second;
+		std::wcout << _T("server") << _T(" ") << server << endl;
+	}
+
+	auto portItr = query.find(_T("port"));
+	std::wstring port;
+	if (portItr != query.end())
+	{
+		port = portItr->second;
+		std::wcout << _T("port") << _T(" ") << port << endl;
+	}
+
+	if (request == _T("register-node"))
+	{
+		std::wcout << _T("server: ") << server << std::endl;
+		std::wcout << _T("port: ") << port << std::endl;
+
+		std::shared_ptr<NodeAttributes> pNode = std::make_shared<NodeAttributes>();
+		pNode->_server = server;
+		pNode->_port = _tstoi(port.c_str());
+
+		_nodes.push_back(pNode);
+		std::wcout << _T("Node registered !") << std::endl;
+	}
+		
+	if (request == _T("get-data"))
 	{
 		TCHAR szKey[255];
 		TCHAR szValue[255];
@@ -117,10 +160,10 @@ void MyServer::handle_get(http_request message)
 		{
 			Data data;
 			data.key = szKey;
-			data.value = U("");
+			data.value = _T("");
 
-			utility::string_t response = data.AsJSON().serialize();
-			ucout << response << endl;
+			std::wstring response = data.AsJSON().serialize();
+			std::wcout << response << endl;
 
 			message.reply(status_codes::OK, data.AsJSON());
 		}
@@ -130,15 +173,15 @@ void MyServer::handle_get(http_request message)
 			data.key = szKey;
 			data.value = (TCHAR *)VData.mv_data;
 
-			utility::string_t response = data.AsJSON().serialize();
-			ucout << response << endl;
+			std::wstring response = data.AsJSON().serialize();
+			std::wcout << response << endl;
 
 			message.reply(status_codes::OK, data.AsJSON());
 		}
 		return;
 	}
 
-	if (request == U("set-data"))
+	if (request == _T("set-data"))
 	{
 		TCHAR szKey[255];
 		TCHAR szValue[255];
@@ -164,8 +207,8 @@ void MyServer::handle_get(http_request message)
 		data.key = szKey;
 		data.value = szValue;
 
-		utility::string_t response = data.AsJSON().serialize();
-		ucout << response << endl;
+		std::wstring response = data.AsJSON().serialize();
+		std::wcout << response << endl;
 
 		message.reply(status_codes::OK, data.AsJSON());
 		return;
@@ -184,15 +227,16 @@ void MyServer::handle_get(http_request message)
 
 NodeClient::NodeClient(std::wstring url) : m_listener(url)
 {
-	std::function<void(http_request)> fnGet =	&NodeClient::handle_get;
+	std::function<void(http_request)> fnGet = &NodeClient::handle_get;
 	m_listener.support(methods::GET, fnGet);
-	_url = url;
+	this->_url = url;
 }
 
 void NodeClient::Init()
 {
 	this->_http = std::unique_ptr<NodeClient>(new NodeClient(this->_url));
 	this->_http->open().wait();
+	RegisterToMaster();
 }
 
 void NodeClient::Close()
@@ -207,13 +251,15 @@ bool NodeClient::RegisterToMaster()
 
 	int port = 7001;
 	TCHAR sz[255];
-	_stprintf_s(sz, _T("http://%s:%d/MyServer/LMDB/"), ip, port);
+	_stprintf(sz, _T("http://%s:%d/MyServer/LMDB/"), ip.c_str(), port);
 
 	std::wstring address = sz;
 
 	std::wostringstream buf;
-	buf << _T("?request=") << _T("RegisterNode")
-		<< _T("&url=") << address;
+	buf << _T("?request=") << _T("register-node")
+		<< _T("&server=") << this->_server
+		<< _T("&port=") << this->_port
+		<< _T("&name=") << this->_name;
 
 	http_response response;
 	http_client client(address);
