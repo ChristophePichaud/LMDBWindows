@@ -29,18 +29,40 @@ int wmain(int argc, wchar_t *argv[])
 		count = _wtoi(argv[3]);
 	}
 
-	std::wstring address = _T("http://");
-	address.append(defaultAddress);
-	address.append(_T(":"));
-	address.append(port);
-	address.append(_T("/MyServer/LMDB/"));
-	http::uri uri = http::uri(address);
-	auto addr = uri.to_string();
+	TCHAR sz[255];
+	_stprintf(sz, _T("http://%s:%s/MyServer/LMDB/"), defaultAddress.c_str(), port.c_str());
 
-	std::wcout << L"Client " << addr << std::endl;
+	std::wstring address = sz;
+
+	std::wcout << L"Client " << address << std::endl;
 	std::wcout << L"count: " << count << std::endl;
+	
+	http_client client(address);
+	
+	std::wostringstream buf;
+	buf << _T("?request=") << _T("get-node")
+		<< _T("&name=") << "cache_v1";
 
-	http_client client(uri);
+	http_response response;
+
+	try
+	{
+		response = client.request(methods::GET, buf.str()).get();
+		wcout << response.to_string() << endl;
+	}
+	catch (http_exception ex)
+	{
+		std::string err = ex.what();
+	}
+
+	json::value jdata = json::value::array();
+	jdata = response.extract_json().get();
+	GetNodeData data = GetNodeData::FromJSON(jdata.as_object());
+
+	_stprintf(sz, _T("GetNodeData ip:%s port:%s name:%s\n"), data.ip.c_str(), data.port.c_str(), data.name.c_str());
+	_tprintf(sz);
+
+	return 0;
 
 	DWORD dwStart = GetTickCount();
 	for (int i = 0; i < count; i++)
@@ -67,7 +89,7 @@ int wmain(int argc, wchar_t *argv[])
 		wcout << response.to_string() << endl;
 	}
 	DWORD dwStop = GetTickCount();
-	TCHAR sz[255];
+
 	_stprintf(sz, _T("set-data for %d elements - Elapsed ms = %ld ms\n"), count, dwStop - dwStart);
 	_tprintf(sz);
 

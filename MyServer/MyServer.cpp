@@ -122,17 +122,79 @@ void MyServer::handle_get(http_request message)
 		std::wcout << _T("port") << _T(" ") << port << endl;
 	}
 
+	auto nameItr = query.find(_T("name"));
+	std::wstring name;
+	if (nameItr != query.end())
+	{
+		name = nameItr->second;
+		std::wcout << _T("name") << _T(" ") << name << endl;
+	}
+
 	if (request == _T("register-node"))
 	{
+		std::wcout << _T("register-node...") << std::endl;
+
 		std::wcout << _T("server: ") << server << std::endl;
 		std::wcout << _T("port: ") << port << std::endl;
 
-		std::shared_ptr<NodeAttributes> pNode = std::make_shared<NodeAttributes>();
-		pNode->_server = server;
-		pNode->_port = _tstoi(port.c_str());
+		if (MyServer::ExistsNode(server, port) == true)
+		{
+			std::wcout << _T("Node already registered !") << std::endl;
+		}
+		else
+		{
+			std::shared_ptr<NodeAttributes> pNode = std::make_shared<NodeAttributes>();
+			pNode->_server = server;
+			pNode->_port = port;
 
-		_nodes.push_back(pNode);
-		std::wcout << _T("Node registered !") << std::endl;
+			_nodes.push_back(pNode);
+			std::wcout << _T("Node registered !") << _T(" count: ") << _nodes.size() << std::endl;
+		}
+	}
+		
+	if (request == _T("show-nodes"))
+	{
+		std::wcout << _T("show-nodes...") << std::endl;
+		MyServer::ShowNodes();
+	}
+	
+	if (request == _T("get-node"))
+	{
+		std::wcout << _T("get-node...") << std::endl;
+			
+		std::shared_ptr<NodeAttributes> pObj = nullptr;
+
+		for (auto itr = _nodes.begin(); itr != _nodes.end(); itr++)
+		{
+			pObj = *itr;
+			if (pObj->_isActive == false)
+			{
+				// We find an entry
+				pObj->_isActive = true;
+				*itr = pObj;
+				break;
+			}
+		}
+				
+		if (pObj != nullptr)
+		{
+			GetNodeData data;
+			data.ip = pObj->_server;
+			data.port = pObj->_port;
+			data.name = name;
+
+			pObj->_name = name;
+
+			std::wstring response = data.AsJSON().serialize();
+			std::wcout << response << endl;
+
+			message.reply(status_codes::OK, data.AsJSON());
+		}
+		else
+		{
+			std::wcout << _T("No node available...") << std::endl;
+			message.reply(status_codes::OK);
+		}
 	}
 		
 	if (request == _T("get-data"))
@@ -217,6 +279,39 @@ void MyServer::handle_get(http_request message)
 	message.reply(status_codes::OK);
 };
 
+bool MyServer::ExistsNode(std::wstring server, std::wstring port)
+{
+	bool ret = false;
+
+	std::shared_ptr<NodeAttributes> pObj = nullptr;
+
+	for (auto itr = _nodes.begin(); itr != _nodes.end(); itr++)
+	{
+		pObj = *itr;
+
+		if (pObj->_server == server && pObj->_port == port)
+		{
+			ret = true;
+			break;
+		}
+	}
+
+	return ret;
+}
+
+void MyServer::ShowNodes()
+{
+	std::shared_ptr<NodeAttributes> pObj = nullptr;
+
+	for (auto itr = _nodes.begin(); itr != _nodes.end(); itr++)
+	{
+		pObj = *itr;
+
+		TCHAR sz[255];
+		_stprintf(sz, _T("Active:%d Server:%s Port:%s\n"), pObj->_isActive, pObj->_server.c_str(), pObj->_port.c_str());
+		_tprintf(sz);
+	}
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

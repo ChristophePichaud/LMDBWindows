@@ -14,7 +14,7 @@ public:
 
 	bool _isActive = false;
 	std::wstring _server;
-	int _port;
+	std::wstring _port;
 	std::wstring _name;
 };
 
@@ -29,6 +29,10 @@ public:
 
 	pplx::task<void> open() { return m_listener.open(); }
 	pplx::task<void> close() { return m_listener.close(); }
+
+public:
+	static bool ExistsNode(std::wstring server, std::wstring port);
+	static void ShowNodes();
 
 private:
 	static void handle_get(http_request message);
