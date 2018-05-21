@@ -11,6 +11,7 @@ int wmain(int argc, wchar_t *argv[])
 	std::wstring defaultAddress = _T("localhost");
 	std::wstring port = _T("7001");
 	int count = 2;
+	std::wstring name = _T("cache_v1");
 
 	if (argc == 2)
 	{
@@ -26,7 +27,8 @@ int wmain(int argc, wchar_t *argv[])
 	{
 		defaultAddress = argv[1];
 		port = argv[2];
-		count = _wtoi(argv[3]);
+		//count = _wtoi(argv[3]);
+		name = argv[3];
 	}
 
 	TCHAR sz[255];
@@ -41,7 +43,7 @@ int wmain(int argc, wchar_t *argv[])
 	
 	std::wostringstream buf;
 	buf << _T("?request=") << _T("get-node")
-		<< _T("&name=") << "cache_v1";
+		<< _T("&dbname=") << name;
 
 	http_response response;
 
@@ -57,12 +59,24 @@ int wmain(int argc, wchar_t *argv[])
 
 	json::value jdata = json::value::array();
 	jdata = response.extract_json().get();
+
+	if (jdata.is_null())
+	{
+		std::wcout << _T("no JSON data...") << std::endl;
+		return 0;
+	}
+
 	GetNodeData data = GetNodeData::FromJSON(jdata.as_object());
 
-	_stprintf(sz, _T("GetNodeData ip:%s port:%s name:%s\n"), data.ip.c_str(), data.port.c_str(), data.name.c_str());
+	_stprintf(sz, _T("GetNodeData ip:%s port:%s name:%s dbname:%s\n"), data.ip.c_str(), data.port.c_str(), data.name.c_str(), data.dbName.c_str());
 	_tprintf(sz);
 
-	return 0;
+	::Sleep(1000);
+
+	_stprintf(sz, _T("http://%s:%s/MyServer/LMDB/"), data.ip.c_str(), data.port.c_str());
+	address = sz;
+
+	http_client client_lmdb(address);
 
 	DWORD dwStart = GetTickCount();
 	for (int i = 0; i < count; i++)
@@ -84,7 +98,7 @@ int wmain(int argc, wchar_t *argv[])
 			<< _T("&value=") << value;
 
 		http_response response;
-		response = client.request(methods::GET, buf.str()).get();
+		response = client_lmdb.request(methods::GET, buf.str()).get();
 
 		wcout << response.to_string() << endl;
 	}
@@ -112,7 +126,7 @@ int wmain(int argc, wchar_t *argv[])
 		wcout << buf.str() << endl;
 
 		http_response response;
-		response = client.request(methods::GET, buf.str()).get();
+		response = client_lmdb.request(methods::GET, buf.str()).get();
 
 		wcout << response.to_string() << endl;
 

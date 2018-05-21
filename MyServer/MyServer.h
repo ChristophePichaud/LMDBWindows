@@ -6,6 +6,7 @@ using namespace utility;
 using namespace http::experimental::listener;
 
 #include "LMDBData.h"
+#include "MyServer\\messagetypes.h"
 
 class NodeAttributes
 {
@@ -16,6 +17,7 @@ public:
 	std::wstring _server;
 	std::wstring _port;
 	std::wstring _name;
+	std::wstring _dbName;
 };
 
 class MyServer
@@ -24,15 +26,15 @@ public:
 	MyServer() {}
 	MyServer(std::wstring url);
 	void Init();
-	void Init_LMDB();
 	void Close();
 
 	pplx::task<void> open() { return m_listener.open(); }
 	pplx::task<void> close() { return m_listener.close(); }
 
 public:
-	static bool ExistsNode(std::wstring server, std::wstring port);
+	static bool ExistsNode(std::wstring server, std::wstring port, std::wstring name);
 	static void ShowNodes();
+	static void SendDbName(GetNodeData data);
 
 private:
 	static void handle_get(http_request message);
@@ -41,7 +43,6 @@ private:
 	static void handle_delete(http_request message);
 
 	http_listener m_listener;
-	static LMDBData m_lmdb;
 	static std::vector<std::shared_ptr<NodeAttributes>> _nodes;
 
 public:
@@ -60,6 +61,7 @@ public:
 	void Init();
 	void Close();
 	bool RegisterToMaster();
+	static void Init_LMDB();
 
 	pplx::task<void> open() { return m_listener.open(); }
 	pplx::task<void> close() { return m_listener.close(); }
@@ -74,6 +76,8 @@ public:
 	std::wstring _server;
 	int _port;
 	std::wstring _name;
+	static std::wstring _dbName;
+	static LMDBData m_lmdb;
 
 public:
 	std::unique_ptr<NodeClient> _http;

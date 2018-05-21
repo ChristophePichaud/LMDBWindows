@@ -1,5 +1,4 @@
 #include "stdafx.h"
-#include "MyServer\\messagetypes.h"
 #include "MyServer.h"
 #include "Helper.h"
 
@@ -10,8 +9,9 @@ using namespace http;
 using namespace http::client;
 using namespace web::http::experimental::listener;
 
-LMDBData MyServer::m_lmdb;
 std::vector<std::shared_ptr<NodeAttributes>> MyServer::_nodes;
+LMDBData NodeClient::m_lmdb;
+std::wstring NodeClient::_dbName;
 
 MyServer::MyServer(std::wstring url) : m_listener(url)
 {
@@ -33,17 +33,7 @@ MyServer::MyServer(std::wstring url) : m_listener(url)
 void MyServer::Init()
 {
 	this->_http = std::unique_ptr<MyServer>(new MyServer(this->_url));
-	//this->_http->Init_LMDB();
 	this->_http->open().wait();
-}
-
-void MyServer::Init_LMDB()
-{
-	std::wcout << _T("Init LMDB") << std::endl;
-	mdb_env_create(&m_lmdb.m_env);
-	mdb_env_set_maxreaders(m_lmdb.m_env, 1);
-	mdb_env_set_mapsize(m_lmdb.m_env, 10485760);
-	mdb_env_open(m_lmdb.m_env, "c:\\temp", MDB_CREATE/*|MDB_NOSYNC*/, 0664);
 }
 
 void MyServer::Close()
@@ -90,22 +80,6 @@ void MyServer::handle_get(http_request message)
 	std::wstring request = queryItr->second;
 	std::wcout << _T("Request") << _T(" ") << request << endl;
 
-	auto keyItr = query.find(_T("key"));
-	std::wstring key;
-	if (keyItr != query.end())
-	{
-		key = keyItr->second;
-		std::wcout << _T("key") << _T(" ") << key << endl;
-	}
-
-	auto valueItr = query.find(_T("value"));
-	std::wstring value;
-	if (valueItr != query.end())
-	{
-		value = valueItr->second;
-		std::wcout << _T("value") << _T(" ") << value << endl;
-	}
-
 	auto serverItr = query.find(_T("server"));
 	std::wstring server;
 	if (serverItr != query.end())
@@ -130,14 +104,23 @@ void MyServer::handle_get(http_request message)
 		std::wcout << _T("name") << _T(" ") << name << endl;
 	}
 
+	auto dbnameItr = query.find(_T("dbname"));
+	std::wstring dbname;
+	if (dbnameItr != query.end())
+	{
+		dbname = dbnameItr->second;
+		std::wcout << _T("dbname") << _T(" ") << dbname << endl;
+	}
+
 	if (request == _T("register-node"))
 	{
 		std::wcout << _T("register-node...") << std::endl;
 
 		std::wcout << _T("server: ") << server << std::endl;
 		std::wcout << _T("port: ") << port << std::endl;
+		std::wcout << _T("name: ") << name << std::endl;
 
-		if (MyServer::ExistsNode(server, port) == true)
+		if (MyServer::ExistsNode(server, port, name) == true)
 		{
 			std::wcout << _T("Node already registered !") << std::endl;
 		}
@@ -146,16 +129,23 @@ void MyServer::handle_get(http_request message)
 			std::shared_ptr<NodeAttributes> pNode = std::make_shared<NodeAttributes>();
 			pNode->_server = server;
 			pNode->_port = port;
+			pNode->_name = name;
+			pNode->_dbName = _T("");
 
 			_nodes.push_back(pNode);
 			std::wcout << _T("Node registered !") << _T(" count: ") << _nodes.size() << std::endl;
 		}
+
+		message.reply(status_codes::OK);
+		return;
 	}
 		
 	if (request == _T("show-nodes"))
 	{
 		std::wcout << _T("show-nodes...") << std::endl;
 		MyServer::ShowNodes();
+		message.reply(status_codes::OK);
+		return;
 	}
 	
 	if (request == _T("get-node"))
@@ -167,13 +157,17 @@ void MyServer::handle_get(http_request message)
 		for (auto itr = _nodes.begin(); itr != _nodes.end(); itr++)
 		{
 			pObj = *itr;
+
 			if (pObj->_isActive == false)
 			{
 				// We find an entry
 				pObj->_isActive = true;
+				pObj->_dbName = dbname;
 				*itr = pObj;
 				break;
 			}
+			else
+				pObj = nullptr;
 		}
 				
 		if (pObj != nullptr)
@@ -181,105 +175,57 @@ void MyServer::handle_get(http_request message)
 			GetNodeData data;
 			data.ip = pObj->_server;
 			data.port = pObj->_port;
-			data.name = name;
-
-			pObj->_name = name;
+			data.name = pObj->_name;
+			data.dbName = dbname;
 
 			std::wstring response = data.AsJSON().serialize();
 			std::wcout << response << endl;
 
 			message.reply(status_codes::OK, data.AsJSON());
+
+			MyServer::SendDbName(data);
 		}
 		else
 		{
 			std::wcout << _T("No node available...") << std::endl;
 			message.reply(status_codes::OK);
 		}
+
+		return;
 	}
 		
-	if (request == _T("get-data"))
-	{
-		TCHAR szKey[255];
-		TCHAR szValue[255];
-
-		MDB_val VKey;
-		MDB_val VData;
-
-		_tcscpy_s(szKey, key.c_str());
-
-		VKey.mv_size = sizeof(szKey);
-		VKey.mv_data = szKey;
-		VData.mv_size = sizeof(szValue);
-		VData.mv_data = szValue;
-
-		mdb_txn_begin(m_lmdb.m_env, NULL, 0, &m_lmdb.m_txn);
-		mdb_dbi_open(m_lmdb.m_txn, NULL, 0, &m_lmdb.m_dbi); 
-		int err = mdb_get(m_lmdb.m_txn, m_lmdb.m_dbi, &VKey, &VData);
-		mdb_txn_commit(m_lmdb.m_txn);
-		mdb_env_stat(m_lmdb.m_env, &m_lmdb.m_mst);
-
-		if (err == MDB_NOTFOUND)
-		{
-			Data data;
-			data.key = szKey;
-			data.value = _T("");
-
-			std::wstring response = data.AsJSON().serialize();
-			std::wcout << response << endl;
-
-			message.reply(status_codes::OK, data.AsJSON());
-		}
-		else
-		{
-			Data data;
-			data.key = szKey;
-			data.value = (TCHAR *)VData.mv_data;
-
-			std::wstring response = data.AsJSON().serialize();
-			std::wcout << response << endl;
-
-			message.reply(status_codes::OK, data.AsJSON());
-		}
-		return;
-	}
-
-	if (request == _T("set-data"))
-	{
-		TCHAR szKey[255];
-		TCHAR szValue[255];
-
-		MDB_val VKey;
-		MDB_val VData;
-
-		_tcscpy_s(szKey, key.c_str());
-		_tcscpy_s(szValue, value.c_str());
-
-		VKey.mv_size = sizeof(szKey);
-		VKey.mv_data = szKey;
-  		VData.mv_size = sizeof(szValue);
-		VData.mv_data = szValue;
-		_tprintf(_T("Add Key:%s Data:%s\n"), szKey, szValue);
-		mdb_txn_begin(m_lmdb.m_env, NULL, 0, &m_lmdb.m_txn);
-		mdb_dbi_open(m_lmdb.m_txn, NULL, 0, &m_lmdb.m_dbi);
-		mdb_put(m_lmdb.m_txn, m_lmdb.m_dbi, &VKey, &VData, MDB_NOOVERWRITE);
-		mdb_txn_commit(m_lmdb.m_txn);
-		mdb_env_stat(m_lmdb.m_env, &m_lmdb.m_mst);
-
-		Data data;
-		data.key = szKey;
-		data.value = szValue;
-
-		std::wstring response = data.AsJSON().serialize();
-		std::wcout << response << endl;
-
-		message.reply(status_codes::OK, data.AsJSON());
-		return;
-	}
-
 	message.reply(status_codes::OK);
 };
 
-bool MyServer::ExistsNode(std::wstring server, std::wstring port)
+void MyServer::SendDbName(GetNodeData data)
+{
+	TCHAR sz[255];
+	_stprintf(sz, _T("http://%s:%s/MyServer/LMDB/"), data.ip.c_str(), data.port.c_str());
+
+	std::wstring address = sz;
+
+	http_client client(address);
+
+	std::wostringstream buf;
+	buf << _T("?request=") << _T("set-node")
+		<< _T("&dbname=") << data.dbName;
+
+	http_response response;
+
+	response = client.request(methods::GET, buf.str()).get();
+	wcout << response.to_string() << endl;
+
+	json::value jdata = json::value::array();
+	jdata = response.extract_json().get();
+
+	if (jdata.is_null())
+	{
+		std::wcout << _T("no JSON data...") << std::endl;
+		return;
+	}
+}
+
+bool MyServer::ExistsNode(std::wstring server, std::wstring port, std::wstring name)
 {
 	bool ret = false;
 
@@ -289,6 +235,14 @@ bool MyServer::ExistsNode(std::wstring server, std::wstring port)
 	{
 		pObj = *itr;
 
+		// DB in use
+		if (pObj->_name == name)
+		{
+			ret = true;
+			break;
+		}
+
+		// port in use
 		if (pObj->_server == server && pObj->_port == port)
 		{
 			ret = true;
@@ -308,7 +262,7 @@ void MyServer::ShowNodes()
 		pObj = *itr;
 
 		TCHAR sz[255];
-		_stprintf(sz, _T("Active:%d Server:%s Port:%s\n"), pObj->_isActive, pObj->_server.c_str(), pObj->_port.c_str());
+		_stprintf(sz, _T("Active:%d Server:%s Port:%s Name:%s DBName:%s\n"), pObj->_isActive, pObj->_server.c_str(), pObj->_port.c_str(), pObj->_name.c_str(), pObj->_dbName.c_str());
 		_tprintf(sz);
 	}
 }
@@ -342,7 +296,7 @@ void NodeClient::Close()
 bool NodeClient::RegisterToMaster()
 {
 	std::wstring ip = CHelper::GetIP();
-	std::wcout << L"IP : " << ip << std::endl;
+	//std::wcout << L"IP : " << ip << std::endl;
 
 	int port = 7001;
 	TCHAR sz[255];
@@ -367,4 +321,154 @@ bool NodeClient::RegisterToMaster()
 void NodeClient::handle_get(http_request message)
 {
 	std::wcout << _T("handle_get") << std::endl;
+
+	std::wcout << _T("Message") << _T(" ") << message.to_string() << endl;
+	std::wcout << _T("Relative URI") << _T(" ") << message.relative_uri().to_string() << endl;
+
+	auto paths = uri::split_path(uri::decode(message.relative_uri().path()));
+	for (auto it1 = paths.begin(); it1 != paths.end(); it1++)
+	{
+		std::wcout << _T("Path") << _T(" ") << *it1 << endl;
+	}
+
+	auto query = uri::split_query(uri::decode(message.relative_uri().query()));
+	for (auto it2 = query.begin(); it2 != query.end(); it2++)
+	{
+		std::wcout << _T("Query") << _T(" ") << it2->first << _T(" ") << it2->second << endl;
+	}
+
+	auto queryItr = query.find(_T("request"));
+	std::wstring request = queryItr->second;
+	std::wcout << _T("Request") << _T(" ") << request << endl;
+
+	auto dbnameItr = query.find(_T("dbname"));
+	std::wstring dbname;
+	if (dbnameItr != query.end())
+	{
+		dbname = dbnameItr->second;
+		std::wcout << _T("dbname") << _T(" ") << dbname << endl;
+	}
+
+	auto keyItr = query.find(_T("key"));
+	std::wstring key;
+	if (keyItr != query.end())
+	{
+		key = keyItr->second;
+		std::wcout << _T("key") << _T(" ") << key << endl;
+	}
+
+	auto valueItr = query.find(_T("value"));
+	std::wstring value;
+	if (valueItr != query.end())
+	{
+		value = valueItr->second;
+		std::wcout << _T("value") << _T(" ") << value << endl;
+	}
+
+	if (request == _T("set-node"))
+	{
+		std::wcout << _T("set-node...") << std::endl;
+		_dbName = dbname;
+		message.reply(status_codes::OK);
+
+		Init_LMDB();
+	}
+
+	if (request == _T("get-data"))
+	{
+		TCHAR szKey[255];
+		TCHAR szValue[255];
+
+		MDB_val VKey;
+		MDB_val VData;
+
+		_tcscpy_s(szKey, key.c_str());
+
+		VKey.mv_size = sizeof(szKey);
+		VKey.mv_data = szKey;
+		VData.mv_size = sizeof(szValue);
+		VData.mv_data = szValue;
+
+		mdb_txn_begin(m_lmdb.m_env, NULL, 0, &m_lmdb.m_txn);
+		mdb_dbi_open(m_lmdb.m_txn, NULL, 0, &m_lmdb.m_dbi);
+		int err = mdb_get(m_lmdb.m_txn, m_lmdb.m_dbi, &VKey, &VData);
+		mdb_txn_commit(m_lmdb.m_txn);
+		mdb_env_stat(m_lmdb.m_env, &m_lmdb.m_mst);
+
+		if (err == MDB_NOTFOUND)
+		{
+			Data data;
+			data.key = szKey;
+			data.value = _T("");
+
+			std::wstring response = data.AsJSON().serialize();
+			std::wcout << response << endl;
+
+			message.reply(status_codes::OK, data.AsJSON());
+		}
+		else
+		{
+			Data data;
+			data.key = szKey;
+			data.value = (TCHAR *)VData.mv_data;
+
+			std::wstring response = data.AsJSON().serialize();
+			std::wcout << response << endl;
+
+			message.reply(status_codes::OK, data.AsJSON());
+		}
+
+		return;
+	}
+
+	if (request == _T("set-data"))
+	{
+		TCHAR szKey[255];
+		TCHAR szValue[255];
+
+		MDB_val VKey;
+		MDB_val VData;
+
+		_tcscpy_s(szKey, key.c_str());
+		_tcscpy_s(szValue, value.c_str());
+
+		VKey.mv_size = sizeof(szKey);
+		VKey.mv_data = szKey;
+		VData.mv_size = sizeof(szValue);
+		VData.mv_data = szValue;
+		_tprintf(_T("Add Key:%s Data:%s\n"), szKey, szValue);
+		mdb_txn_begin(m_lmdb.m_env, NULL, 0, &m_lmdb.m_txn);
+		mdb_dbi_open(m_lmdb.m_txn, NULL, 0, &m_lmdb.m_dbi);
+		mdb_put(m_lmdb.m_txn, m_lmdb.m_dbi, &VKey, &VData, MDB_NOOVERWRITE);
+		mdb_txn_commit(m_lmdb.m_txn);
+		mdb_env_stat(m_lmdb.m_env, &m_lmdb.m_mst);
+
+		Data data;
+		data.key = szKey;
+		data.value = szValue;
+
+		std::wstring response = data.AsJSON().serialize();
+		std::wcout << response << endl;
+
+		message.reply(status_codes::OK, data.AsJSON());
+		return;
+	}
+
+	message.reply(status_codes::OK);
 }
+
+void NodeClient::Init_LMDB()
+{
+	USES_CONVERSION;
+
+	char sz[255];
+	sprintf(sz, "c:\\temp\\%s", W2A(_dbName.c_str()));
+	::CreateDirectoryA(sz, NULL);
+
+	std::wcout << _T("Init LMDB") << std::endl;
+	mdb_env_create(&m_lmdb.m_env);
+	mdb_env_set_maxreaders(m_lmdb.m_env, 1);
+	mdb_env_set_mapsize(m_lmdb.m_env, 10485760);
+	mdb_env_open(m_lmdb.m_env, sz, MDB_CREATE/*|MDB_NOSYNC*/, 0664);
+}
+

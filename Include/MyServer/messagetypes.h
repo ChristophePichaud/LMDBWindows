@@ -29,6 +29,7 @@ struct GetNodeData
 	std::wstring ip;
 	std::wstring port;
 	std::wstring name;
+	std::wstring dbName;
 
 	static GetNodeData FromJSON(const web::json::object & object)
 	{
@@ -36,6 +37,7 @@ struct GetNodeData
 		result.ip = object.at(_T("ip")).as_string();
 		result.port = object.at(_T("port")).as_string();
 		result.name = object.at(_T("name")).as_string();
+		result.dbName = object.at(_T("dbName")).as_string();
 		return result;
 	}
 
@@ -45,6 +47,7 @@ struct GetNodeData
 		result[_T("ip")] = web::json::value::string(ip);
 		result[_T("port")] = web::json::value::string(port);
 		result[_T("name")] = web::json::value::string(name);
+		result[_T("dbName")] = web::json::value::string(dbName);
 		return result;
 	}
 };
