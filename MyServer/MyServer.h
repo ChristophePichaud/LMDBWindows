@@ -27,6 +27,8 @@ public:
 	MyServer(std::wstring url);
 	void Init();
 	void Close();
+	void ActivatePingThread();
+	static void PingThread(LPVOID param);
 
 	pplx::task<void> open() { return m_listener.open(); }
 	pplx::task<void> close() { return m_listener.close(); }
@@ -47,7 +49,7 @@ private:
 
 public:
 	std::wstring _server;
-	int _port;
+	std::wstring _port;
 
 public:
 	std::unique_ptr<MyServer> _http;
@@ -73,9 +75,9 @@ private:
 	http_listener m_listener;
 
 public:
-	std::wstring _server;
-	int _port;
-	std::wstring _name;
+	static std::wstring _server;
+	static std::wstring _port;
+	static std::wstring _name;
 	static std::wstring _dbName;
 	static LMDBData m_lmdb;
 

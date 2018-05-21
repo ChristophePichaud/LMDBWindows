@@ -48,7 +48,7 @@ int wmain(int argc, wchar_t *argv[])
 	{
 		NodeClient client(address);
 		client._server = ip;
-		client._port = _tstoi(port.c_str());
+		client._port = port;
 		client._name = name;
 		client.Init();
 		std::wcout << L"Server node " << address << std::endl;
@@ -65,7 +65,7 @@ int wmain(int argc, wchar_t *argv[])
 
 		MyServer server(address);
 		server._server = ip;
-		server._port = _tstoi(port.c_str());
+		server._port = port;
 		server.Init();
 		std::wcout << L"Server node " << address << std::endl;
 		std::wcout << _T("Press ENTER to exit.") << std::endl;

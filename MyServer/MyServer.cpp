@@ -12,6 +12,9 @@ using namespace web::http::experimental::listener;
 std::vector<std::shared_ptr<NodeAttributes>> MyServer::_nodes;
 LMDBData NodeClient::m_lmdb;
 std::wstring NodeClient::_dbName;
+std::wstring NodeClient::_server;
+std::wstring  NodeClient::_port;
+std::wstring NodeClient::_name;
 
 MyServer::MyServer(std::wstring url) : m_listener(url)
 {
@@ -34,11 +37,83 @@ void MyServer::Init()
 {
 	this->_http = std::unique_ptr<MyServer>(new MyServer(this->_url));
 	this->_http->open().wait();
+	ActivatePingThread();
 }
 
 void MyServer::Close()
 {
 	this->_http->close().wait();
+}
+
+void MyServer::ActivatePingThread()
+{
+	DWORD dwThreadId = 0;
+	HANDLE hThread = ::CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE) &MyServer::PingThread, NULL, 0, &dwThreadId);
+}
+
+void MyServer::PingThread(LPVOID param)
+{
+	while (TRUE)
+	{
+
+		::Sleep(2000);
+
+		std::shared_ptr<NodeAttributes> pObj = nullptr;
+
+		for (auto itr = _nodes.begin(); itr != _nodes.end(); itr++)
+		{
+			pObj = *itr;
+
+			TCHAR sz[255];
+			_stprintf(sz, _T("http://%s:%s/MyServer/LMDB/"), pObj->_server.c_str(), pObj->_port.c_str());
+
+			std::wstring address = sz;
+
+			http_client client(address);
+
+			std::wostringstream buf;
+			buf << _T("?request=") << _T("ping");
+
+			http_response response;
+
+			try
+			{
+				wcout << _T("Ping testing ip:") << pObj->_server.c_str() << _T(" on port:") << pObj->_port.c_str() << endl;
+				response = client.request(methods::GET, buf.str()).get();
+				wcout << response.to_string() << endl;
+			}
+			catch (...)
+			{
+				// Something goes wrong !
+				pObj->_isActive = false;
+				*itr = pObj;
+			}
+
+			json::value jdata = json::value::array();
+			jdata = response.extract_json().get();
+
+			if (jdata.is_null())
+			{
+				std::wcout << _T("no JSON data...") << std::endl;
+				continue;
+			}
+
+			PingData data = PingData::FromJSON(jdata.as_object());
+
+			if (data.status == _T("OK"))
+			{
+				// Normal behaviour
+			}
+			else
+			{
+				// Something goes wrong !
+				pObj->_isActive = false;
+				*itr = pObj;
+			}
+
+			::Sleep(1000);
+		}
+	}
 }
 
 void MyServer::handle_post(http_request message)
@@ -158,7 +233,13 @@ void MyServer::handle_get(http_request message)
 		{
 			pObj = *itr;
 
-			if (pObj->_isActive == false)
+			if (pObj->_dbName == dbname) // && pObj->_isActive == true
+			{
+				// We find an existing entry
+				*itr = pObj;
+				break;
+			}
+			else if (pObj->_isActive == false)
 			{
 				// We find an entry
 				pObj->_isActive = true;
@@ -363,6 +444,21 @@ void NodeClient::handle_get(http_request message)
 	{
 		value = valueItr->second;
 		std::wcout << _T("value") << _T(" ") << value << endl;
+	}
+
+	if (request == _T("ping"))
+	{
+		std::wcout << _T("ping...") << std::endl;
+
+		PingData data;
+		data.ip = _server;
+		data.port = _port;
+		data.status = _T("OK");
+
+		std::wstring response = data.AsJSON().serialize();
+		std::wcout << response << endl;
+
+		message.reply(status_codes::OK, data.AsJSON());
 	}
 
 	if (request == _T("set-node"))

@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CSWMRGuard.cpp" />
     <ClCompile Include="Helper.cpp" />
     <ClCompile Include="LMDBData.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -27,6 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Include\MyServer\messagetypes.h" />
+    <ClInclude Include="CSWMRGuard.h" />
     <ClInclude Include="Helper.h" />
     <ClInclude Include="LMDBData.h" />
     <ClInclude Include="MyServer.h" />

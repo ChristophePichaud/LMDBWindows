@@ -31,6 +31,14 @@ int wmain(int argc, wchar_t *argv[])
 		name = argv[3];
 	}
 
+	if (argc == 5)
+	{
+		defaultAddress = argv[1];
+		port = argv[2];
+		name = argv[3];
+		count = _wtoi(argv[4]);
+	}
+
 	TCHAR sz[255];
 	_stprintf(sz, _T("http://%s:%s/MyServer/LMDB/"), defaultAddress.c_str(), port.c_str());
 

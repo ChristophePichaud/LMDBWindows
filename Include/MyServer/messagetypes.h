@@ -51,3 +51,28 @@ struct GetNodeData
 		return result;
 	}
 };
+
+struct PingData
+{
+	std::wstring ip;
+	std::wstring port;
+	std::wstring status;
+
+	static PingData FromJSON(const web::json::object & object)
+	{
+		PingData result;
+		result.ip = object.at(_T("ip")).as_string();
+		result.port = object.at(_T("port")).as_string();
+		result.status = object.at(_T("status")).as_string();
+		return result;
+	}
+
+	web::json::value AsJSON() const
+	{
+		web::json::value result = web::json::value::object();
+		result[_T("ip")] = web::json::value::string(ip);
+		result[_T("port")] = web::json::value::string(port);
+		result[_T("status")] = web::json::value::string(status);
+		return result;
+	}
+};
