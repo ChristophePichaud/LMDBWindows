@@ -7,6 +7,8 @@ using namespace http;
 using namespace utility;
 using namespace http::experimental::listener;
 
+CSWMRGuard g_Guard;
+
 int wmain(int argc, wchar_t *argv[])
 {
     std::wstring port = U("7001");
@@ -46,12 +48,16 @@ int wmain(int argc, wchar_t *argv[])
 
 	if (mode == _T("node"))
 	{
+		//
+		// Create the a worker node instance
+		//
+
 		NodeClient client(address);
 		client._server = ip;
 		client._port = port;
 		client._name = name;
 		client.Init();
-		std::wcout << L"Server node " << address << std::endl;
+		std::wcout << L"Worker node " << address << std::endl;
 		std::wcout << _T("Press ENTER to exit.") << std::endl;
 		std::string line;
 		std::getline(std::cin, line);

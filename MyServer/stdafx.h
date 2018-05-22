@@ -69,6 +69,9 @@
 #include "..\Include\lmdb-dll.h"
 #include "..\Include\midl-dll.h"
 
+#include "CSWMRGuard.h"
+extern CSWMRGuard g_Guard;
+
 #ifdef _WIN64
 	#ifdef _DEBUG
 		#pragma comment (lib, "..\\Lib\\LMDBWindowsDllD64.lib")

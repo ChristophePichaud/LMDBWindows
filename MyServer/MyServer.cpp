@@ -56,9 +56,11 @@ void MyServer::PingThread(LPVOID param)
 	while (TRUE)
 	{
 
-		::Sleep(2000);
+		::Sleep(10000);
 
 		std::shared_ptr<NodeAttributes> pObj = nullptr;
+
+		g_Guard.WaitToWrite();
 
 		for (auto itr = _nodes.begin(); itr != _nodes.end(); itr++)
 		{
@@ -82,11 +84,16 @@ void MyServer::PingThread(LPVOID param)
 				response = client.request(methods::GET, buf.str()).get();
 				wcout << response.to_string() << endl;
 			}
-			catch (...)
+			catch (http_exception ex)
 			{
+				wcout << _T("http_exception... Node is removed.") << endl;
+				std::string err = ex.what();
 				// Something goes wrong !
 				pObj->_isActive = false;
 				*itr = pObj;
+
+				_nodes.erase(itr);
+				break;
 			}
 
 			json::value jdata = json::value::array();
@@ -99,7 +106,7 @@ void MyServer::PingThread(LPVOID param)
 				// Something goes wrong !
 				pObj->_isActive = false;
 				*itr = pObj;
-				continue;
+				break;
 			}
 
 			PingData data = PingData::FromJSON(jdata.as_object());
@@ -113,10 +120,12 @@ void MyServer::PingThread(LPVOID param)
 				// Something goes wrong !
 				pObj->_isActive = false;
 				*itr = pObj;
+				break;
 			}
 
-			::Sleep(1000);
 		}
+
+		g_Guard.Done();
 	}
 }
 
@@ -211,8 +220,10 @@ void MyServer::handle_get(http_request message)
 			pNode->_name = name;
 			pNode->_dbName = _T("");
 
+			g_Guard.WaitToWrite();
 			_nodes.push_back(pNode);
 			std::wcout << _T("Node registered !") << _T(" count: ") << _nodes.size() << std::endl;
+			g_Guard.Done();
 		}
 
 		message.reply(status_codes::OK);
@@ -232,6 +243,8 @@ void MyServer::handle_get(http_request message)
 		std::wcout << _T("get-node...") << std::endl;
 			
 		std::shared_ptr<NodeAttributes> pObj = nullptr;
+
+		g_Guard.WaitToWrite();
 
 		for (auto itr = _nodes.begin(); itr != _nodes.end(); itr++)
 		{
@@ -276,6 +289,8 @@ void MyServer::handle_get(http_request message)
 			message.reply(status_codes::OK);
 		}
 
+		g_Guard.Done();
+
 		return;
 	}
 		
@@ -316,6 +331,8 @@ bool MyServer::ExistsNode(std::wstring server, std::wstring port, std::wstring n
 
 	std::shared_ptr<NodeAttributes> pObj = nullptr;
 
+	g_Guard.WaitToWrite();
+
 	for (auto itr = _nodes.begin(); itr != _nodes.end(); itr++)
 	{
 		pObj = *itr;
@@ -335,12 +352,16 @@ bool MyServer::ExistsNode(std::wstring server, std::wstring port, std::wstring n
 		}
 	}
 
+	g_Guard.Done();
+
 	return ret;
 }
 
 void MyServer::ShowNodes()
 {
 	std::shared_ptr<NodeAttributes> pObj = nullptr;
+
+	g_Guard.WaitToWrite();
 
 	for (auto itr = _nodes.begin(); itr != _nodes.end(); itr++)
 	{
@@ -350,6 +371,8 @@ void MyServer::ShowNodes()
 		_stprintf(sz, _T("Active:%d Server:%s Port:%s Name:%s DBName:%s\n"), pObj->_isActive, pObj->_server.c_str(), pObj->_port.c_str(), pObj->_name.c_str(), pObj->_dbName.c_str());
 		_tprintf(sz);
 	}
+
+	g_Guard.Done();
 }
 
 
