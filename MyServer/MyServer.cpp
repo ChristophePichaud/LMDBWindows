@@ -95,6 +95,10 @@ void MyServer::PingThread(LPVOID param)
 			if (jdata.is_null())
 			{
 				std::wcout << _T("no JSON data...") << std::endl;
+
+				// Something goes wrong !
+				pObj->_isActive = false;
+				*itr = pObj;
 				continue;
 			}
 
