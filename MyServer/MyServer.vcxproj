@@ -25,6 +25,8 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MyServer.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="WorkerNodeAttributes.cpp" />
+    <ClCompile Include="WorkerNodeClient.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Include\MyServer\messagetypes.h" />
@@ -33,6 +35,8 @@
     <ClInclude Include="LMDBData.h" />
     <ClInclude Include="MyServer.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="WorkerNodeAttributes.h" />
+    <ClInclude Include="WorkerNodeClient.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

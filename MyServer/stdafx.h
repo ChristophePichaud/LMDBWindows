@@ -72,6 +72,14 @@
 #include "CSWMRGuard.h"
 extern CSWMRGuard g_Guard;
 
+using namespace std;
+using namespace web;
+using namespace utility;
+using namespace http;
+using namespace http::client;
+using namespace web::http::experimental::listener;
+
+
 #ifdef _WIN64
 	#ifdef _DEBUG
 		#pragma comment (lib, "..\\Lib\\LMDBWindowsDllD64.lib")

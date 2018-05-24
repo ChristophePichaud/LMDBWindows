@@ -1,11 +1,7 @@
 #include "stdafx.h"
 #include "MyServer.h"
 #include "Helper.h"
-
-using namespace web;
-using namespace http;
-using namespace utility;
-using namespace http::experimental::listener;
+#include "WorkerNodeClient.h"
 
 CSWMRGuard g_Guard;
 
@@ -41,10 +37,9 @@ int wmain(int argc, wchar_t *argv[])
 	std::wstring ip = CHelper::GetIP();
 	std::wcout << L"IP : " << ip << std::endl;
 
-	TCHAR sz[255];
-	_stprintf(sz, _T("http://%s:%s/MyServer/LMDB/"), ip.c_str(), port.c_str());
-	http::uri uri = http::uri(sz);
-	std::wstring address = uri.to_string();
+	std::wstring url = CHelper::BuildURL(ip, port);
+	http::uri uri = http::uri(url);
+	std::wstring address = uri.to_string();						
 
 	if (mode == _T("node"))
 	{
@@ -52,7 +47,7 @@ int wmain(int argc, wchar_t *argv[])
 		// Create the a worker node instance
 		//
 
-		NodeClient client(address);
+		WorkerNodeClient client(address);
 		client._server = ip;
 		client._port = port;
 		client._name = name;

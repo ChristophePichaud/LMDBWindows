@@ -1,0 +1,1 @@
+makecert -sr LocalMachine -ss Root -a sha512 -n "CN=NEOS-NBK792" -sky exchange -pe -r 
