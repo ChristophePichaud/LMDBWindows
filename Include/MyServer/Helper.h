@@ -34,5 +34,18 @@ public:
 		std::wstring address = sz;
 		return address;
 	}
+
+	static std::wstring FindParameterInQuery(std::map<std::wstring, std::wstring>query, std::wstring var)
+	{
+		auto it = query.find(var);
+		std::wstring value;
+		if (it != query.end())
+		{
+			value = it->second;
+			std::wcout << _T("Extracted param ") << var << _T(": ") << value << endl;
+		}
+		return value;
+	}
+
 };
 

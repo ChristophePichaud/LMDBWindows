@@ -1,15 +1,16 @@
 #include "stdafx.h"
 #include "MyServer.h"
-#include "Helper.h"
+#include "..\Include\MyServer\Helper.h"
 #include "WorkerNodeClient.h"
+#include "..\Include\MyServer\Constants.h"
 
 CSWMRGuard g_Guard;
 
 int wmain(int argc, wchar_t *argv[])
 {
-    std::wstring port = U("7001");
+	std::wstring port = _MASTER_NODE_PORT_;
 	std::wstring defaultAddress = _T("localhost");
-	std::wstring mode = _T("master");
+	std::wstring mode = _MODE_MASTER_NODE_;
 	std::wstring name = _T("");
 	if(argc == 2)
     {
@@ -41,7 +42,7 @@ int wmain(int argc, wchar_t *argv[])
 	http::uri uri = http::uri(url);
 	std::wstring address = uri.to_string();						
 
-	if (mode == _T("node"))
+	if (mode == _MODE_WORKER_NODE_) // _T("node"))
 	{
 		//
 		// Create the a worker node instance

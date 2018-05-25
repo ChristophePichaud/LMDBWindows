@@ -45,10 +45,10 @@
 #include <sstream>
 #include <fstream>
 
+#include <atlstr.h>
+
 #include "cpprest/http_client.h"
 #include "cpprest/http_msg.h"
-
-#include "MyServer/messagetypes.h"
 
 using namespace std;
 using namespace web;

@@ -1,7 +1,9 @@
 #include "stdafx.h"
 #include "MyServer.h"
-#include "Helper.h"
+#include "..\Include\MyServer\Helper.h"
 #include "WorkerNodeClient.h"
+#include "..\Include\MyServer\Constants.h"
+
 
 std::vector<std::shared_ptr<WorkerNodeAttributes>> MyServer::_nodes;
 
@@ -56,12 +58,10 @@ void MyServer::PingThread(LPVOID param)
 			pObj = *itr;
 
 			std::wstring url = CHelper::BuildURL(pObj->_server, pObj->_port);
-			std::wstring address = url;
-
-			http_client client(address);
+			http_client client(url);
 
 			std::wostringstream buf;
-			buf << _T("?request=") << _T("ping");
+			buf << _REQUEST_ << _VERB_PING_;
 
 			http_response response;
 
@@ -136,6 +136,7 @@ void MyServer::handle_put(http_request message)
 
 void MyServer::handle_get(http_request message)
 {
+	std::wcout << _T("handle_get") << std::endl;
 	std::wcout << _T("Message") << _T(" ") << message.to_string() << endl;
 	std::wcout << _T("Relative URI") << _T(" ") << message.relative_uri().to_string() << endl;
 
@@ -151,49 +152,15 @@ void MyServer::handle_get(http_request message)
 		std::wcout << _T("Query") << _T(" ") << it2->first << _T(" ") << it2->second << endl;
 	}
 
-	auto queryItr = query.find(_T("request"));
-	std::wstring request = queryItr->second;
-	std::wcout << _T("Request") << _T(" ") << request << endl;
+	std::wstring request = CHelper::FindParameterInQuery(query, _T("request"));
+	std::wstring server = CHelper::FindParameterInQuery(query, _T("server"));
+	std::wstring port = CHelper::FindParameterInQuery(query, _T("port"));
+	std::wstring name = CHelper::FindParameterInQuery(query, _T("name"));
+	std::wstring dbname = CHelper::FindParameterInQuery(query, _T("dbname"));
 
-	auto serverItr = query.find(_T("server"));
-	std::wstring server;
-	if (serverItr != query.end())
+	if (request == _VERB_REGISTER_NODE_)
 	{
-		server = serverItr->second;
-		std::wcout << _T("server") << _T(" ") << server << endl;
-	}
-
-	auto portItr = query.find(_T("port"));
-	std::wstring port;
-	if (portItr != query.end())
-	{
-		port = portItr->second;
-		std::wcout << _T("port") << _T(" ") << port << endl;
-	}
-
-	auto nameItr = query.find(_T("name"));
-	std::wstring name;
-	if (nameItr != query.end())
-	{
-		name = nameItr->second;
-		std::wcout << _T("name") << _T(" ") << name << endl;
-	}
-
-	auto dbnameItr = query.find(_T("dbname"));
-	std::wstring dbname;
-	if (dbnameItr != query.end())
-	{
-		dbname = dbnameItr->second;
-		std::wcout << _T("dbname") << _T(" ") << dbname << endl;
-	}
-
-	if (request == _T("register-node"))
-	{
-		std::wcout << _T("register-node...") << std::endl;
-
-		std::wcout << _T("server: ") << server << std::endl;
-		std::wcout << _T("port: ") << port << std::endl;
-		std::wcout << _T("name: ") << name << std::endl;
+		std::wcout << _VERB_REGISTER_NODE_ << std::endl;
 
 		if (MyServer::ExistsNode(server, port, name) == true)
 		{
@@ -217,17 +184,17 @@ void MyServer::handle_get(http_request message)
 		return;
 	}
 		
-	if (request == _T("show-nodes"))
+	if (request == _VERB_SHOW_NODE_)
 	{
-		std::wcout << _T("show-nodes...") << std::endl;
+		std::wcout << _VERB_SHOW_NODE_ << std::endl;
 		MyServer::ShowNodes();
 		message.reply(status_codes::OK);
 		return;
 	}
 	
-	if (request == _T("get-node"))
+	if (request == _VERB_GET_NODE_ )
 	{
-		std::wcout << _T("get-node...") << std::endl;
+		std::wcout << _VERB_GET_NODE_ << std::endl;
 			
 		std::shared_ptr<WorkerNodeAttributes> pObj = nullptr;
 
@@ -292,7 +259,7 @@ void MyServer::SendDbName(GetNodeData data)
 	http_client client(address);
 
 	std::wostringstream buf;
-	buf << _T("?request=") << _T("set-node")
+	buf << _REQUEST_ << _VERB_SET_NODE_
 		<< _T("&dbname=") << data.dbName;
 
 	http_response response;

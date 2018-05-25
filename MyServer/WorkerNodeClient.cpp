@@ -1,8 +1,10 @@
 #include "stdafx.h"
 #include "WorkerNodeClient.h"
-#include "Helper.h"
 #include "LMDBData.h"
 #include "MyServer\\messagetypes.h"
+#include "..\Include\MyServer\Helper.h"
+#include "..\Include\MyServer\Constants.h"
+
 
 LMDBData WorkerNodeClient::m_lmdb;
 std::wstring WorkerNodeClient::_dbName;
@@ -44,20 +46,17 @@ void WorkerNodeClient::Close()
 bool WorkerNodeClient::RegisterToMaster()
 {
 	std::wstring ip = CHelper::GetIP();
-	//std::wcout << L"IP : " << ip << std::endl;
-
-	std::wstring port = _T("7001");
+	std::wstring port = _MASTER_NODE_PORT_;
 	std::wstring url = CHelper::BuildURL(ip, port);
-	std::wstring address = url;
 
 	std::wostringstream buf;
-	buf << _T("?request=") << _T("register-node")
+	buf << _REQUEST_ << _VERB_REGISTER_NODE_
 		<< _T("&server=") << this->_server
 		<< _T("&port=") << this->_port
 		<< _T("&name=") << this->_name;
 
 	http_response response;
-	http_client client(address);
+	http_client client(url);
 	response = client.request(methods::GET, buf.str()).get();
 	wcout << response.to_string() << endl;
 
@@ -67,7 +66,6 @@ bool WorkerNodeClient::RegisterToMaster()
 void WorkerNodeClient::handle_get(http_request message)
 {
 	std::wcout << _T("handle_get") << std::endl;
-
 	std::wcout << _T("Message") << _T(" ") << message.to_string() << endl;
 	std::wcout << _T("Relative URI") << _T(" ") << message.relative_uri().to_string() << endl;
 
@@ -83,37 +81,14 @@ void WorkerNodeClient::handle_get(http_request message)
 		std::wcout << _T("Query") << _T(" ") << it2->first << _T(" ") << it2->second << endl;
 	}
 
-	auto queryItr = query.find(_T("request"));
-	std::wstring request = queryItr->second;
-	std::wcout << _T("Request") << _T(" ") << request << endl;
+	std::wstring request = CHelper::FindParameterInQuery(query, _T("request"));
+	std::wstring dbname = CHelper::FindParameterInQuery(query, _T("dbname"));
+	std::wstring key = CHelper::FindParameterInQuery(query, _T("key"));
+	std::wstring value = CHelper::FindParameterInQuery(query, _T("value"));
 
-	auto dbnameItr = query.find(_T("dbname"));
-	std::wstring dbname;
-	if (dbnameItr != query.end())
+	if (request == _VERB_PING_)
 	{
-		dbname = dbnameItr->second;
-		std::wcout << _T("dbname") << _T(" ") << dbname << endl;
-	}
-
-	auto keyItr = query.find(_T("key"));
-	std::wstring key;
-	if (keyItr != query.end())
-	{
-		key = keyItr->second;
-		std::wcout << _T("key") << _T(" ") << key << endl;
-	}
-
-	auto valueItr = query.find(_T("value"));
-	std::wstring value;
-	if (valueItr != query.end())
-	{
-		value = valueItr->second;
-		std::wcout << _T("value") << _T(" ") << value << endl;
-	}
-
-	if (request == _T("ping"))
-	{
-		std::wcout << _T("ping...") << std::endl;
+		std::wcout << _VERB_PING_ << std::endl;
 
 		PingData data;
 		data.ip = _server;
@@ -126,16 +101,16 @@ void WorkerNodeClient::handle_get(http_request message)
 		message.reply(status_codes::OK, data.AsJSON());
 	}
 
-	if (request == _T("set-node"))
+	if (request == _VERB_SET_NODE_)
 	{
-		std::wcout << _T("set-node...") << std::endl;
+		std::wcout << _VERB_SET_NODE_ << std::endl;
 		_dbName = dbname;
 		message.reply(status_codes::OK);
 
 		Init_LMDB();
 	}
 
-	if (request == _T("get-data"))
+	if (request == _VERB_GET_DATA_)
 	{
 		TCHAR szKey[255];
 		TCHAR szValue[255];
@@ -182,7 +157,7 @@ void WorkerNodeClient::handle_get(http_request message)
 		return;
 	}
 
-	if (request == _T("set-data"))
+	if (request == _VERB_SET_DATA_)
 	{
 		TCHAR szKey[255];
 		TCHAR szValue[255];
@@ -223,7 +198,7 @@ void WorkerNodeClient::Init_LMDB()
 	USES_CONVERSION;
 
 	char sz[255];
-	sprintf(sz, "c:\\temp\\%s", W2A(_dbName.c_str()));
+	sprintf(sz, "%s\\%s", _LMDB_ROOT_PATH_, W2A(_dbName.c_str()));
 	::CreateDirectoryA(sz, NULL);
 
 	std::wcout << _T("Init LMDB") << std::endl;
