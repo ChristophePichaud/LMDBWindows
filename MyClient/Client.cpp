@@ -76,7 +76,7 @@ int wmain(int argc, wchar_t *argv[])
 	GetNodeData data = GetNodeData::FromJSON(jdata.as_object());
 
 	TCHAR sz[255];
-	_stprintf(sz, _T("GetNodeData ip:%s port:%s name:%s dbname:%s\n"), data.ip.c_str(), data.port.c_str(), data.name.c_str(), data.dbName.c_str());
+	_stprintf_s(sz, _T("GetNodeData ip:%s port:%s name:%s dbname:%s\n"), data.ip.c_str(), data.port.c_str(), data.name.c_str(), data.dbName.c_str());
 	_tprintf(sz);
 
 	::Sleep(1000);
@@ -109,7 +109,7 @@ int wmain(int argc, wchar_t *argv[])
 	}
 
 	DWORD dwStop = GetTickCount();
-	_stprintf(sz, _T("set-data for %d elements - Elapsed ms = %ld ms\n"), count, dwStop - dwStart);
+	_stprintf_s(sz, _T("set-data for %d elements - Elapsed ms = %ld ms\n"), count, dwStop - dwStart);
 	_tprintf(sz);
 
 	dwStart = GetTickCount();
@@ -138,12 +138,12 @@ int wmain(int argc, wchar_t *argv[])
 		jdata = response.extract_json().get();
 		Data data = Data::FromJSON(jdata.as_object());
 
-		_stprintf(sz, _T("Data key:%s value:%s\n"), data.key.c_str(), data.value.c_str());
+		_stprintf_s(sz, _T("Data key:%s value:%s\n"), data.key.c_str(), data.value.c_str());
 		_tprintf(sz);
 	}
 
 	dwStop = GetTickCount();
-	_stprintf(sz, _T("get-data for %d elements - Elapsed ms = %ld ms\n"), count, dwStop - dwStart);
+	_stprintf_s(sz, _T("get-data for %d elements - Elapsed ms = %ld ms\n"), count, dwStop - dwStart);
 	_tprintf(sz);
 
 	return 0;

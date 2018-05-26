@@ -30,7 +30,7 @@ public:
 	static std::wstring BuildURL(std::wstring server, std::wstring port)
 	{
 		TCHAR sz[255];
-		_stprintf(sz, _T("http://%s:%s/MyServer/LMDB/"), server.c_str(), port.c_str());
+		_stprintf_s(sz, _T("http://%s:%s/MyServer/LMDB/"), server.c_str(), port.c_str());
 		std::wstring address = sz;
 		return address;
 	}

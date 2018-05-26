@@ -320,7 +320,7 @@ void MyServer::ShowNodes()
 		pObj = *itr;
 
 		TCHAR sz[255];
-		_stprintf(sz, _T("Active:%d Server:%s Port:%s Name:%s DBName:%s\n"), pObj->_isActive, pObj->_server.c_str(), pObj->_port.c_str(), pObj->_name.c_str(), pObj->_dbName.c_str());
+		_stprintf_s(sz, _T("Active:%d Server:%s Port:%s Name:%s DBName:%s\n"), pObj->_isActive, pObj->_server.c_str(), pObj->_port.c_str(), pObj->_name.c_str(), pObj->_dbName.c_str());
 		_tprintf(sz);
 	}
 

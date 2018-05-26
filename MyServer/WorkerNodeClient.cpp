@@ -198,7 +198,7 @@ void WorkerNodeClient::Init_LMDB()
 	USES_CONVERSION;
 
 	char sz[255];
-	sprintf(sz, "%s\\%s", _LMDB_ROOT_PATH_, W2A(_dbName.c_str()));
+	sprintf_s(sz, "%s\\%s", _LMDB_ROOT_PATH_, W2A(_dbName.c_str()));
 	::CreateDirectoryA(sz, NULL);
 
 	std::wcout << _T("Init LMDB") << std::endl;
