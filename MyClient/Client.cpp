@@ -13,7 +13,7 @@
 int wmain(int argc, wchar_t *argv[])
 {
 	std::wstring defaultAddress = _T("localhost");
-	std::wstring port = _MASTER_NODE_PORT_;
+	std::wstring port = Constants::MasterNodePort;
 	int count = 2;
 	std::wstring name = _T("cache_v1");
 
@@ -49,7 +49,7 @@ int wmain(int argc, wchar_t *argv[])
 	http_client client(url);
 	
 	std::wostringstream buf;
-	buf << _REQUEST_ << _VERB_GET_NODE_
+	buf << Constants::Request << Constants::VerbGetNode
 		<< _T("&dbname=") << name;
 
 	http_response response;
@@ -98,7 +98,7 @@ int wmain(int argc, wchar_t *argv[])
 		value = v.str();
 
 		std::wostringstream buf;
-		buf << _REQUEST_ << _VERB_SET_DATA_
+		buf << Constants::Request << Constants::VerbSetData
 			<< _T("&key=") << key
 			<< _T("&value=") << value;
 
@@ -124,7 +124,7 @@ int wmain(int argc, wchar_t *argv[])
 		key = k.str();
 
 		std::wostringstream buf;
-		buf << _REQUEST_ << _VERB_GET_DATA_
+		buf << Constants::Request << Constants::VerbGetData
 			<< _T("&key=") << key;
 
 		wcout << buf.str() << endl;

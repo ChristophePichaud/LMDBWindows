@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Include\MyServer\Constants.cpp" />
     <ClCompile Include="CSWMRGuard.cpp" />
     <ClCompile Include="LMDBData.cpp" />
     <ClCompile Include="Main.cpp" />

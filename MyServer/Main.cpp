@@ -8,9 +8,9 @@ CSWMRGuard g_Guard;
 
 int wmain(int argc, wchar_t *argv[])
 {
-	std::wstring port = _MASTER_NODE_PORT_;
+	std::wstring port = Constants::MasterNodePort;
 	std::wstring defaultAddress = _T("localhost");
-	std::wstring mode = _MODE_MASTER_NODE_;
+	std::wstring mode = Constants::ModeMasterNode;
 	std::wstring name = _T("");
 	if(argc == 2)
     {
@@ -42,7 +42,7 @@ int wmain(int argc, wchar_t *argv[])
 	http::uri uri = http::uri(url);
 	std::wstring address = uri.to_string();						
 
-	if (mode == _MODE_WORKER_NODE_) // _T("node"))
+	if (mode == Constants::ModeWorkerNode)
 	{
 		//
 		// Create the a worker node instance

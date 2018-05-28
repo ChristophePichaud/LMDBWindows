@@ -46,11 +46,11 @@ void WorkerNodeClient::Close()
 bool WorkerNodeClient::RegisterToMaster()
 {
 	std::wstring ip = CHelper::GetIP();
-	std::wstring port = _MASTER_NODE_PORT_;
+	std::wstring port = Constants::MasterNodePort;
 	std::wstring url = CHelper::BuildURL(ip, port);
 
 	std::wostringstream buf;
-	buf << _REQUEST_ << _VERB_REGISTER_NODE_
+	buf << Constants::Request << Constants::VerbRegisterNode
 		<< _T("&server=") << this->_server
 		<< _T("&port=") << this->_port
 		<< _T("&name=") << this->_name;
@@ -86,9 +86,9 @@ void WorkerNodeClient::handle_get(http_request message)
 	std::wstring key = CHelper::FindParameterInQuery(query, _T("key"));
 	std::wstring value = CHelper::FindParameterInQuery(query, _T("value"));
 
-	if (request == _VERB_PING_)
+	if (request == Constants::VerbPing)
 	{
-		std::wcout << _VERB_PING_ << std::endl;
+		std::wcout << Constants::VerbPing << std::endl;
 
 		PingData data;
 		data.ip = _server;
@@ -101,16 +101,16 @@ void WorkerNodeClient::handle_get(http_request message)
 		message.reply(status_codes::OK, data.AsJSON());
 	}
 
-	if (request == _VERB_SET_NODE_)
+	if (request == Constants::VerbSetNode)
 	{
-		std::wcout << _VERB_SET_NODE_ << std::endl;
+		std::wcout << Constants::VerbSetNode << std::endl;
 		_dbName = dbname;
 		message.reply(status_codes::OK);
 
 		Init_LMDB();
 	}
 
-	if (request == _VERB_GET_DATA_)
+	if (request == Constants::VerbGetData)
 	{
 		TCHAR szKey[255];
 		TCHAR szValue[255];
@@ -157,7 +157,7 @@ void WorkerNodeClient::handle_get(http_request message)
 		return;
 	}
 
-	if (request == _VERB_SET_DATA_)
+	if (request == Constants::VerbSetData)
 	{
 		TCHAR szKey[255];
 		TCHAR szValue[255];
@@ -198,7 +198,7 @@ void WorkerNodeClient::Init_LMDB()
 	USES_CONVERSION;
 
 	char sz[255];
-	sprintf_s(sz, "%s\\%s", _LMDB_ROOT_PATH_, W2A(_dbName.c_str()));
+	sprintf_s(sz, "%s\\%s", Constants::LMDBRootPath.c_str(), W2A(_dbName.c_str()));
 	::CreateDirectoryA(sz, NULL);
 
 	std::wcout << _T("Init LMDB") << std::endl;

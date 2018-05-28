@@ -61,7 +61,7 @@ void MyServer::PingThread(LPVOID param)
 			http_client client(url);
 
 			std::wostringstream buf;
-			buf << _REQUEST_ << _VERB_PING_;
+			buf << Constants::Request << Constants::VerbPing;
 
 			http_response response;
 
@@ -158,9 +158,9 @@ void MyServer::handle_get(http_request message)
 	std::wstring name = CHelper::FindParameterInQuery(query, _T("name"));
 	std::wstring dbname = CHelper::FindParameterInQuery(query, _T("dbname"));
 
-	if (request == _VERB_REGISTER_NODE_)
+	if (request == Constants::VerbRegisterNode)
 	{
-		std::wcout << _VERB_REGISTER_NODE_ << std::endl;
+		std::wcout << Constants::VerbRegisterNode << std::endl;
 
 		if (MyServer::ExistsNode(server, port, name) == true)
 		{
@@ -184,17 +184,17 @@ void MyServer::handle_get(http_request message)
 		return;
 	}
 		
-	if (request == _VERB_SHOW_NODE_)
+	if (request == Constants::VerbShowNodes)
 	{
-		std::wcout << _VERB_SHOW_NODE_ << std::endl;
+		std::wcout << Constants::VerbShowNodes << std::endl;
 		MyServer::ShowNodes();
 		message.reply(status_codes::OK);
 		return;
 	}
 	
-	if (request == _VERB_GET_NODE_ )
+	if (request == Constants::VerbGetNode)
 	{
-		std::wcout << _VERB_GET_NODE_ << std::endl;
+		std::wcout << Constants::VerbGetNode << std::endl;
 			
 		std::shared_ptr<WorkerNodeAttributes> pObj = nullptr;
 
@@ -259,7 +259,7 @@ void MyServer::SendDbName(GetNodeData data)
 	http_client client(address);
 
 	std::wostringstream buf;
-	buf << _REQUEST_ << _VERB_SET_NODE_
+	buf << Constants::Request << Constants::VerbSetNode
 		<< _T("&dbname=") << data.dbName;
 
 	http_response response;
