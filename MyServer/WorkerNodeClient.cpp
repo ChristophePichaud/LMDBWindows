@@ -110,8 +110,24 @@ void WorkerNodeClient::handle_get(http_request message)
 		Init_LMDB();
 	}
 
+	if (request == Constants::VerbReleaseDB)
+	{
+		std::wcout << Constants::VerbReleaseDB << std::endl;
+		_dbName = dbname;
+		message.reply(status_codes::OK);
+
+		Uninit_LMDB();
+	}
+
 	if (request == Constants::VerbGetData)
 	{
+		if (m_lmdb.m_Init == false)
+		{
+			std::wcout << _T("Init not done !") << endl;
+			message.reply(status_codes::OK);
+			return;
+		}
+
 		TCHAR szKey[255];
 		TCHAR szValue[255];
 
@@ -129,7 +145,7 @@ void WorkerNodeClient::handle_get(http_request message)
 		mdb_dbi_open(m_lmdb.m_txn, NULL, 0, &m_lmdb.m_dbi);
 		int err = mdb_get(m_lmdb.m_txn, m_lmdb.m_dbi, &VKey, &VData);
 		mdb_txn_commit(m_lmdb.m_txn);
-		mdb_env_stat(m_lmdb.m_env, &m_lmdb.m_mst);
+		//mdb_env_stat(m_lmdb.m_env, &m_lmdb.m_mst);
 
 		if (err == MDB_NOTFOUND)
 		{
@@ -159,6 +175,13 @@ void WorkerNodeClient::handle_get(http_request message)
 
 	if (request == Constants::VerbSetData)
 	{
+		if(m_lmdb.m_Init == false)
+		{
+			std::wcout << _T("Init not done !") << endl;
+			message.reply(status_codes::OK);
+			return;
+		}
+
 		TCHAR szKey[255];
 		TCHAR szValue[255];
 
@@ -168,7 +191,7 @@ void WorkerNodeClient::handle_get(http_request message)
 		_tcscpy_s(szKey, key.c_str());
 		_tcscpy_s(szValue, value.c_str());
 
-		VKey.mv_size = sizeof(szKey);
+ 		VKey.mv_size = sizeof(szKey);
 		VKey.mv_data = szKey;
 		VData.mv_size = sizeof(szValue);
 		VData.mv_data = szValue;
@@ -177,7 +200,7 @@ void WorkerNodeClient::handle_get(http_request message)
 		mdb_dbi_open(m_lmdb.m_txn, NULL, 0, &m_lmdb.m_dbi);
 		mdb_put(m_lmdb.m_txn, m_lmdb.m_dbi, &VKey, &VData, MDB_NOOVERWRITE);
 		mdb_txn_commit(m_lmdb.m_txn);
-		mdb_env_stat(m_lmdb.m_env, &m_lmdb.m_mst);
+		//mdb_env_stat(m_lmdb.m_env, &m_lmdb.m_mst);
 
 		Data data;
 		data.key = szKey;
@@ -187,12 +210,13 @@ void WorkerNodeClient::handle_get(http_request message)
 		std::wcout << response << endl;
 
 		message.reply(status_codes::OK, data.AsJSON());
+
 		return;
 	}
 
 	message.reply(status_codes::OK);
 }
-
+		
 void WorkerNodeClient::Init_LMDB()
 {
 	USES_CONVERSION;
@@ -206,5 +230,18 @@ void WorkerNodeClient::Init_LMDB()
 	mdb_env_set_maxreaders(m_lmdb.m_env, 1);
 	mdb_env_set_mapsize(m_lmdb.m_env, 10485760);
 	mdb_env_open(m_lmdb.m_env, sz, MDB_CREATE/*|MDB_NOSYNC*/, 0664);
+	m_lmdb.m_Init = true;
 }
 
+void WorkerNodeClient::Uninit_LMDB()
+{
+	std::wcout << _T("Uninit LMDB") << std::endl;
+
+	mdb_dbi_close(m_lmdb.m_env, m_lmdb.m_dbi);
+	mdb_env_close(m_lmdb.m_env);
+
+	m_lmdb.m_dbi = 0;
+	m_lmdb.m_env = nullptr;
+	m_lmdb.m_txn = nullptr;
+	m_lmdb.m_Init = false;
+}

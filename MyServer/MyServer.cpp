@@ -247,6 +247,56 @@ void MyServer::handle_get(http_request message)
 
 		return;
 	}
+
+	if (request == Constants::VerbReleaseNode)
+	{
+		std::wcout << Constants::VerbReleaseNode << std::endl;
+
+		std::shared_ptr<WorkerNodeAttributes> pObj = nullptr;
+
+		g_Guard.WaitToWrite();
+
+		for (auto itr = _nodes.begin(); itr != _nodes.end(); itr++)
+		{
+			pObj = *itr;
+
+			if (pObj->_dbName == dbname) // && pObj->_isActive == true
+			{
+				// We find an existing entry
+				pObj->_isActive = false;
+				pObj->_dbName = _T("");
+				*itr = pObj;
+				break;
+			}
+			else
+				pObj = nullptr;
+		}
+
+		if (pObj != nullptr)
+		{
+			GetNodeData data;
+			data.ip = pObj->_server;
+			data.port = pObj->_port;
+			data.name = pObj->_name;
+			data.dbName = dbname;
+
+			std::wstring response = data.AsJSON().serialize();
+			std::wcout << response << endl;
+
+			message.reply(status_codes::OK, data.AsJSON());
+
+			MyServer::SendReleaseDbName(data);
+		}
+		else
+		{
+			std::wcout << _T("No node available...") << std::endl;
+			message.reply(status_codes::OK);
+		}
+
+		g_Guard.Done();
+
+		return;
+	}
 		
 	message.reply(status_codes::OK);
 };
@@ -260,6 +310,32 @@ void MyServer::SendDbName(GetNodeData data)
 
 	std::wostringstream buf;
 	buf << Constants::Request << Constants::VerbSetNode
+		<< _T("&dbname=") << data.dbName;
+
+	http_response response;
+
+	response = client.request(methods::GET, buf.str()).get();
+	wcout << response.to_string() << endl;
+
+	json::value jdata = json::value::array();
+	jdata = response.extract_json().get();
+
+	if (jdata.is_null())
+	{
+		std::wcout << _T("no JSON data...") << std::endl;
+		return;
+	}
+}
+
+void MyServer::SendReleaseDbName(GetNodeData data)
+{
+	std::wstring url = CHelper::BuildURL(data.ip, data.port);
+	std::wstring address = url;
+
+	http_client client(address);
+
+	std::wostringstream buf;
+	buf << Constants::Request << Constants::VerbReleaseDB
 		<< _T("&dbname=") << data.dbName;
 
 	http_response response;

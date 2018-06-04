@@ -22,6 +22,7 @@ public:
 	static bool ExistsNode(std::wstring server, std::wstring port, std::wstring name);
 	static void ShowNodes();
 	static void SendDbName(GetNodeData data);
+	static void SendReleaseDbName(GetNodeData data);
 
 private:
 	static void handle_get(http_request message);

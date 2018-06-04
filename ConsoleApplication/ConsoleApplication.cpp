@@ -80,7 +80,7 @@ int main(int argc, char * argv[])
 	}
 
 	E(mdb_env_create(&env));
-	E(mdb_env_set_maxreaders(env, 1));
+	E(mdb_env_set_maxreaders(env, 1));	
 	E(mdb_env_set_mapsize(env, 10485760 * 1000));
 	E(mdb_env_open(env, "c:\\temp", MDB_CREATE/*|MDB_NOSYNC*/, 0664));
 
@@ -131,6 +131,8 @@ int main(int argc, char * argv[])
 	sprintf_s(szDebug, ("Elapsed for get: %ld ms\n"), dwStop - dwStart);
 	printf(szDebug);
 
+	mdb_dbi_close(env, dbi);
+	mdb_env_close(env);
 	return 0;
 }
 

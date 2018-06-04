@@ -28,6 +28,8 @@ public:
 	static const std::wstring VerbShowNodes;
 	static const std::wstring VerbGetNode;
 	static const std::wstring VerbSetNode;
+	static const std::wstring VerbReleaseNode;
+	static const std::wstring VerbReleaseDB;
 	static const std::string LMDBRootPath;
 	static const std::wstring StatusOK;
 	static const std::wstring ModeMasterNode;

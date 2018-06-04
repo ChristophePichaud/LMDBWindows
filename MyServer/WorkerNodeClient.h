@@ -11,6 +11,7 @@ public:
 	void Close();
 	bool RegisterToMaster();
 	static void Init_LMDB();
+	static void Uninit_LMDB();
 
 	pplx::task<void> open() { return m_listener.open(); }
 	pplx::task<void> close() { return m_listener.close(); }
