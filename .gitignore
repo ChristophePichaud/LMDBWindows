@@ -32,3 +32,5 @@
 /.vs
 /HttpLMDB/x64/Debug
 /HttpLMDB_Client/x64/Debug
+/LMDBWrapper/x64/Debug
+/LMDBWrapper_Client/x64/Debug

@@ -1,6 +1,6 @@
 #include <tchar.h>
 #include <string>
-#include "..\Include\MyServer\Constants.h"
+#include "Constants.h"
 
 const std::wstring Constants::MasterNodePort	= _T("7001");
 const std::wstring Constants::Request			= _T("?request=");
