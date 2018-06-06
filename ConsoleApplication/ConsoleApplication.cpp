@@ -58,7 +58,7 @@ int main(int argc, char * argv[])
 		key.mv_data = szKey;
 		data.mv_size = sizeof(szValue);
 		data.mv_data = szValue;
-		//printf("Add Key:%s Data:%s\n", key.mv_data, data.mv_data);
+		printf("Add Key:%s Data:%s\n", key.mv_data, data.mv_data);
 		if (RES(MDB_KEYEXIST, mdb_put(txn, dbi, &key, &data, MDB_NOOVERWRITE))) 
 		{
 			j++;
@@ -83,7 +83,7 @@ int main(int argc, char * argv[])
 		data.mv_data = szValue;
 
 		mdb_get(txn, dbi, &key, &data);
-		//printf("Get Key:%s Data:%s\n", key.mv_data, data.mv_data);
+		printf("Get Key:%s Data:%s\n", key.mv_data, data.mv_data);
 	}
 	dwStop = GetTickCount();
 	sprintf_s(szDebug, ("Elapsed for get: %ld ms\n"), dwStop - dwStart);

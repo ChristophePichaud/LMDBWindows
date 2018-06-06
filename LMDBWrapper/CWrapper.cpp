@@ -21,13 +21,11 @@ LMDBData::~LMDBData()
 }
 
 
-bool CLMDBWrapper::Init(std::wstring dbname)
+bool CLMDBWrapper::Init(LPSTR lpszDbName)
 {
 	char sz[255];
 
-	std::string dbname2(dbname.begin(), dbname.end());
-
-	sprintf_s(sz, "%s\\%s", Constants::LMDBRootPath.c_str(), dbname2.c_str());
+	sprintf_s(sz, "%s\\%s", Constants::LMDBRootPath.c_str(), lpszDbName);
 	::CreateDirectoryA(sz, NULL);
 
 	std::wcout << _T("Init LMDB") << std::endl;
@@ -35,14 +33,17 @@ bool CLMDBWrapper::Init(std::wstring dbname)
 	mdb_env_set_maxreaders(m_lmdb.m_env, 1);
 	mdb_env_set_mapsize(m_lmdb.m_env, 10485760);
 	mdb_env_open(m_lmdb.m_env, sz, MDB_CREATE/*|MDB_NOSYNC*/, 0664);
+	mdb_txn_begin(m_lmdb.m_env, NULL, 0, &m_lmdb.m_txn);
+	mdb_dbi_open(m_lmdb.m_txn, NULL, 0, &m_lmdb.m_dbi);
 	m_lmdb.m_Init = true;
 	return true;
 }
 
-bool CLMDBWrapper::Uninit(std::wstring dbname)
+bool CLMDBWrapper::Uninit(LPSTR lpszDbName)
 {
 	std::wcout << _T("Uninit LMDB") << std::endl;
 
+	mdb_txn_commit(m_lmdb.m_txn);
 	mdb_dbi_close(m_lmdb.m_env, m_lmdb.m_dbi);
 	mdb_env_close(m_lmdb.m_env);
 
@@ -50,11 +51,11 @@ bool CLMDBWrapper::Uninit(std::wstring dbname)
 	m_lmdb.m_env = nullptr;
 	m_lmdb.m_txn = nullptr;
 	m_lmdb.m_Init = false;
-
+		
 	return true;
 }
 
-bool CLMDBWrapper::SetData(LPTSTR lpszKey, LPTSTR lpszValue)
+bool CLMDBWrapper::SetData(LPSTR lpszKey, LPSTR lpszValue)
 {
 	if (m_lmdb.m_Init == false)
 	{
@@ -70,21 +71,17 @@ bool CLMDBWrapper::SetData(LPTSTR lpszKey, LPTSTR lpszValue)
 	VData.mv_size = sizeof(lpszValue);
 	VData.mv_data = lpszValue;
 	//_tprintf(_T("Add Key:%s Data:%s\n"), szKey, szValue);
-	mdb_txn_begin(m_lmdb.m_env, NULL, 0, &m_lmdb.m_txn);
-	mdb_dbi_open(m_lmdb.m_txn, NULL, 0, &m_lmdb.m_dbi);
 	mdb_put(m_lmdb.m_txn, m_lmdb.m_dbi, &VKey, &VData, MDB_NOOVERWRITE);
-	mdb_txn_commit(m_lmdb.m_txn);
-	//mdb_env_stat(m_lmdb.m_env, &m_lmdb.m_mst);
 
 	return true;
 }
 
-bool CLMDBWrapper::SetData(LPTSTR lpszKey, LPTSTR lpszValueb64, DWORD dwLen)
+bool CLMDBWrapper::SetData(LPSTR lpszKey, LPSTR lpszValueb64, DWORD dwLen)
 {
 	return true;
 }
 
-bool CLMDBWrapper::GetData(LPTSTR lpszKey, LPTSTR lpszValue)
+bool CLMDBWrapper::GetData(LPSTR lpszKey, LPSTR lpszValue)
 {
 	if (m_lmdb.m_Init == false)
 	{
@@ -98,21 +95,17 @@ bool CLMDBWrapper::GetData(LPTSTR lpszKey, LPTSTR lpszValue)
 	VKey.mv_size = sizeof(lpszKey);
 	VKey.mv_data = lpszKey;
 	VData.mv_size = sizeof(lpszValue);
-	VData.mv_data = lpszValue;
+	VData.mv_data = NULL; //lpszValue;
 
-	mdb_txn_begin(m_lmdb.m_env, NULL, 0, &m_lmdb.m_txn);
-	mdb_dbi_open(m_lmdb.m_txn, NULL, 0, &m_lmdb.m_dbi);
 	int err = mdb_get(m_lmdb.m_txn, m_lmdb.m_dbi, &VKey, &VData);
-	mdb_txn_commit(m_lmdb.m_txn);
-	//mdb_env_stat(m_lmdb.m_env, &m_lmdb.m_mst);
 
 	if (err == MDB_NOTFOUND)
 	{
-		_tcscpy(lpszValue, _T(""));
+		strcpy(lpszValue, "");
 	}
 	else
 	{
-		_tcscpy(lpszValue, (TCHAR *)VData.mv_data);
+		strcpy(lpszValue, (char *)VData.mv_data);
 	}
 
 	return true;

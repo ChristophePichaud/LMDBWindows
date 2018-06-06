@@ -18,16 +18,16 @@ public:
 
 
 // This class is exported from the LMDBWrapper.dll
-class LMDBWRAPPER_API CLMDBWrapper {
+class LMDBWRAPPER_API CLMDBWrapper {	
 public:
 	CLMDBWrapper(void) { }
 	~CLMDBWrapper() { }
 
-	bool Init(std::wstring dbname);
-	bool Uninit(std::wstring dbname);
-	bool SetData(LPTSTR lpszKey, LPTSTR lpszValue);
-	bool SetData(LPTSTR lpszKey, LPTSTR lpszValueb64, DWORD dwLen);
-	bool GetData(LPTSTR lpszKey, LPTSTR lpszValue);
+	bool Init(LPSTR lpszDbName);
+	bool Uninit(LPSTR lpszDbName);
+	bool SetData(LPSTR lpszKey, LPSTR lpszValue);
+	bool SetData(LPSTR lpszKey, LPSTR lpszValue, DWORD dwLen);
+	bool GetData(LPSTR lpszKey, LPSTR lpszValue);
 
 private:
 	LMDBData m_lmdb;
