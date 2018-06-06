@@ -54,7 +54,7 @@ bool CLMDBWrapper::Uninit(std::wstring dbname)
 	return true;
 }
 
-bool CLMDBWrapper::SetData(std::wstring key, std::wstring value)
+bool CLMDBWrapper::SetData(LPTSTR lpszKey, LPTSTR lpszValue)
 {
 	if (m_lmdb.m_Init == false)
 	{
@@ -62,19 +62,13 @@ bool CLMDBWrapper::SetData(std::wstring key, std::wstring value)
 		return false;
 	}
 
-	TCHAR szKey[255];
-	TCHAR szValue[255];
-
 	MDB_val VKey;
 	MDB_val VData;
 
-	_tcscpy_s(szKey, key.c_str());
-	_tcscpy_s(szValue, value.c_str());
-
-	VKey.mv_size = sizeof(szKey);
-	VKey.mv_data = szKey;
-	VData.mv_size = sizeof(szValue);
-	VData.mv_data = szValue;
+	VKey.mv_size = sizeof(lpszKey);
+	VKey.mv_data = lpszKey;
+	VData.mv_size = sizeof(lpszValue);
+	VData.mv_data = lpszValue;
 	//_tprintf(_T("Add Key:%s Data:%s\n"), szKey, szValue);
 	mdb_txn_begin(m_lmdb.m_env, NULL, 0, &m_lmdb.m_txn);
 	mdb_dbi_open(m_lmdb.m_txn, NULL, 0, &m_lmdb.m_dbi);
@@ -85,12 +79,12 @@ bool CLMDBWrapper::SetData(std::wstring key, std::wstring value)
 	return true;
 }
 
-bool CLMDBWrapper::SetData(std::wstring key, std::wstring valueb64, DWORD dwLen)
+bool CLMDBWrapper::SetData(LPTSTR lpszKey, LPTSTR lpszValueb64, DWORD dwLen)
 {
 	return true;
 }
 
-bool CLMDBWrapper::GetData(std::wstring key, std::wstring & value)
+bool CLMDBWrapper::GetData(LPTSTR lpszKey, LPTSTR lpszValue)
 {
 	if (m_lmdb.m_Init == false)
 	{
@@ -98,18 +92,13 @@ bool CLMDBWrapper::GetData(std::wstring key, std::wstring & value)
 		return false;;
 	}
 
-	TCHAR szKey[255];
-	TCHAR szValue[255];
-
 	MDB_val VKey;
 	MDB_val VData;
 
-	_tcscpy_s(szKey, key.c_str());
-
-	VKey.mv_size = sizeof(szKey);
-	VKey.mv_data = szKey;
-	VData.mv_size = sizeof(szValue);
-	VData.mv_data = szValue;
+	VKey.mv_size = sizeof(lpszKey);
+	VKey.mv_data = lpszKey;
+	VData.mv_size = sizeof(lpszValue);
+	VData.mv_data = lpszValue;
 
 	mdb_txn_begin(m_lmdb.m_env, NULL, 0, &m_lmdb.m_txn);
 	mdb_dbi_open(m_lmdb.m_txn, NULL, 0, &m_lmdb.m_dbi);
@@ -119,11 +108,11 @@ bool CLMDBWrapper::GetData(std::wstring key, std::wstring & value)
 
 	if (err == MDB_NOTFOUND)
 	{
-		value = _T("");
+		_tcscpy(lpszValue, _T(""));
 	}
 	else
 	{
-		value = (TCHAR *)VData.mv_data;
+		_tcscpy(lpszValue, (TCHAR *)VData.mv_data);
 	}
 
 	return true;

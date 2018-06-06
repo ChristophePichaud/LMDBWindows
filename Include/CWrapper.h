@@ -25,9 +25,9 @@ public:
 
 	bool Init(std::wstring dbname);
 	bool Uninit(std::wstring dbname);
-	bool SetData(std::wstring key, std::wstring value);
-	bool SetData(std::wstring key, std::wstring valueb64, DWORD dwLen);
-	bool GetData(std::wstring key, std::wstring & value);
+	bool SetData(LPTSTR lpszKey, LPTSTR lpszValue);
+	bool SetData(LPTSTR lpszKey, LPTSTR lpszValueb64, DWORD dwLen);
+	bool GetData(LPTSTR lpszKey, LPTSTR lpszValue);
 
 private:
 	LMDBData m_lmdb;
