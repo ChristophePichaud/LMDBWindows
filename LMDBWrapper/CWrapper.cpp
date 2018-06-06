@@ -106,6 +106,8 @@ bool CLMDBWrapper::GetData(LPSTR lpszKey, LPSTR lpszValue)
 
 	VKey.mv_size = sizeof(szKey);
 	VKey.mv_data = szKey;
+	VData.mv_size = sizeof(szValue);
+
 	int err = mdb_get(m_lmdb.m_txn, m_lmdb.m_dbi, &VKey, &VData);
 	//printf("Get Key:%s Data:%s\n", VKey.mv_data, VData.mv_data);
 
