@@ -63,13 +63,19 @@ bool CLMDBWrapper::SetData(LPSTR lpszKey, LPSTR lpszValue)
 		return false;
 	}
 
+	char szKey[255];
+	char szValue[255];
+
+	strcpy(szKey, lpszKey);
+	strcpy(szValue, lpszValue);
+
 	MDB_val VKey;
 	MDB_val VData;
 
-	VKey.mv_size = sizeof(lpszKey);
-	VKey.mv_data = lpszKey;
-	VData.mv_size = sizeof(lpszValue);
-	VData.mv_data = lpszValue;
+	VKey.mv_size = sizeof(szKey);
+	VKey.mv_data = szKey;
+	VData.mv_size = sizeof(szValue);
+	VData.mv_data = szValue;
 	//_tprintf(_T("Add Key:%s Data:%s\n"), szKey, szValue);
 	mdb_put(m_lmdb.m_txn, m_lmdb.m_dbi, &VKey, &VData, MDB_NOOVERWRITE);
 
@@ -86,18 +92,22 @@ bool CLMDBWrapper::GetData(LPSTR lpszKey, LPSTR lpszValue)
 	if (m_lmdb.m_Init == false)
 	{
 		std::wcout << _T("Init not done !") << std::endl;
-		return false;;
+		return false;
 	}
+
+	char szKey[255];
+	char szValue[255];
+
+	strcpy(szKey, lpszKey);
+	strcpy(szValue, "");
 
 	MDB_val VKey;
 	MDB_val VData;
 
-	VKey.mv_size = sizeof(lpszKey);
-	VKey.mv_data = lpszKey;
-	VData.mv_size = sizeof(lpszValue);
-	VData.mv_data = NULL; //lpszValue;
-
+	VKey.mv_size = sizeof(szKey);
+	VKey.mv_data = szKey;
 	int err = mdb_get(m_lmdb.m_txn, m_lmdb.m_dbi, &VKey, &VData);
+	//printf("Get Key:%s Data:%s\n", VKey.mv_data, VData.mv_data);
 
 	if (err == MDB_NOTFOUND)
 	{

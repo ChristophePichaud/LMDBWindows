@@ -23,7 +23,7 @@ int main(int argc, char * argv[])
 	char sval[32] = "";
 	char szDebug[255];
 
-	count = 50000;
+	count = 200;
 
 	if (argc == 2)
 	{
@@ -76,15 +76,16 @@ int main(int argc, char * argv[])
 		char szKey[255];
 		char szValue[255];
 		sprintf(szKey, "key_%d", i);
+		memset(szValue, 0, 255);
 
 		key.mv_size = sizeof(szKey);
 		key.mv_data = szKey;
-		data.mv_size = sizeof(szValue);
-		data.mv_data = szValue;
+		//data.mv_size = sizeof(szValue);
+		//data.mv_data = szValue;
 
 		mdb_get(txn, dbi, &key, &data);
 		printf("Get Key:%s Data:%s\n", key.mv_data, data.mv_data);
-	}
+		}
 	dwStop = GetTickCount();
 	sprintf_s(szDebug, ("Elapsed for get: %ld ms\n"), dwStop - dwStart);
 	printf(szDebug);
