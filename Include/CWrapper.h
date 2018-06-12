@@ -27,7 +27,7 @@ public:
 	bool Uninit(LPSTR lpszDbName);
 	bool SetData(LPSTR lpszKey, LPSTR lpszValue);
 	bool SetData(LPSTR lpszKey, LPSTR lpszValue, DWORD dwLen);
-	bool GetData(LPSTR lpszKey, LPSTR lpszValue);
+	bool GetData(LPSTR lpszKey, LPSTR * lpszValue);
 
 private:
 	LMDBData m_lmdb;

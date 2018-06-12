@@ -25,7 +25,7 @@ misrepresented as being the original source code.
 René Nyffenegger rene.nyffenegger@adp-gmbh.ch
 
 */
-
+#include "stdafx.h"
 #include <string>
 #include "Base64.h"
 

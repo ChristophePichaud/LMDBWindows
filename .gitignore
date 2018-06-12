@@ -34,3 +34,4 @@
 /HttpLMDB_Client/x64/Debug
 /LMDBWrapper/x64/Debug
 /LMDBWrapper_Client/x64/Debug
+/libraries/liblmdb/.vs

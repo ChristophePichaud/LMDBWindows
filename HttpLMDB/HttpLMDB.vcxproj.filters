@@ -24,10 +24,10 @@
     <ClInclude Include="..\Include\MyServer\Constants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Base64.h">
+    <ClInclude Include="..\Include\HttpLMDB.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\HttpLMDB.h">
+    <ClInclude Include="..\Include\Base64.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -44,7 +44,7 @@
     <ClCompile Include="..\Include\MyServer\Constants.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Base64.cpp">
+    <ClCompile Include="..\Include\Base64.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
