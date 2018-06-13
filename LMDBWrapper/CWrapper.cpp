@@ -3,6 +3,7 @@
 #include "..\Include\CWrapper.h"
 #include "..\Include\LMDBWrapper.h"
 #include "..\Include\MyServer\Constants.h"
+#include "..\Include\MyServer\Helper.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -92,16 +93,17 @@ bool CLMDBWrapper::SetData(LPSTR lpszKey, LPSTR lpszValueb64, DWORD dwLen)
 	}
 
 	char szKey[255];
-
 	strcpy(szKey, lpszKey);
+
+	std::string buffer = CHelper::base64_encode((const unsigned char*)lpszValueb64, dwLen);
 
 	MDB_val VKey;
 	MDB_val VData;
 
 	VKey.mv_size = sizeof(szKey);
 	VKey.mv_data = szKey;
-	VData.mv_size = dwLen;
-	VData.mv_data = lpszValueb64;
+	VData.mv_size = buffer.length() + 1;
+	VData.mv_data = (LPSTR) buffer.c_str();
 
 	mdb_txn_begin(m_lmdb.m_env, NULL, 0, &m_lmdb.m_txn);
 	mdb_dbi_open(m_lmdb.m_txn, NULL, 0, &m_lmdb.m_dbi);
