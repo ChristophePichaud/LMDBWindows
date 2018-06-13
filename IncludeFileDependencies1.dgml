@@ -1,0 +1,1194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DirectedGraph xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id="(@1 @202)" Category="CodeSchema_ProjectItem" Bounds="1133.60733394997,546.986000539553,97.258000077079,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\ConsoleApplication1\targetver.h" Label="targetver.h" />
+    <Node Id="(@1 @263)" Category="CodeSchema_ProjectItem" Bounds="1133.60733394997,490.988000462474,81.2113334104124,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\ConsoleApplication1\stdafx.h" Label="stdafx.h" />
+    <Node Id="(@1 @304)" Category="CodeSchema_ProjectItem" Bounds="1133.60733394997,602.984000616632,169.901333410412,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\ConsoleApplication1\ConsoleApplication1.cpp" Label="ConsoleApplication1.cpp" />
+    <Node Id="(@1 @329)" Category="CodeSchema_ProjectItem" Bounds="1244.81866736038,490.988000462474,93.828000077079,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\ConsoleApplication1\stdafx.cpp" Label="stdafx.cpp" />
+    <Node Id="(@11 @196)" Category="CodeSchema_ProjectItem" Bounds="20,490.988000462474,86.208000077079,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\LMDBWrapper\header.h" Label="header.h" />
+    <Node Id="(@11 @199)" Category="CodeSchema_ProjectItem" Bounds="20,658.982000693711,126.508000077079,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\Include\LMDBWrapper.h" Label="LMDBWrapper.h" />
+    <Node Id="(@11 @200)" Category="CodeSchema_ProjectItem" Bounds="151.694666743746,546.986000539553,102.674666743746,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\Include\CWrapper.h" Label="CWrapper.h" />
+    <Node Id="(@11 @207)" Category="CodeSchema_ProjectItem" Bounds="136.208000077079,490.988000462474,97.2580000770791,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\LMDBWrapper\targetver.h" Label="targetver.h" />
+    <Node Id="(@11 @235)" Category="CodeSchema_ProjectItem" Bounds="20,546.986000539553,101.694666743746,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\Include\MyServer\Constants.h" Label="Constants.h" />
+    <Node Id="(@11 @318)" Category="CodeSchema_ProjectItem" Bounds="176.508000077079,658.982000693711,139.124666743746,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\LMDBWrapper\LMDBWrapper.cpp" Label="LMDBWrapper.cpp" />
+    <Node Id="(@11 @319)" Category="CodeSchema_ProjectItem" Bounds="164.311333410412,602.984000616632,115.291333410412,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\LMDBWrapper\CWrapper.cpp" Label="CWrapper.cpp" />
+    <Node Id="(@11 @323)" Category="CodeSchema_ProjectItem" Bounds="20,602.984000616632,114.311333410412,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\Include\MyServer\Constants.cpp" Label="Constants.cpp" />
+    <Node Id="(@11 @83)" Category="CodeSchema_ProjectItem" Bounds="263.466000154158,490.988000462474,97.318000077079,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\LMDBWrapper\Resource.h" Label="Resource.h" />
+    <Node Id="(@13 @201)" Category="CodeSchema_ProjectItem" Bounds="255.039333487491,151.996000154158,98.878000077079,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\MyServer\MyServer.h" Label="MyServer.h" />
+    <Node Id="(@13 @215)" Category="CodeSchema_ProjectItem" Bounds="448.057333564571,207.994000231237,123.344666743746,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\Include\MyServer\messagetypes.h" Label="messagetypes.h" />
+    <Node Id="(@13 @220)" Category="CodeSchema_ProjectItem" Bounds="20,319.990000385395,167.888000077079,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\MyServer\WorkerNodeAttributes.h" Label="WorkerNodeAttributes.h" />
+    <Node Id="(@13 @235)" Category="CodeSchema_ProjectItem" Bounds="383.917333564571,151.996000154158,101.694666743746,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\Include\MyServer\Constants.h" Label="Constants.h" />
+    <Node Id="(@13 @252)" Category="CodeSchema_ProjectItem" Bounds="340.539333487491,263.992000308316,146.444666743746,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\MyServer\WorkerNodeClient.h" Label="WorkerNodeClient.h" />
+    <Node Id="(@13 @268)" Category="CodeSchema_ProjectItem" Bounds="20,151.996000154158,81.2113334104124,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\MyServer\stdafx.h" Label="stdafx.h" />
+    <Node Id="(@13 @306)" Category="CodeSchema_ProjectItem" Bounds="299.876000154158,207.994000231237,118.181333410412,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\MyServer\LMDBData.cpp" Label="LMDBData.cpp" />
+    <Node Id="(@13 @308)" Category="CodeSchema_ProjectItem" Bounds="173.961333410412,263.992000308316,136.578000077079,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\MyServer\CSWMRGuard.cpp" Label="CSWMRGuard.cpp" />
+    <Node Id="(@13 @322)" Category="CodeSchema_ProjectItem" Bounds="217.888000077079,319.990000385395,180.504666743746,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\MyServer\WorkerNodeAttributes.cpp" Label="WorkerNodeAttributes.cpp" />
+    <Node Id="(@13 @323)" Category="CodeSchema_ProjectItem" Bounds="155.564666743746,207.994000231237,114.311333410412,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\Include\MyServer\Constants.cpp" Label="Constants.cpp" />
+    <Node Id="(@13 @334)" Category="CodeSchema_ProjectItem" Bounds="131.211333410412,151.996000154158,93.828000077079,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\MyServer\stdafx.cpp" Label="stdafx.cpp" />
+    <Node Id="(@13 @57)" Category="CodeSchema_ProjectItem" Bounds="20,207.994000231237,105.564666743746,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\MyServer\LMDBData.h" Label="LMDBData.h" />
+    <Node Id="(@13 @80)" Category="CodeSchema_ProjectItem" Bounds="20,263.992000308316,123.961333410412,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\MyServer\CSWMRGuard.h" Label="CSWMRGuard.h" />
+    <Node Id="(@15 @162)" Category="CodeSchema_ProjectItem" Bounds="785.080000385395,830.978000847869,72.9880000770791,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\libraries\liblmdb\midl.h" Label="midl.h" />
+    <Node Id="(@15 @28)" Category="CodeSchema_ProjectItem" Bounds="886.844667129141,774.98000077079,72.9846667437457,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\libraries\liblmdb\mdb.c" Label="mdb.c" />
+    <Node Id="(@15 @30)" Category="CodeSchema_ProjectItem" Bounds="785.080000385395,774.98000077079,71.7646667437457,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\libraries\liblmdb\midl.c" Label="midl.c" />
+    <Node Id="(@15 @59)" Category="CodeSchema_ProjectItem" Bounds="888.068000462474,830.978000847869,77.058000077079,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\libraries\liblmdb\lmdb.h" Label="lmdb.h" />
+    <Node Id="(@17 @197)" Category="CodeSchema_ProjectItem" Bounds="507.697333564571,774.98000077079,84.7513334104124,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\Include\MyServer\Helper.h" Label="Helper.h" />
+    <Node Id="(@17 @208)" Category="CodeSchema_ProjectItem" Bounds="520.314000231237,830.978000847869,97.258000077079,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\MyClient\targetver.h" Label="targetver.h" />
+    <Node Id="(@17 @235)" Category="CodeSchema_ProjectItem" Bounds="396.486000154158,886.976000924948,101.694666743746,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\Include\MyServer\Constants.h" Label="Constants.h" />
+    <Node Id="(@17 @269)" Category="CodeSchema_ProjectItem" Bounds="396.486000154158,774.98000077079,81.2113334104124,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\MyClient\stdafx.h" Label="stdafx.h" />
+    <Node Id="(@17 @323)" Category="CodeSchema_ProjectItem" Bounds="528.180666897904,886.976000924948,114.311333410412,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\Include\MyServer\Constants.cpp" Label="Constants.cpp" />
+    <Node Id="(@17 @326)" Category="CodeSchema_ProjectItem" Bounds="622.448666974983,774.98000077079,92.6313334104125,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\MyClient\Client.cpp" Label="Client.cpp" />
+    <Node Id="(@17 @335)" Category="CodeSchema_ProjectItem" Bounds="396.486000154158,830.978000847869,93.828000077079,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\MyClient\stdafx.cpp" Label="stdafx.cpp" />
+    <Node Id="(@19 @209)" Category="CodeSchema_ProjectItem" Bounds="1408.64666743746,546.986000539553,97.258000077079,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\HttpLMDB_Client\targetver.h" Label="targetver.h" />
+    <Node Id="(@19 @270)" Category="CodeSchema_ProjectItem" Bounds="1408.64666743746,490.988000462474,81.2113334104124,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\HttpLMDB_Client\stdafx.h" Label="stdafx.h" />
+    <Node Id="(@19 @327)" Category="CodeSchema_ProjectItem" Bounds="1408.64666743746,602.984000616632,151.901333410412,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\HttpLMDB_Client\HttpLMDB_Client.cpp" Label="HttpLMDB_Client.cpp" />
+    <Node Id="(@19 @336)" Category="CodeSchema_ProjectItem" Bounds="1519.85800084787,490.988000462474,93.828000077079,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\HttpLMDB_Client\stdafx.cpp" Label="stdafx.cpp" />
+    <Node Id="(@21 @197)" Category="CodeSchema_ProjectItem" Bounds="131.211333410412,774.98000077079,84.7513334104124,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\Include\MyServer\Helper.h" Label="Helper.h" />
+    <Node Id="(@21 @200)" Category="CodeSchema_ProjectItem" Bounds="20,886.976000924948,102.674666743746,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\Include\CWrapper.h" Label="CWrapper.h" />
+    <Node Id="(@21 @210)" Category="CodeSchema_ProjectItem" Bounds="143.828000077079,830.978000847869,97.2580000770791,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\LMDBWrapper_Client\targetver.h" Label="targetver.h" />
+    <Node Id="(@21 @271)" Category="CodeSchema_ProjectItem" Bounds="20,774.98000077079,81.2113334104124,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\LMDBWrapper_Client\stdafx.h" Label="stdafx.h" />
+    <Node Id="(@21 @328)" Category="CodeSchema_ProjectItem" Bounds="152.674666743746,886.976000924948,173.811333410412,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\LMDBWrapper_Client\LMDBWrapper_Client.cpp" Label="LMDBWrapper_Client.cpp" />
+    <Node Id="(@21 @337)" Category="CodeSchema_ProjectItem" Bounds="20,830.978000847869,93.828000077079,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\LMDBWrapper_Client\stdafx.cpp" Label="stdafx.cpp" />
+    <Node Id="(@3 @203)" Category="CodeSchema_ProjectItem" Bounds="430.784000231237,546.986000539553,97.2580000770791,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\HttpLMDB\targetver.h" Label="targetver.h" />
+    <Node Id="(@3 @235)" Category="CodeSchema_ProjectItem" Bounds="430.784000231237,602.984000616632,101.694666743746,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\Include\MyServer\Constants.h" Label="Constants.h" />
+    <Node Id="(@3 @264)" Category="CodeSchema_ProjectItem" Bounds="430.784000231237,490.988000462474,81.2113334104124,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\HttpLMDB\stdafx.h" Label="stdafx.h" />
+    <Node Id="(@3 @305)" Category="CodeSchema_ProjectItem" Bounds="558.042000308316,546.986000539553,99.4180000770791,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\Include\Base64.cpp" Label="Base64.cpp" />
+    <Node Id="(@3 @307)" Category="CodeSchema_ProjectItem" Bounds="575.09533364165,658.982000693711,117.214666743746,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\HttpLMDB\HttpLMDB.cpp" Label="HttpLMDB.cpp" />
+    <Node Id="(@3 @310)" Category="CodeSchema_ProjectItem" Bounds="687.460000385395,546.986000539553,101.108000077079,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\HttpLMDB\dllmain.cpp" Label="dllmain.cpp" />
+    <Node Id="(@3 @323)" Category="CodeSchema_ProjectItem" Bounds="430.784000231237,658.982000693711,114.311333410412,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\Include\MyServer\Constants.cpp" Label="Constants.cpp" />
+    <Node Id="(@3 @330)" Category="CodeSchema_ProjectItem" Bounds="658.796667052062,490.988000462474,93.8280000770791,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\HttpLMDB\stdafx.cpp" Label="stdafx.cpp" />
+    <Node Id="(@3 @56)" Category="CodeSchema_ProjectItem" Bounds="541.99533364165,490.988000462474,86.8013334104123,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\Include\Base64.h" Label="Base64.h" />
+    <Node Id="(@3 @58)" Category="CodeSchema_ProjectItem" Bounds="562.478666974983,602.984000616632,104.598000077079,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\Include\HttpLMDB.h" Label="HttpLMDB.h" />
+    <Node Id="(@5 @163)" Category="CodeSchema_ProjectItem" Bounds="1184.5106672833,95.998000077079,94.3980000770791,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\Include\lmdb-dll.h" Label="lmdb-dll.h" />
+    <Node Id="(@5 @164)" Category="CodeSchema_ProjectItem" Bounds="940.354667129141,95.998000077079,90.3280000770791,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\Include\midl-dll.h" Label="midl-dll.h" />
+    <Node Id="(@5 @165)" Category="CodeSchema_ProjectItem" Bounds="940.354667129141,207.994000231237,143.141333410412,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\Include\LMDBWindowsDll.h" Label="LMDBWindowsDll.h" />
+    <Node Id="(@5 @204)" Category="CodeSchema_ProjectItem" Bounds="940.354667129141,151.996000154158,97.2580000770791,25.998000077079" FilePath="$(VsSolution)Dll\targetver.h" Label="targetver.h" />
+    <Node Id="(@5 @265)" Category="CodeSchema_ProjectItem" Bounds="1145.10400061663,40,81.2113334104124,25.998000077079" FilePath="$(VsSolution)Dll\stdafx.h" Label="stdafx.h" />
+    <Node Id="(@5 @29)" Category="CodeSchema_ProjectItem" Bounds="1042.11933387289,40,72.9846667437459,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\libraries\lmdb-dll\mdb.c" Label="mdb.c" />
+    <Node Id="(@5 @309)" Category="CodeSchema_ProjectItem" Bounds="1113.49600053955,207.994000231237,155.758000077079,25.998000077079" FilePath="$(VsSolution)Dll\LMDBWindowsDll.cpp" Label="LMDBWindowsDll.cpp" />
+    <Node Id="(@5 @31)" Category="CodeSchema_ProjectItem" Bounds="940.354667129141,40,71.7646667437458,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\libraries\lmdb-dll\midl.c" Label="midl.c" />
+    <Node Id="(@5 @311)" Category="CodeSchema_ProjectItem" Bounds="1067.61266720622,151.996000154158,101.108000077079,25.998000077079" FilePath="$(VsSolution)Dll\dllmain.cpp" Label="dllmain.cpp" />
+    <Node Id="(@5 @331)" Category="CodeSchema_ProjectItem" Bounds="1060.68266720622,95.998000077079,93.828000077079,25.998000077079" FilePath="$(VsSolution)Dll\stdafx.cpp" Label="stdafx.cpp" />
+    <Node Id="(@7 @197)" Category="CodeSchema_ProjectItem" Bounds="752.613333718729,40,84.7513334104124,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\Include\MyServer\Helper.h" Label="Helper.h" />
+    <Node Id="(@7 @205)" Category="CodeSchema_ProjectItem" Bounds="641.402000308316,151.996000154158,97.258000077079,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\Admin\targetver.h" Label="targetver.h" />
+    <Node Id="(@7 @235)" Category="CodeSchema_ProjectItem" Bounds="768.660000385396,151.996000154158,101.694666743746,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\Include\MyServer\Constants.h" Label="Constants.h" />
+    <Node Id="(@7 @266)" Category="CodeSchema_ProjectItem" Bounds="641.402000308316,40,81.2113334104124,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\Admin\stdafx.h" Label="stdafx.h" />
+    <Node Id="(@7 @314)" Category="CodeSchema_ProjectItem" Bounds="765.230000385396,95.998000077079,97.0113334104124,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\Admin\Admin.cpp" Label="Admin.cpp" />
+    <Node Id="(@7 @323)" Category="CodeSchema_ProjectItem" Bounds="641.402000308316,207.994000231237,114.311333410412,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\Include\MyServer\Constants.cpp" Label="Constants.cpp" />
+    <Node Id="(@7 @332)" Category="CodeSchema_ProjectItem" Bounds="641.402000308316,95.998000077079,93.8280000770791,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\Admin\stdafx.cpp" Label="stdafx.cpp" />
+    <Node Id="(@9 @206)" Category="CodeSchema_ProjectItem" Bounds="858.568000462474,546.986000539553,97.258000077079,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\ConsoleApplication\targetver.h" Label="targetver.h" />
+    <Node Id="(@9 @267)" Category="CodeSchema_ProjectItem" Bounds="858.568000462474,490.988000462474,81.2113334104124,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\ConsoleApplication\stdafx.h" Label="stdafx.h" />
+    <Node Id="(@9 @315)" Category="CodeSchema_ProjectItem" Bounds="858.568000462474,602.984000616632,163.554666743746,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\ConsoleApplication\ConsoleApplication.cpp" Label="ConsoleApplication.cpp" />
+    <Node Id="(@9 @333)" Category="CodeSchema_ProjectItem" Bounds="969.779333872887,490.988000462474,93.8280000770791,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\ConsoleApplication\stdafx.cpp" Label="stdafx.cpp" />
+    <Node Id="@10" Category="CodeSchema_PoundIncludeFile" Bounds="838.568000462474,450.988000462474,245.039333487491,197.994000231237" FilePath="D:\Dev\GitHub_LMDBWindows\ConsoleApplication\ConsoleApplication.vcxproj" Group="Expanded" Label="ConsoleApplication.vcxproj" Language="{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}" />
+    <Node Id="@101" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\ctype.h" Label="ctype.h" />
+    <Node Id="@103" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\ucrt\share.h" Label="share.h" />
+    <Node Id="@105" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\share.h" Label="share.h" />
+    <Node Id="@107" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\ucrt\corecrt_share.h" Label="corecrt_share.h" />
+    <Node Id="@109" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\corecrt_share.h" Label="corecrt_share.h" />
+    <Node Id="@111" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\ucrt\corecrt_terminate.h" Label="corecrt_terminate.h" />
+    <Node Id="@113" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\corecrt_terminate.h" Label="corecrt_terminate.h" />
+    <Node Id="@115" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\ucrt\stddef.h" Label="stddef.h" />
+    <Node Id="@117" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\stddef.h" Label="stddef.h" />
+    <Node Id="@119" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\ucrt\crtdbg.h" Label="crtdbg.h" />
+    <Node Id="@12" Category="CodeSchema_PoundIncludeFile" Bounds="0,450.988000462474,380.784000231237,253.992000308316" FilePath="D:\Dev\GitHub_LMDBWindows\LMDBWrapper\LMDBWrapper.vcxproj" Group="Expanded" Label="LMDBWrapper.vcxproj" Language="{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}" />
+    <Node Id="@121" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\crtdbg.h" Label="crtdbg.h" />
+    <Node Id="@123" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\ucrt\corecrt_stdio_config.h" Label="corecrt_stdio_config.h" />
+    <Node Id="@125" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\corecrt_stdio_config.h" Label="corecrt_stdio_config.h" />
+    <Node Id="@127" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\ucrt\corecrt_wstring.h" Label="corecrt_wstring.h" />
+    <Node Id="@129" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\corecrt_wstring.h" Label="corecrt_wstring.h" />
+    <Node Id="@131" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\ucrt\string.h" Label="string.h" />
+    <Node Id="@133" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\string.h" Label="string.h" />
+    <Node Id="@135" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\vcruntime_string.h" Label="vcruntime_string.h" />
+    <Node Id="@137" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\vcruntime_new_debug.h" Label="vcruntime_new_debug.h" />
+    <Node Id="@139" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\ucrt\corecrt_search.h" Label="corecrt_search.h" />
+    <Node Id="@14" Category="CodeSchema_PoundIncludeFile" Bounds="0,0,591.402000308316,365.988000462474" FilePath="D:\Dev\GitHub_LMDBWindows\MyServer\MyServer.vcxproj" Group="Expanded" Label="MyServer.vcxproj" Language="{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}" />
+    <Node Id="@141" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\corecrt_search.h" Label="corecrt_search.h" />
+    <Node Id="@143" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\eh.h" Label="eh.h" />
+    <Node Id="@145" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\xtgmath.h" Label="xtgmath.h" />
+    <Node Id="@147" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\ymath.h" Label="ymath.h" />
+    <Node Id="@149" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\ucrt\math.h" Label="math.h" />
+    <Node Id="@151" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\math.h" Label="math.h" />
+    <Node Id="@153" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\corecrt_math.h" Label="corecrt_math.h" />
+    <Node Id="@155" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\use_ansi.h" Label="use_ansi.h" />
+    <Node Id="@157" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\xkeycheck.h" Label="xkeycheck.h" />
+    <Node Id="@159" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\concurrencysal.h" Label="concurrencysal.h" />
+    <Node Id="@16" Category="CodeSchema_PoundIncludeFile" Bounds="765.080000385395,734.98000077079,220.046000154158,141.996000154158" FilePath="$(VsSolution)\LMDBWindows.vcxproj" Group="Expanded" Label="LMDBWindows.vcxproj" Language="{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}" />
+    <Node Id="@161" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\sal.h" Label="sal.h" />
+    <Node Id="@167" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\vcruntime_exception.h" Label="vcruntime_exception.h" />
+    <Node Id="@169" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\xlocinfo.h" Label="xlocinfo.h" />
+    <Node Id="@171" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\vcruntime_typeinfo.h" Label="vcruntime_typeinfo.h" />
+    <Node Id="@173" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\ucrt\corecrt_wstdio.h" Label="corecrt_wstdio.h" />
+    <Node Id="@175" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\corecrt_wstdio.h" Label="corecrt_wstdio.h" />
+    <Node Id="@177" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\ucrt\stdio.h" Label="stdio.h" />
+    <Node Id="@179" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h" Label="stdio.h" />
+    <Node Id="@18" Category="CodeSchema_PoundIncludeFile" Bounds="376.486000154158,734.98000077079,358.594000231237,197.994000231237" FilePath="D:\Dev\GitHub_LMDBWindows\MyClient\MyClient.vcxproj" Group="Expanded" Label="MyClient.vcxproj" Language="{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}" />
+    <Node Id="@181" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\ucrt\corecrt_wconio.h" Label="corecrt_wconio.h" />
+    <Node Id="@183" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\corecrt_wconio.h" Label="corecrt_wconio.h" />
+    <Node Id="@185" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\ucrt\corecrt_wio.h" Label="corecrt_wio.h" />
+    <Node Id="@187" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\corecrt_wio.h" Label="corecrt_wio.h" />
+    <Node Id="@189" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\ucrt\errno.h" Label="errno.h" />
+    <Node Id="@191" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\errno.h" Label="errno.h" />
+    <Node Id="@193" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\ucrt\wchar.h" Label="wchar.h" />
+    <Node Id="@195" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\wchar.h" Label="wchar.h" />
+    <Node Id="@198" Category="CodeSchema_ProjectItem" Bounds="319.078333333333,95.998000077079,84.7513334104124,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\Include\MyServer\Helper.h" Label="Helper.h" />
+    <Node Id="@2" Category="CodeSchema_PoundIncludeFile" Bounds="1113.60733394997,450.988000462474,245.039333487491,197.994000231237" FilePath="D:\Dev\GitHub_LMDBWindows\ConsoleApplication1\ConsoleApplication1.vcxproj" Group="Expanded" Label="ConsoleApplication1.vcxproj" Language="{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}" />
+    <Node Id="@20" Category="CodeSchema_PoundIncludeFile" Bounds="1388.64666743746,450.988000462474,245.039333487491,197.994000231237" FilePath="D:\Dev\GitHub_LMDBWindows\HttpLMDB_Client\HttpLMDB_Client.vcxproj" Group="Expanded" Label="HttpLMDB_Client.vcxproj" Language="{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}" />
+    <Node Id="@212" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\xpolymorphic_allocator.h" Label="xpolymorphic_allocator.h" />
+    <Node Id="@214" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\corecrt_math_defines.h" Label="corecrt_math_defines.h" />
+    <Node Id="@217" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\ucrt\sys\types.h" Label="types.h" />
+    <Node Id="@219" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\sys\types.h" Label="types.h" />
+    <Node Id="@22" Category="CodeSchema_PoundIncludeFile" Bounds="0,734.98000077079,346.486000154158,197.994000231237" FilePath="D:\Dev\GitHub_LMDBWindows\LMDBWrapper_Client\LMDBWrapper_Client.vcxproj" Group="Expanded" Label="LMDBWrapper_Client.vcxproj" Language="{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}" />
+    <Node Id="@222" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\vadefs.h" Label="vadefs.h" />
+    <Node Id="@224" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\crtdefs.h" Label="crtdefs.h" />
+    <Node Id="@226" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\yvals.h" Label="yvals.h" />
+    <Node Id="@228" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\CodeAnalysis\sourceannotations.h" Label="sourceannotations.h" />
+    <Node Id="@230" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\ucrt\corecrt_wprocess.h" Label="corecrt_wprocess.h" />
+    <Node Id="@232" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\corecrt_wprocess.h" Label="corecrt_wprocess.h" />
+    <Node Id="@234" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\limits.h" Label="limits.h" />
+    <Node Id="@237" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\ucrt\corecrt_memcpy_s.h" Label="corecrt_memcpy_s.h" />
+    <Node Id="@239" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\corecrt_memcpy_s.h" Label="corecrt_memcpy_s.h" />
+    <Node Id="@241" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\ucrt\float.h" Label="float.h" />
+    <Node Id="@243" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\float.h" Label="float.h" />
+    <Node Id="@245" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\ucrt\sys\stat.h" Label="stat.h" />
+    <Node Id="@247" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\sys\stat.h" Label="stat.h" />
+    <Node Id="@249" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\ucrt\corecrt_wdirect.h" Label="corecrt_wdirect.h" />
+    <Node Id="@25" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\xmemory0" Label="xmemory0" />
+    <Node Id="@251" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\corecrt_wdirect.h" Label="corecrt_wdirect.h" />
+    <Node Id="@254" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\stdint.h" Label="stdint.h" />
+    <Node Id="@256" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\ucrt\corecrt.h" Label="corecrt.h" />
+    <Node Id="@258" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\corecrt.h" Label="corecrt.h" />
+    <Node Id="@260" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\xstring_insert.h" Label="xstring_insert.h" />
+    <Node Id="@262" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\vcruntime_new.h" Label="vcruntime_new.h" />
+    <Node Id="@27" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\cstdlib" Label="cstdlib" />
+    <Node Id="@273" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\shared\winpackagefamily.h" Label="winpackagefamily.h" />
+    <Node Id="@275" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\shared\winpackagefamily.h" Label="winpackagefamily.h" />
+    <Node Id="@277" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\shared\winapifamily.h" Label="winapifamily.h" />
+    <Node Id="@279" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\shared\winapifamily.h" Label="winapifamily.h" />
+    <Node Id="@281" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\ucrt\corecrt_memory.h" Label="corecrt_memory.h" />
+    <Node Id="@283" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\corecrt_memory.h" Label="corecrt_memory.h" />
+    <Node Id="@285" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\cmath" Label="cmath" />
+    <Node Id="@287" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\istream" Label="istream" />
+    <Node Id="@289" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\ostream" Label="ostream" />
+    <Node Id="@291" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\xlocnum" Label="xlocnum" />
+    <Node Id="@293" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\exception" Label="exception" />
+    <Node Id="@295" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\xtr1common" Label="xtr1common" />
+    <Node Id="@297" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\xlocinfo" Label="xlocinfo" />
+    <Node Id="@299" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\typeinfo" Label="typeinfo" />
+    <Node Id="@301" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\cstdio" Label="cstdio" />
+    <Node Id="@303" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\cerrno" Label="cerrno" />
+    <Node Id="@313" Category="CodeSchema_ProjectItem" Bounds="20,40,88.908000077079,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\MyServer\Main.cpp" Label="Main.cpp" />
+    <Node Id="@317" Category="CodeSchema_ProjectItem" Bounds="471.77,40,97.3680000770791,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\Include\MyServer\Helper.cpp" Label="Helper.cpp" />
+    <Node Id="@321" Category="CodeSchema_ProjectItem" Bounds="139.706666666667,40,111.494666743746,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\MyServer\MyServer.cpp" Label="MyServer.cpp" />
+    <Node Id="@325" Category="CodeSchema_ProjectItem" Bounds="281.923333333333,40,159.061333410412,25.998000077079" FilePath="D:\Dev\GitHub_LMDBWindows\MyServer\WorkerNodeClient.cpp" Label="WorkerNodeClient.cpp" />
+    <Node Id="@33" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\iosfwd" Label="iosfwd" />
+    <Node Id="@339" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\cwchar" Label="cwchar" />
+    <Node Id="@341" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\system_error" Label="system_error" />
+    <Node Id="@343" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\ios" Label="ios" />
+    <Node Id="@345" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\type_traits" Label="type_traits" />
+    <Node Id="@347" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\climits" Label="climits" />
+    <Node Id="@349" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\limits" Label="limits" />
+    <Node Id="@35" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\xlocale" Label="xlocale" />
+    <Node Id="@351" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\cfloat" Label="cfloat" />
+    <Node Id="@353" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\xfacet" Label="xfacet" />
+    <Node Id="@355" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\cstdint" Label="cstdint" />
+    <Node Id="@357" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\stdexcept" Label="stdexcept" />
+    <Node Id="@359" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\initializer_list" Label="initializer_list" />
+    <Node Id="@361" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\new" Label="new" />
+    <Node Id="@363" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\xmemory" Label="xmemory" />
+    <Node Id="@365" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\memory" Label="memory" />
+    <Node Id="@367" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\xutility" Label="xutility" />
+    <Node Id="@369" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\utility" Label="utility" />
+    <Node Id="@37" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\tuple" Label="tuple" />
+    <Node Id="@39" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\xiosbase" Label="xiosbase" />
+    <Node Id="@4" Category="CodeSchema_PoundIncludeFile" Bounds="410.784000231237,450.988000462474,397.784000231237,253.992000308316" FilePath="D:\Dev\GitHub_LMDBWindows\HttpLMDB\HttpLMDB.vcxproj" Group="Expanded" Label="HttpLMDB.vcxproj" Language="{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}" />
+    <Node Id="@41" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\cstddef" Label="cstddef" />
+    <Node Id="@43" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\xstddef" Label="xstddef" />
+    <Node Id="@45" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\streambuf" Label="streambuf" />
+    <Node Id="@47" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\cstring" Label="cstring" />
+    <Node Id="@49" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\xstring" Label="xstring" />
+    <Node Id="@51" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\string" Label="string" />
+    <Node Id="@53" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\xatomic0.h" Label="xatomic0.h" />
+    <Node Id="@55" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\intrin0.h" Label="intrin0.h" />
+    <Node Id="@6" Category="CodeSchema_PoundIncludeFile" Bounds="920.354667129141,0,378.554000231237,253.992000308316" FilePath="$(VsSolution)Dll\LMDBWindowsDll.vcxproj" Group="Expanded" Label="LMDBWindowsDll.vcxproj" Language="{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}" />
+    <Node Id="@61" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\ucrt\corecrt_wstdlib.h" Label="corecrt_wstdlib.h" />
+    <Node Id="@63" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\corecrt_wstdlib.h" Label="corecrt_wstdlib.h" />
+    <Node Id="@65" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\ucrt\stdlib.h" Label="stdlib.h" />
+    <Node Id="@67" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdlib.h" Label="stdlib.h" />
+    <Node Id="@69" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\xatomic.h" Label="xatomic.h" />
+    <Node Id="@71" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\ucrt\malloc.h" Label="malloc.h" />
+    <Node Id="@73" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\malloc.h" Label="malloc.h" />
+    <Node Id="@75" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\ucrt\corecrt_malloc.h" Label="corecrt_malloc.h" />
+    <Node Id="@77" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\corecrt_malloc.h" Label="corecrt_malloc.h" />
+    <Node Id="@79" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\xerrc.h" Label="xerrc.h" />
+    <Node Id="@8" Category="CodeSchema_PoundIncludeFile" Bounds="621.402000308316,0,268.952666820825,253.992000308316" FilePath="D:\Dev\GitHub_LMDBWindows\Admin\Admin.vcxproj" Group="Expanded" Label="Admin.vcxproj" Language="{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}" />
+    <Node Id="@82" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\xcall_once.h" Label="xcall_once.h" />
+    <Node Id="@85" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\ucrt\locale.h" Label="locale.h" />
+    <Node Id="@87" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\locale.h" Label="locale.h" />
+    <Node Id="@89" Category="CodeSchema_ProjectItem" FilePath="$(VsInstallDir)\VC\Tools\MSVC\14.14.26428\include\vcruntime.h" Label="vcruntime.h" />
+    <Node Id="@91" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\ucrt\corecrt_wtime.h" Label="corecrt_wtime.h" />
+    <Node Id="@93" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\corecrt_wtime.h" Label="corecrt_wtime.h" />
+    <Node Id="@95" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\ucrt\corecrt_wctype.h" Label="corecrt_wctype.h" />
+    <Node Id="@97" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.16299.0\ucrt\corecrt_wctype.h" Label="corecrt_wctype.h" />
+    <Node Id="@99" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\Windows Kits\10\Include\10.0.14393.0\ucrt\ctype.h" Label="ctype.h" />
+    <Node Id="G4" Category="CodeSchema_PoundIncludeGroup" Group="Collapsed" Label="Windows SDK" />
+    <Node Id="OthersGroup" Category="CodeSchema_PoundIncludeGroup" Group="Collapsed" Label="Others" />
+    <Node Id="PoundIncludeGraphExternalsGroup" Category="Externals" Bounds="252.651000154158,395.988000462474,86.1,25" Group="Collapsed" Label="Externals" />
+    <Node Id="Windows SDK Indirectly Included" Category="CodeSchema_PoundIncludeGroup" Group="Collapsed" Label="Indirectly Included" />
+  </Nodes>
+  <Links>
+    <Link Source="@10" Target="(@9 @206)" Category="Contains" />
+    <Link Source="@10" Target="(@9 @267)" Category="Contains" />
+    <Link Source="@10" Target="(@9 @315)" Category="Contains" />
+    <Link Source="@10" Target="(@9 @333)" Category="Contains" />
+    <Link Source="@101" Target="@258" Category="PoundInclude" />
+    <Link Source="@101" Target="@97" Category="PoundInclude" />
+    <Link Source="@103" Target="@107" Category="PoundInclude" />
+    <Link Source="@105" Target="@109" Category="PoundInclude" />
+    <Link Source="@111" Target="@256" Category="PoundInclude" />
+    <Link Source="@113" Target="@258" Category="PoundInclude" />
+    <Link Source="@115" Target="@256" Category="PoundInclude" />
+    <Link Source="@117" Target="@258" Category="PoundInclude" />
+    <Link Source="@119" Target="@137" Category="PoundInclude" />
+    <Link Source="@119" Target="@256" Category="PoundInclude" />
+    <Link Source="@12" Target="(@11 @196)" Category="Contains" />
+    <Link Source="@12" Target="(@11 @199)" Category="Contains" />
+    <Link Source="@12" Target="(@11 @200)" Category="Contains" />
+    <Link Source="@12" Target="(@11 @207)" Category="Contains" />
+    <Link Source="@12" Target="(@11 @235)" Category="Contains" />
+    <Link Source="@12" Target="(@11 @318)" Category="Contains" />
+    <Link Source="@12" Target="(@11 @319)" Category="Contains" />
+    <Link Source="@12" Target="(@11 @323)" Category="Contains" />
+    <Link Source="@12" Target="(@11 @83)" Category="Contains" />
+    <Link Source="@121" Target="@137" Category="PoundInclude" />
+    <Link Source="@121" Target="@258" Category="PoundInclude" />
+    <Link Source="@123" Target="@256" Category="PoundInclude" />
+    <Link Source="@125" Target="@258" Category="PoundInclude" />
+    <Link Source="@127" Target="@135" Category="PoundInclude" />
+    <Link Source="@127" Target="@256" Category="PoundInclude" />
+    <Link Source="@129" Target="@135" Category="PoundInclude" />
+    <Link Source="@129" Target="@258" Category="PoundInclude" />
+    <Link Source="@131" Target="@127" Category="PoundInclude" />
+    <Link Source="@131" Target="@135" Category="PoundInclude" />
+    <Link Source="@131" Target="@256" Category="PoundInclude" />
+    <Link Source="@131" Target="@281" Category="PoundInclude" />
+    <Link Source="@133" Target="@129" Category="PoundInclude" />
+    <Link Source="@133" Target="@135" Category="PoundInclude" />
+    <Link Source="@133" Target="@258" Category="PoundInclude" />
+    <Link Source="@133" Target="@283" Category="PoundInclude" />
+    <Link Source="@135" Target="@89" Category="PoundInclude" />
+    <Link Source="@137" Target="@262" Category="PoundInclude" />
+    <Link Source="@139" Target="@115" Category="PoundInclude" />
+    <Link Source="@139" Target="@256" Category="PoundInclude" />
+    <Link Source="@14" Target="(@13 @201)" Category="Contains" />
+    <Link Source="@14" Target="(@13 @215)" Category="Contains" />
+    <Link Source="@14" Target="(@13 @220)" Category="Contains" />
+    <Link Source="@14" Target="(@13 @235)" Category="Contains" />
+    <Link Source="@14" Target="(@13 @252)" Category="Contains" />
+    <Link Source="@14" Target="(@13 @268)" Category="Contains" />
+    <Link Source="@14" Target="(@13 @306)" Category="Contains" />
+    <Link Source="@14" Target="(@13 @308)" Category="Contains" />
+    <Link Source="@14" Target="(@13 @322)" Category="Contains" />
+    <Link Source="@14" Target="(@13 @323)" Category="Contains" />
+    <Link Source="@14" Target="(@13 @334)" Category="Contains" />
+    <Link Source="@14" Target="(@13 @57)" Category="Contains" />
+    <Link Source="@14" Target="(@13 @80)" Category="Contains" />
+    <Link Source="@14" Target="@198" Category="Contains" />
+    <Link Source="@14" Target="@313" Category="Contains" />
+    <Link Source="@14" Target="@317" Category="Contains" />
+    <Link Source="@14" Target="@321" Category="Contains" />
+    <Link Source="@14" Target="@325" Category="Contains" />
+    <Link Source="@141" Target="@117" Category="PoundInclude" />
+    <Link Source="@141" Target="@258" Category="PoundInclude" />
+    <Link Source="@143" Target="@111" Category="PoundInclude" />
+    <Link Source="@143" Target="@113" Category="PoundInclude" />
+    <Link Source="@145" Target="@27" Category="PoundInclude" />
+    <Link Source="@145" Target="@295" Category="PoundInclude" />
+    <Link Source="@147" Target="@226" Category="PoundInclude" />
+    <Link Source="@149" Target="@256" Category="PoundInclude" />
+    <Link Source="@151" Target="@153" Category="PoundInclude" />
+    <Link Source="@151" Target="@214" Category="PoundInclude" />
+    <Link Source="@153" Target="@258" Category="PoundInclude" />
+    <Link Source="@16" Target="(@15 @162)" Category="Contains" />
+    <Link Source="@16" Target="(@15 @28)" Category="Contains" />
+    <Link Source="@16" Target="(@15 @30)" Category="Contains" />
+    <Link Source="@16" Target="(@15 @59)" Category="Contains" />
+    <Link Source="@161" Target="@159" Category="PoundInclude" />
+    <Link Source="@161" Target="@228" Category="PoundInclude" />
+    <Link Source="@167" Target="@143" Category="PoundInclude" />
+    <Link Source="@167" Target="@262" Category="PoundInclude" />
+    <Link Source="@169" Target="@101" Category="PoundInclude" />
+    <Link Source="@169" Target="@193" Category="PoundInclude" />
+    <Link Source="@169" Target="@195" Category="PoundInclude" />
+    <Link Source="@169" Target="@226" Category="PoundInclude" />
+    <Link Source="@169" Target="@85" Category="PoundInclude" />
+    <Link Source="@169" Target="@87" Category="PoundInclude" />
+    <Link Source="@169" Target="@99" Category="PoundInclude" />
+    <Link Source="@171" Target="@167" Category="PoundInclude" />
+    <Link Source="@171" Target="@89" Category="PoundInclude" />
+    <Link Source="@173" Target="@123" Category="PoundInclude" />
+    <Link Source="@173" Target="@256" Category="PoundInclude" />
+    <Link Source="@175" Target="@125" Category="PoundInclude" />
+    <Link Source="@175" Target="@258" Category="PoundInclude" />
+    <Link Source="@177" Target="@173" Category="PoundInclude" />
+    <Link Source="@177" Target="@256" Category="PoundInclude" />
+    <Link Source="@179" Target="@175" Category="PoundInclude" />
+    <Link Source="@179" Target="@258" Category="PoundInclude" />
+    <Link Source="@18" Target="(@17 @197)" Category="Contains" />
+    <Link Source="@18" Target="(@17 @208)" Category="Contains" />
+    <Link Source="@18" Target="(@17 @235)" Category="Contains" />
+    <Link Source="@18" Target="(@17 @269)" Category="Contains" />
+    <Link Source="@18" Target="(@17 @323)" Category="Contains" />
+    <Link Source="@18" Target="(@17 @326)" Category="Contains" />
+    <Link Source="@18" Target="(@17 @335)" Category="Contains" />
+    <Link Source="@181" Target="@123" Category="PoundInclude" />
+    <Link Source="@181" Target="@256" Category="PoundInclude" />
+    <Link Source="@183" Target="@125" Category="PoundInclude" />
+    <Link Source="@183" Target="@258" Category="PoundInclude" />
+    <Link Source="@185" Target="@107" Category="PoundInclude" />
+    <Link Source="@185" Target="@256" Category="PoundInclude" />
+    <Link Source="@187" Target="@109" Category="PoundInclude" />
+    <Link Source="@187" Target="@258" Category="PoundInclude" />
+    <Link Source="@189" Target="@256" Category="PoundInclude" />
+    <Link Source="@191" Target="@258" Category="PoundInclude" />
+    <Link Source="@193" Target="@127" Category="PoundInclude" />
+    <Link Source="@193" Target="@135" Category="PoundInclude" />
+    <Link Source="@193" Target="@173" Category="PoundInclude" />
+    <Link Source="@193" Target="@181" Category="PoundInclude" />
+    <Link Source="@193" Target="@185" Category="PoundInclude" />
+    <Link Source="@193" Target="@217" Category="PoundInclude" />
+    <Link Source="@193" Target="@230" Category="PoundInclude" />
+    <Link Source="@193" Target="@237" Category="PoundInclude" />
+    <Link Source="@193" Target="@245" Category="PoundInclude" />
+    <Link Source="@193" Target="@249" Category="PoundInclude" />
+    <Link Source="@193" Target="@256" Category="PoundInclude" />
+    <Link Source="@193" Target="@61" Category="PoundInclude" />
+    <Link Source="@193" Target="@91" Category="PoundInclude" />
+    <Link Source="@193" Target="@95" Category="PoundInclude" />
+    <Link Source="@195" Target="@129" Category="PoundInclude" />
+    <Link Source="@195" Target="@135" Category="PoundInclude" />
+    <Link Source="@195" Target="@175" Category="PoundInclude" />
+    <Link Source="@195" Target="@183" Category="PoundInclude" />
+    <Link Source="@195" Target="@187" Category="PoundInclude" />
+    <Link Source="@195" Target="@219" Category="PoundInclude" />
+    <Link Source="@195" Target="@232" Category="PoundInclude" />
+    <Link Source="@195" Target="@239" Category="PoundInclude" />
+    <Link Source="@195" Target="@247" Category="PoundInclude" />
+    <Link Source="@195" Target="@251" Category="PoundInclude" />
+    <Link Source="@195" Target="@258" Category="PoundInclude" />
+    <Link Source="@195" Target="@63" Category="PoundInclude" />
+    <Link Source="@195" Target="@93" Category="PoundInclude" />
+    <Link Source="@195" Target="@97" Category="PoundInclude" />
+    <Link Source="@198" Target="@51" Category="PoundInclude" />
+    <Link Source="@2" Target="(@1 @202)" Category="Contains" />
+    <Link Source="@2" Target="(@1 @263)" Category="Contains" />
+    <Link Source="@2" Target="(@1 @304)" Category="Contains" />
+    <Link Source="@2" Target="(@1 @329)" Category="Contains" />
+    <Link Source="@20" Target="(@19 @209)" Category="Contains" />
+    <Link Source="@20" Target="(@19 @270)" Category="Contains" />
+    <Link Source="@20" Target="(@19 @327)" Category="Contains" />
+    <Link Source="@20" Target="(@19 @336)" Category="Contains" />
+    <Link Source="@212" Target="@25" Category="PoundInclude" />
+    <Link Source="@212" Target="@345" Category="PoundInclude" />
+    <Link Source="@212" Target="@369" Category="PoundInclude" />
+    <Link Source="@212" Target="@37" Category="PoundInclude" />
+    <Link Source="@22" Target="(@21 @197)" Category="Contains" />
+    <Link Source="@22" Target="(@21 @200)" Category="Contains" />
+    <Link Source="@22" Target="(@21 @210)" Category="Contains" />
+    <Link Source="@22" Target="(@21 @271)" Category="Contains" />
+    <Link Source="@22" Target="(@21 @328)" Category="Contains" />
+    <Link Source="@22" Target="(@21 @337)" Category="Contains" />
+    <Link Source="@224" Target="@256" Category="PoundInclude" />
+    <Link Source="@224" Target="@258" Category="PoundInclude" />
+    <Link Source="@224" Target="@89" Category="PoundInclude" />
+    <Link Source="@226" Target="@155" Category="PoundInclude" />
+    <Link Source="@226" Target="@157" Category="PoundInclude" />
+    <Link Source="@226" Target="@224" Category="PoundInclude" />
+    <Link Source="@230" Target="@256" Category="PoundInclude" />
+    <Link Source="@232" Target="@258" Category="PoundInclude" />
+    <Link Source="@234" Target="@89" Category="PoundInclude" />
+    <Link Source="@237" Target="@135" Category="PoundInclude" />
+    <Link Source="@237" Target="@189" Category="PoundInclude" />
+    <Link Source="@237" Target="@256" Category="PoundInclude" />
+    <Link Source="@239" Target="@135" Category="PoundInclude" />
+    <Link Source="@239" Target="@191" Category="PoundInclude" />
+    <Link Source="@239" Target="@258" Category="PoundInclude" />
+    <Link Source="@241" Target="@256" Category="PoundInclude" />
+    <Link Source="@243" Target="@258" Category="PoundInclude" />
+    <Link Source="@245" Target="@217" Category="PoundInclude" />
+    <Link Source="@245" Target="@256" Category="PoundInclude" />
+    <Link Source="@247" Target="@219" Category="PoundInclude" />
+    <Link Source="@247" Target="@258" Category="PoundInclude" />
+    <Link Source="@249" Target="@256" Category="PoundInclude" />
+    <Link Source="@25" Target="@27" Category="PoundInclude" />
+    <Link Source="@25" Target="@349" Category="PoundInclude" />
+    <Link Source="@25" Target="@355" Category="PoundInclude" />
+    <Link Source="@25" Target="@361" Category="PoundInclude" />
+    <Link Source="@25" Target="@367" Category="PoundInclude" />
+    <Link Source="@25" Target="@53" Category="PoundInclude" />
+    <Link Source="@25" Target="@55" Category="PoundInclude" />
+    <Link Source="@25" Target="@69" Category="PoundInclude" />
+    <Link Source="@251" Target="@258" Category="PoundInclude" />
+    <Link Source="@254" Target="@89" Category="PoundInclude" />
+    <Link Source="@256" Target="@277" Category="PoundInclude" />
+    <Link Source="@256" Target="@89" Category="PoundInclude" />
+    <Link Source="@258" Target="@279" Category="PoundInclude" />
+    <Link Source="@258" Target="@89" Category="PoundInclude" />
+    <Link Source="@260" Target="@289" Category="PoundInclude" />
+    <Link Source="@262" Target="@89" Category="PoundInclude" />
+    <Link Source="@27" Target="@149" Category="PoundInclude" />
+    <Link Source="@27" Target="@151" Category="PoundInclude" />
+    <Link Source="@27" Target="@226" Category="PoundInclude" />
+    <Link Source="@27" Target="@65" Category="PoundInclude" />
+    <Link Source="@27" Target="@67" Category="PoundInclude" />
+    <Link Source="@277" Target="@273" Category="PoundInclude" />
+    <Link Source="@279" Target="@275" Category="PoundInclude" />
+    <Link Source="@281" Target="@135" Category="PoundInclude" />
+    <Link Source="@281" Target="@237" Category="PoundInclude" />
+    <Link Source="@281" Target="@256" Category="PoundInclude" />
+    <Link Source="@283" Target="@135" Category="PoundInclude" />
+    <Link Source="@283" Target="@239" Category="PoundInclude" />
+    <Link Source="@283" Target="@258" Category="PoundInclude" />
+    <Link Source="@285" Target="@145" Category="PoundInclude" />
+    <Link Source="@285" Target="@27" Category="PoundInclude" />
+    <Link Source="@287" Target="@289" Category="PoundInclude" />
+    <Link Source="@289" Target="@343" Category="PoundInclude" />
+    <Link Source="@291" Target="@27" Category="PoundInclude" />
+    <Link Source="@291" Target="@285" Category="PoundInclude" />
+    <Link Source="@291" Target="@301" Category="PoundInclude" />
+    <Link Source="@291" Target="@347" Category="PoundInclude" />
+    <Link Source="@291" Target="@45" Category="PoundInclude" />
+    <Link Source="@293" Target="@167" Category="PoundInclude" />
+    <Link Source="@293" Target="@345" Category="PoundInclude" />
+    <Link Source="@293" Target="@71" Category="PoundInclude" />
+    <Link Source="@293" Target="@73" Category="PoundInclude" />
+    <Link Source="@295" Target="@226" Category="PoundInclude" />
+    <Link Source="@297" Target="@169" Category="PoundInclude" />
+    <Link Source="@297" Target="@27" Category="PoundInclude" />
+    <Link Source="@297" Target="@43" Category="PoundInclude" />
+    <Link Source="@299" Target="@171" Category="PoundInclude" />
+    <Link Source="@299" Target="@293" Category="PoundInclude" />
+    <Link Source="@301" Target="@177" Category="PoundInclude" />
+    <Link Source="@301" Target="@179" Category="PoundInclude" />
+    <Link Source="@301" Target="@226" Category="PoundInclude" />
+    <Link Source="@303" Target="@189" Category="PoundInclude" />
+    <Link Source="@303" Target="@191" Category="PoundInclude" />
+    <Link Source="@303" Target="@226" Category="PoundInclude" />
+    <Link Source="@313" Target="@198" Category="PoundInclude" Bounds="108.907997131348,61.3805999755859,201.326164245605,37.9591293334961" />
+    <Link Source="@317" Target="@198" Category="PoundInclude" Bounds="406.852111816406,65.9980010986328,76.6926879882813,27.0102996826172" />
+    <Link Source="@321" Target="@198" Category="PoundInclude" Bounds="233.988128662109,65.9980010986328,80.4039001464844,27.1232376098633" />
+    <Link Source="@325" Target="@198" Category="PoundInclude" Bounds="361.454010009766,65.9980010986328,0,21" />
+    <Link Source="@33" Target="@119" Category="PoundInclude" />
+    <Link Source="@33" Target="@121" Category="PoundInclude" />
+    <Link Source="@33" Target="@301" Category="PoundInclude" />
+    <Link Source="@33" Target="@339" Category="PoundInclude" />
+    <Link Source="@33" Target="@43" Category="PoundInclude" />
+    <Link Source="@33" Target="@47" Category="PoundInclude" />
+    <Link Source="@339" Target="@193" Category="PoundInclude" />
+    <Link Source="@339" Target="@195" Category="PoundInclude" />
+    <Link Source="@339" Target="@226" Category="PoundInclude" />
+    <Link Source="@341" Target="@27" Category="PoundInclude" />
+    <Link Source="@341" Target="@303" Category="PoundInclude" />
+    <Link Source="@341" Target="@357" Category="PoundInclude" />
+    <Link Source="@341" Target="@79" Category="PoundInclude" />
+    <Link Source="@341" Target="@82" Category="PoundInclude" />
+    <Link Source="@343" Target="@291" Category="PoundInclude" />
+    <Link Source="@345" Target="@43" Category="PoundInclude" />
+    <Link Source="@347" Target="@226" Category="PoundInclude" />
+    <Link Source="@347" Target="@234" Category="PoundInclude" />
+    <Link Source="@349" Target="@147" Category="PoundInclude" />
+    <Link Source="@349" Target="@285" Category="PoundInclude" />
+    <Link Source="@349" Target="@339" Category="PoundInclude" />
+    <Link Source="@349" Target="@347" Category="PoundInclude" />
+    <Link Source="@349" Target="@351" Category="PoundInclude" />
+    <Link Source="@349" Target="@43" Category="PoundInclude" />
+    <Link Source="@35" Target="@297" Category="PoundInclude" />
+    <Link Source="@35" Target="@299" Category="PoundInclude" />
+    <Link Source="@35" Target="@347" Category="PoundInclude" />
+    <Link Source="@35" Target="@353" Category="PoundInclude" />
+    <Link Source="@35" Target="@357" Category="PoundInclude" />
+    <Link Source="@35" Target="@365" Category="PoundInclude" />
+    <Link Source="@35" Target="@47" Category="PoundInclude" />
+    <Link Source="@351" Target="@226" Category="PoundInclude" />
+    <Link Source="@351" Target="@241" Category="PoundInclude" />
+    <Link Source="@351" Target="@243" Category="PoundInclude" />
+    <Link Source="@353" Target="@226" Category="PoundInclude" />
+    <Link Source="@355" Target="@226" Category="PoundInclude" />
+    <Link Source="@355" Target="@254" Category="PoundInclude" />
+    <Link Source="@357" Target="@293" Category="PoundInclude" />
+    <Link Source="@357" Target="@49" Category="PoundInclude" />
+    <Link Source="@359" Target="@41" Category="PoundInclude" />
+    <Link Source="@361" Target="@262" Category="PoundInclude" />
+    <Link Source="@361" Target="@293" Category="PoundInclude" />
+    <Link Source="@363" Target="@25" Category="PoundInclude" />
+    <Link Source="@365" Target="@293" Category="PoundInclude" />
+    <Link Source="@365" Target="@299" Category="PoundInclude" />
+    <Link Source="@365" Target="@345" Category="PoundInclude" />
+    <Link Source="@365" Target="@363" Category="PoundInclude" />
+    <Link Source="@367" Target="@27" Category="PoundInclude" />
+    <Link Source="@367" Target="@347" Category="PoundInclude" />
+    <Link Source="@367" Target="@369" Category="PoundInclude" />
+    <Link Source="@369" Target="@33" Category="PoundInclude" />
+    <Link Source="@369" Target="@345" Category="PoundInclude" />
+    <Link Source="@369" Target="@43" Category="PoundInclude" />
+    <Link Source="@37" Target="@345" Category="PoundInclude" />
+    <Link Source="@37" Target="@361" Category="PoundInclude" />
+    <Link Source="@37" Target="@367" Category="PoundInclude" />
+    <Link Source="@39" Target="@103" Category="PoundInclude" />
+    <Link Source="@39" Target="@105" Category="PoundInclude" />
+    <Link Source="@39" Target="@341" Category="PoundInclude" />
+    <Link Source="@39" Target="@35" Category="PoundInclude" />
+    <Link Source="@4" Target="(@3 @203)" Category="Contains" />
+    <Link Source="@4" Target="(@3 @235)" Category="Contains" />
+    <Link Source="@4" Target="(@3 @264)" Category="Contains" />
+    <Link Source="@4" Target="(@3 @305)" Category="Contains" />
+    <Link Source="@4" Target="(@3 @307)" Category="Contains" />
+    <Link Source="@4" Target="(@3 @310)" Category="Contains" />
+    <Link Source="@4" Target="(@3 @323)" Category="Contains" />
+    <Link Source="@4" Target="(@3 @330)" Category="Contains" />
+    <Link Source="@4" Target="(@3 @56)" Category="Contains" />
+    <Link Source="@4" Target="(@3 @58)" Category="Contains" />
+    <Link Source="@41" Target="@115" Category="PoundInclude" />
+    <Link Source="@41" Target="@117" Category="PoundInclude" />
+    <Link Source="@41" Target="@295" Category="PoundInclude" />
+    <Link Source="@43" Target="@27" Category="PoundInclude" />
+    <Link Source="@43" Target="@295" Category="PoundInclude" />
+    <Link Source="@43" Target="@359" Category="PoundInclude" />
+    <Link Source="@43" Target="@41" Category="PoundInclude" />
+    <Link Source="@45" Target="@39" Category="PoundInclude" />
+    <Link Source="@47" Target="@131" Category="PoundInclude" />
+    <Link Source="@47" Target="@133" Category="PoundInclude" />
+    <Link Source="@47" Target="@226" Category="PoundInclude" />
+    <Link Source="@49" Target="@25" Category="PoundInclude" />
+    <Link Source="@51" Target="@212" Category="PoundInclude" />
+    <Link Source="@51" Target="@260" Category="PoundInclude" />
+    <Link Source="@51" Target="@287" Category="PoundInclude" />
+    <Link Source="@53" Target="@226" Category="PoundInclude" />
+    <Link Source="@6" Target="(@5 @163)" Category="Contains" />
+    <Link Source="@6" Target="(@5 @164)" Category="Contains" />
+    <Link Source="@6" Target="(@5 @165)" Category="Contains" />
+    <Link Source="@6" Target="(@5 @204)" Category="Contains" />
+    <Link Source="@6" Target="(@5 @265)" Category="Contains" />
+    <Link Source="@6" Target="(@5 @29)" Category="Contains" />
+    <Link Source="@6" Target="(@5 @309)" Category="Contains" />
+    <Link Source="@6" Target="(@5 @31)" Category="Contains" />
+    <Link Source="@6" Target="(@5 @311)" Category="Contains" />
+    <Link Source="@6" Target="(@5 @331)" Category="Contains" />
+    <Link Source="@61" Target="@256" Category="PoundInclude" />
+    <Link Source="@63" Target="@258" Category="PoundInclude" />
+    <Link Source="@65" Target="@139" Category="PoundInclude" />
+    <Link Source="@65" Target="@234" Category="PoundInclude" />
+    <Link Source="@65" Target="@256" Category="PoundInclude" />
+    <Link Source="@65" Target="@61" Category="PoundInclude" />
+    <Link Source="@65" Target="@75" Category="PoundInclude" />
+    <Link Source="@67" Target="@141" Category="PoundInclude" />
+    <Link Source="@67" Target="@234" Category="PoundInclude" />
+    <Link Source="@67" Target="@258" Category="PoundInclude" />
+    <Link Source="@67" Target="@63" Category="PoundInclude" />
+    <Link Source="@67" Target="@77" Category="PoundInclude" />
+    <Link Source="@69" Target="@115" Category="PoundInclude" />
+    <Link Source="@69" Target="@117" Category="PoundInclude" />
+    <Link Source="@69" Target="@131" Category="PoundInclude" />
+    <Link Source="@69" Target="@133" Category="PoundInclude" />
+    <Link Source="@69" Target="@367" Category="PoundInclude" />
+    <Link Source="@69" Target="@53" Category="PoundInclude" />
+    <Link Source="@69" Target="@55" Category="PoundInclude" />
+    <Link Source="@69" Target="@65" Category="PoundInclude" />
+    <Link Source="@69" Target="@67" Category="PoundInclude" />
+    <Link Source="@71" Target="@256" Category="PoundInclude" />
+    <Link Source="@71" Target="@75" Category="PoundInclude" />
+    <Link Source="@73" Target="@258" Category="PoundInclude" />
+    <Link Source="@73" Target="@77" Category="PoundInclude" />
+    <Link Source="@75" Target="@256" Category="PoundInclude" />
+    <Link Source="@77" Target="@258" Category="PoundInclude" />
+    <Link Source="@79" Target="@226" Category="PoundInclude" />
+    <Link Source="@8" Target="(@7 @197)" Category="Contains" />
+    <Link Source="@8" Target="(@7 @205)" Category="Contains" />
+    <Link Source="@8" Target="(@7 @235)" Category="Contains" />
+    <Link Source="@8" Target="(@7 @266)" Category="Contains" />
+    <Link Source="@8" Target="(@7 @314)" Category="Contains" />
+    <Link Source="@8" Target="(@7 @323)" Category="Contains" />
+    <Link Source="@8" Target="(@7 @332)" Category="Contains" />
+    <Link Source="@82" Target="@226" Category="PoundInclude" />
+    <Link Source="@85" Target="@256" Category="PoundInclude" />
+    <Link Source="@87" Target="@258" Category="PoundInclude" />
+    <Link Source="@89" Target="@161" Category="PoundInclude" />
+    <Link Source="@89" Target="@222" Category="PoundInclude" />
+    <Link Source="@91" Target="@256" Category="PoundInclude" />
+    <Link Source="@93" Target="@258" Category="PoundInclude" />
+    <Link Source="@95" Target="@256" Category="PoundInclude" />
+    <Link Source="@97" Target="@258" Category="PoundInclude" />
+    <Link Source="@99" Target="@256" Category="PoundInclude" />
+    <Link Source="@99" Target="@95" Category="PoundInclude" />
+    <Link Source="G4" Target="@101" Category="Contains" />
+    <Link Source="G4" Target="@103" Category="Contains" />
+    <Link Source="G4" Target="@105" Category="Contains" />
+    <Link Source="G4" Target="@111" Category="Contains" />
+    <Link Source="G4" Target="@113" Category="Contains" />
+    <Link Source="G4" Target="@115" Category="Contains" />
+    <Link Source="G4" Target="@117" Category="Contains" />
+    <Link Source="G4" Target="@119" Category="Contains" />
+    <Link Source="G4" Target="@121" Category="Contains" />
+    <Link Source="G4" Target="@131" Category="Contains" />
+    <Link Source="G4" Target="@133" Category="Contains" />
+    <Link Source="G4" Target="@149" Category="Contains" />
+    <Link Source="G4" Target="@151" Category="Contains" />
+    <Link Source="G4" Target="@177" Category="Contains" />
+    <Link Source="G4" Target="@179" Category="Contains" />
+    <Link Source="G4" Target="@189" Category="Contains" />
+    <Link Source="G4" Target="@191" Category="Contains" />
+    <Link Source="G4" Target="@193" Category="Contains" />
+    <Link Source="G4" Target="@195" Category="Contains" />
+    <Link Source="G4" Target="@241" Category="Contains" />
+    <Link Source="G4" Target="@243" Category="Contains" />
+    <Link Source="G4" Target="@256" Category="Contains" />
+    <Link Source="G4" Target="@258" Category="Contains" />
+    <Link Source="G4" Target="@65" Category="Contains" />
+    <Link Source="G4" Target="@67" Category="Contains" />
+    <Link Source="G4" Target="@71" Category="Contains" />
+    <Link Source="G4" Target="@73" Category="Contains" />
+    <Link Source="G4" Target="@85" Category="Contains" />
+    <Link Source="G4" Target="@87" Category="Contains" />
+    <Link Source="G4" Target="@99" Category="Contains" />
+    <Link Source="G4" Target="Windows SDK Indirectly Included" Category="Contains" />
+    <Link Source="OthersGroup" Target="@135" Category="Contains" />
+    <Link Source="OthersGroup" Target="@137" Category="Contains" />
+    <Link Source="OthersGroup" Target="@143" Category="Contains" />
+    <Link Source="OthersGroup" Target="@145" Category="Contains" />
+    <Link Source="OthersGroup" Target="@147" Category="Contains" />
+    <Link Source="OthersGroup" Target="@155" Category="Contains" />
+    <Link Source="OthersGroup" Target="@157" Category="Contains" />
+    <Link Source="OthersGroup" Target="@159" Category="Contains" />
+    <Link Source="OthersGroup" Target="@161" Category="Contains" />
+    <Link Source="OthersGroup" Target="@167" Category="Contains" />
+    <Link Source="OthersGroup" Target="@169" Category="Contains" />
+    <Link Source="OthersGroup" Target="@171" Category="Contains" />
+    <Link Source="OthersGroup" Target="@212" Category="Contains" />
+    <Link Source="OthersGroup" Target="@222" Category="Contains" />
+    <Link Source="OthersGroup" Target="@224" Category="Contains" />
+    <Link Source="OthersGroup" Target="@226" Category="Contains" />
+    <Link Source="OthersGroup" Target="@228" Category="Contains" />
+    <Link Source="OthersGroup" Target="@234" Category="Contains" />
+    <Link Source="OthersGroup" Target="@25" Category="Contains" />
+    <Link Source="OthersGroup" Target="@254" Category="Contains" />
+    <Link Source="OthersGroup" Target="@260" Category="Contains" />
+    <Link Source="OthersGroup" Target="@262" Category="Contains" />
+    <Link Source="OthersGroup" Target="@27" Category="Contains" />
+    <Link Source="OthersGroup" Target="@285" Category="Contains" />
+    <Link Source="OthersGroup" Target="@287" Category="Contains" />
+    <Link Source="OthersGroup" Target="@289" Category="Contains" />
+    <Link Source="OthersGroup" Target="@291" Category="Contains" />
+    <Link Source="OthersGroup" Target="@293" Category="Contains" />
+    <Link Source="OthersGroup" Target="@295" Category="Contains" />
+    <Link Source="OthersGroup" Target="@297" Category="Contains" />
+    <Link Source="OthersGroup" Target="@299" Category="Contains" />
+    <Link Source="OthersGroup" Target="@301" Category="Contains" />
+    <Link Source="OthersGroup" Target="@303" Category="Contains" />
+    <Link Source="OthersGroup" Target="@33" Category="Contains" />
+    <Link Source="OthersGroup" Target="@339" Category="Contains" />
+    <Link Source="OthersGroup" Target="@341" Category="Contains" />
+    <Link Source="OthersGroup" Target="@343" Category="Contains" />
+    <Link Source="OthersGroup" Target="@345" Category="Contains" />
+    <Link Source="OthersGroup" Target="@347" Category="Contains" />
+    <Link Source="OthersGroup" Target="@349" Category="Contains" />
+    <Link Source="OthersGroup" Target="@35" Category="Contains" />
+    <Link Source="OthersGroup" Target="@351" Category="Contains" />
+    <Link Source="OthersGroup" Target="@353" Category="Contains" />
+    <Link Source="OthersGroup" Target="@355" Category="Contains" />
+    <Link Source="OthersGroup" Target="@357" Category="Contains" />
+    <Link Source="OthersGroup" Target="@359" Category="Contains" />
+    <Link Source="OthersGroup" Target="@361" Category="Contains" />
+    <Link Source="OthersGroup" Target="@363" Category="Contains" />
+    <Link Source="OthersGroup" Target="@365" Category="Contains" />
+    <Link Source="OthersGroup" Target="@367" Category="Contains" />
+    <Link Source="OthersGroup" Target="@369" Category="Contains" />
+    <Link Source="OthersGroup" Target="@37" Category="Contains" />
+    <Link Source="OthersGroup" Target="@39" Category="Contains" />
+    <Link Source="OthersGroup" Target="@41" Category="Contains" />
+    <Link Source="OthersGroup" Target="@43" Category="Contains" />
+    <Link Source="OthersGroup" Target="@45" Category="Contains" />
+    <Link Source="OthersGroup" Target="@47" Category="Contains" />
+    <Link Source="OthersGroup" Target="@49" Category="Contains" />
+    <Link Source="OthersGroup" Target="@51" Category="Contains" />
+    <Link Source="OthersGroup" Target="@53" Category="Contains" />
+    <Link Source="OthersGroup" Target="@55" Category="Contains" />
+    <Link Source="OthersGroup" Target="@69" Category="Contains" />
+    <Link Source="OthersGroup" Target="@79" Category="Contains" />
+    <Link Source="OthersGroup" Target="@82" Category="Contains" />
+    <Link Source="OthersGroup" Target="@89" Category="Contains" />
+    <Link Source="PoundIncludeGraphExternalsGroup" Target="G4" Category="Contains" />
+    <Link Source="PoundIncludeGraphExternalsGroup" Target="OthersGroup" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@107" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@109" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@123" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@125" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@127" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@129" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@139" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@141" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@153" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@173" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@175" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@181" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@183" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@185" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@187" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@214" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@217" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@219" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@230" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@232" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@237" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@239" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@245" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@247" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@249" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@251" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@273" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@275" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@277" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@279" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@281" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@283" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@61" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@63" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@75" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@77" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@91" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@93" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@95" Category="Contains" />
+    <Link Source="Windows SDK Indirectly Included" Target="@97" Category="Contains" />
+  </Links>
+  <Categories>
+    <Category Id="CodeSchema_PoundIncludeFile" Label="C++ Project File" BasedOn="File" CanBeDataDriven="True" IsProviderRoot="False" NavigationActionLabel="C++ Project File" />
+    <Category Id="CodeSchema_PoundIncludeGroup" Label="#include Group" BasedOn="Group" CanBeDataDriven="True" IsProviderRoot="False" NavigationActionLabel="#include Group" />
+    <Category Id="CodeSchema_ProjectItem" Label="Project Item" BasedOn="File" CanBeDataDriven="True" DefaultAction="Node:Both:CodeSchema_Type" Icon="File" NavigationActionLabel="Project Items" />
+    <Category Id="Contains" Label="Contains" Description="Whether the source of the link contains the target object" CanBeDataDriven="False" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Contained By" IsContainment="True" OutgoingActionLabel="Contains" />
+    <Category Id="Externals" Label="Externals" CanBeDataDriven="True" IsProviderRoot="False" NavigationActionLabel="Externals" />
+    <Category Id="File" Label="File" CanBeDataDriven="True" DefaultAction="Microsoft.Contains" Icon="File" NavigationActionLabel="Files" />
+    <Category Id="Group" Label="Group" CanBeDataDriven="True" DefaultAction="Microsoft.Contains" IsProviderRoot="False" NavigationActionLabel="Groups" />
+    <Category Id="PoundInclude" Label="#include" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="#include By" OutgoingActionLabel="#include" />
+  </Categories>
+  <Properties>
+    <Property Id="Bounds" DataType="System.Windows.Rect" />
+    <Property Id="CanBeDataDriven" Label="CanBeDataDriven" Description="CanBeDataDriven" DataType="System.Boolean" />
+    <Property Id="CanLinkedNodesBeDataDriven" Label="CanLinkedNodesBeDataDriven" Description="CanLinkedNodesBeDataDriven" DataType="System.Boolean" />
+    <Property Id="DefaultAction" Label="DefaultAction" Description="DefaultAction" DataType="System.String" />
+    <Property Id="Expression" DataType="System.String" />
+    <Property Id="FilePath" Label="File Path" Description="File Path" DataType="System.String" />
+    <Property Id="Group" Label="Group" Description="Display the node as a group" DataType="Microsoft.VisualStudio.GraphModel.GraphGroupStyle" />
+    <Property Id="GroupLabel" DataType="System.String" />
+    <Property Id="Icon" DataType="System.String" />
+    <Property Id="IncomingActionLabel" Label="IncomingActionLabel" Description="IncomingActionLabel" DataType="System.String" />
+    <Property Id="IsContainment" DataType="System.Boolean" />
+    <Property Id="IsEnabled" DataType="System.Boolean" />
+    <Property Id="IsProviderRoot" Label="IsProviderRoot" Description="IsProviderRoot" DataType="System.Boolean" />
+    <Property Id="Label" Label="Label" Description="Displayable label of an Annotatable object" DataType="System.String" />
+    <Property Id="Language" Label="Language" Description="Language" DataType="System.String" />
+    <Property Id="NavigationActionLabel" Label="NavigationActionLabel" Description="NavigationActionLabel" DataType="System.String" />
+    <Property Id="OutgoingActionLabel" Label="OutgoingActionLabel" Description="OutgoingActionLabel" DataType="System.String" />
+    <Property Id="TargetType" DataType="System.Type" />
+    <Property Id="Value" DataType="System.String" />
+    <Property Id="ValueLabel" DataType="System.String" />
+  </Properties>
+  <QualifiedNames>
+    <Name Id="Assembly" Label="Assembly" ValueType="Uri" />
+    <Name Id="File" Label="File" ValueType="Uri" />
+  </QualifiedNames>
+  <IdentifierAliases>
+    <Alias n="1" Uri="Assembly=file:///D:/DEV/GITHUB_LMDBWINDOWS/CONSOLEAPPLICATION1/CONSOLEAPPLICATION1.VCXPROJ" />
+    <Alias n="2" Id="(@1)" />
+    <Alias n="3" Uri="Assembly=file:///D:/Dev/GitHub_LMDBWindows/HttpLMDB/HttpLMDB.vcxproj" />
+    <Alias n="4" Id="(@3)" />
+    <Alias n="5" Uri="Assembly=$(VsSolutionUri)DLL/LMDBWINDOWSDLL.VCXPROJ" />
+    <Alias n="6" Id="(@5)" />
+    <Alias n="7" Uri="Assembly=file:///D:/DEV/GITHUB_LMDBWINDOWS/ADMIN/ADMIN.VCXPROJ" />
+    <Alias n="8" Id="(@7)" />
+    <Alias n="9" Uri="Assembly=file:///D:/Dev/GitHub_LMDBWindows/ConsoleApplication/ConsoleApplication.vcxproj" />
+    <Alias n="10" Id="(@9)" />
+    <Alias n="11" Uri="Assembly=file:///D:/Dev/GitHub_LMDBWindows/LMDBWrapper/LMDBWrapper.vcxproj" />
+    <Alias n="12" Id="(@11)" />
+    <Alias n="13" Uri="Assembly=file:///D:/Dev/GitHub_LMDBWindows/MyServer/MyServer.vcxproj" />
+    <Alias n="14" Id="(@13)" />
+    <Alias n="15" Uri="Assembly=$(VsSolutionUri)/LMDBWindows.vcxproj" />
+    <Alias n="16" Id="(@15)" />
+    <Alias n="17" Uri="Assembly=file:///D:/DEV/GITHUB_LMDBWINDOWS/MYCLIENT/MYCLIENT.VCXPROJ" />
+    <Alias n="18" Id="(@17)" />
+    <Alias n="19" Uri="Assembly=file:///D:/DEV/GITHUB_LMDBWINDOWS/HTTPLMDB_CLIENT/HTTPLMDB_CLIENT.VCXPROJ" />
+    <Alias n="20" Id="(@19)" />
+    <Alias n="21" Uri="Assembly=file:///D:/Dev/GitHub_LMDBWindows/LMDBWrapper_Client/LMDBWrapper_Client.vcxproj" />
+    <Alias n="22" Id="(@21)" />
+    <Alias n="23" Uri="Assembly=" />
+    <Alias n="24" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/xmemory0" />
+    <Alias n="25" Id="(@23 @24)" />
+    <Alias n="26" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/cstdlib" />
+    <Alias n="27" Id="(@23 @26)" />
+    <Alias n="28" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/libraries/liblmdb/mdb.c" />
+    <Alias n="29" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/libraries/lmdb-dll/mdb.c" />
+    <Alias n="30" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/libraries/liblmdb/midl.c" />
+    <Alias n="31" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/libraries/lmdb-dll/midl.c" />
+    <Alias n="32" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/iosfwd" />
+    <Alias n="33" Id="(@23 @32)" />
+    <Alias n="34" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/xlocale" />
+    <Alias n="35" Id="(@23 @34)" />
+    <Alias n="36" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/tuple" />
+    <Alias n="37" Id="(@23 @36)" />
+    <Alias n="38" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/xiosbase" />
+    <Alias n="39" Id="(@23 @38)" />
+    <Alias n="40" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/cstddef" />
+    <Alias n="41" Id="(@23 @40)" />
+    <Alias n="42" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/xstddef" />
+    <Alias n="43" Id="(@23 @42)" />
+    <Alias n="44" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/streambuf" />
+    <Alias n="45" Id="(@23 @44)" />
+    <Alias n="46" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/cstring" />
+    <Alias n="47" Id="(@23 @46)" />
+    <Alias n="48" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/xstring" />
+    <Alias n="49" Id="(@23 @48)" />
+    <Alias n="50" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/string" />
+    <Alias n="51" Id="(@23 @50)" />
+    <Alias n="52" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/xatomic0.h" />
+    <Alias n="53" Id="(@23 @52)" />
+    <Alias n="54" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/intrin0.h" />
+    <Alias n="55" Id="(@23 @54)" />
+    <Alias n="56" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/Include/Base64.h" />
+    <Alias n="57" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/MyServer/LMDBData.h" />
+    <Alias n="58" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/Include/HttpLMDB.h" />
+    <Alias n="59" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/libraries/liblmdb/lmdb.h" />
+    <Alias n="60" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/ucrt/corecrt_wstdlib.h" />
+    <Alias n="61" Id="(@23 @60)" />
+    <Alias n="62" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/corecrt_wstdlib.h" />
+    <Alias n="63" Id="(@23 @62)" />
+    <Alias n="64" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/ucrt/stdlib.h" />
+    <Alias n="65" Id="(@23 @64)" />
+    <Alias n="66" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/stdlib.h" />
+    <Alias n="67" Id="(@23 @66)" />
+    <Alias n="68" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/xatomic.h" />
+    <Alias n="69" Id="(@23 @68)" />
+    <Alias n="70" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/ucrt/malloc.h" />
+    <Alias n="71" Id="(@23 @70)" />
+    <Alias n="72" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/malloc.h" />
+    <Alias n="73" Id="(@23 @72)" />
+    <Alias n="74" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/ucrt/corecrt_malloc.h" />
+    <Alias n="75" Id="(@23 @74)" />
+    <Alias n="76" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/corecrt_malloc.h" />
+    <Alias n="77" Id="(@23 @76)" />
+    <Alias n="78" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/xerrc.h" />
+    <Alias n="79" Id="(@23 @78)" />
+    <Alias n="80" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/MyServer/CSWMRGuard.h" />
+    <Alias n="81" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/xcall_once.h" />
+    <Alias n="82" Id="(@23 @81)" />
+    <Alias n="83" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/LMDBWrapper/Resource.h" />
+    <Alias n="84" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/ucrt/locale.h" />
+    <Alias n="85" Id="(@23 @84)" />
+    <Alias n="86" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/locale.h" />
+    <Alias n="87" Id="(@23 @86)" />
+    <Alias n="88" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/vcruntime.h" />
+    <Alias n="89" Id="(@23 @88)" />
+    <Alias n="90" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/ucrt/corecrt_wtime.h" />
+    <Alias n="91" Id="(@23 @90)" />
+    <Alias n="92" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/corecrt_wtime.h" />
+    <Alias n="93" Id="(@23 @92)" />
+    <Alias n="94" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/ucrt/corecrt_wctype.h" />
+    <Alias n="95" Id="(@23 @94)" />
+    <Alias n="96" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/corecrt_wctype.h" />
+    <Alias n="97" Id="(@23 @96)" />
+    <Alias n="98" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/ucrt/ctype.h" />
+    <Alias n="99" Id="(@23 @98)" />
+    <Alias n="100" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/ctype.h" />
+    <Alias n="101" Id="(@23 @100)" />
+    <Alias n="102" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/ucrt/share.h" />
+    <Alias n="103" Id="(@23 @102)" />
+    <Alias n="104" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/share.h" />
+    <Alias n="105" Id="(@23 @104)" />
+    <Alias n="106" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/ucrt/corecrt_share.h" />
+    <Alias n="107" Id="(@23 @106)" />
+    <Alias n="108" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/corecrt_share.h" />
+    <Alias n="109" Id="(@23 @108)" />
+    <Alias n="110" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/ucrt/corecrt_terminate.h" />
+    <Alias n="111" Id="(@23 @110)" />
+    <Alias n="112" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/corecrt_terminate.h" />
+    <Alias n="113" Id="(@23 @112)" />
+    <Alias n="114" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/ucrt/stddef.h" />
+    <Alias n="115" Id="(@23 @114)" />
+    <Alias n="116" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/stddef.h" />
+    <Alias n="117" Id="(@23 @116)" />
+    <Alias n="118" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/ucrt/crtdbg.h" />
+    <Alias n="119" Id="(@23 @118)" />
+    <Alias n="120" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/crtdbg.h" />
+    <Alias n="121" Id="(@23 @120)" />
+    <Alias n="122" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/ucrt/corecrt_stdio_config.h" />
+    <Alias n="123" Id="(@23 @122)" />
+    <Alias n="124" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/corecrt_stdio_config.h" />
+    <Alias n="125" Id="(@23 @124)" />
+    <Alias n="126" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/ucrt/corecrt_wstring.h" />
+    <Alias n="127" Id="(@23 @126)" />
+    <Alias n="128" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/corecrt_wstring.h" />
+    <Alias n="129" Id="(@23 @128)" />
+    <Alias n="130" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/ucrt/string.h" />
+    <Alias n="131" Id="(@23 @130)" />
+    <Alias n="132" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/string.h" />
+    <Alias n="133" Id="(@23 @132)" />
+    <Alias n="134" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/vcruntime_string.h" />
+    <Alias n="135" Id="(@23 @134)" />
+    <Alias n="136" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/vcruntime_new_debug.h" />
+    <Alias n="137" Id="(@23 @136)" />
+    <Alias n="138" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/ucrt/corecrt_search.h" />
+    <Alias n="139" Id="(@23 @138)" />
+    <Alias n="140" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/corecrt_search.h" />
+    <Alias n="141" Id="(@23 @140)" />
+    <Alias n="142" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/eh.h" />
+    <Alias n="143" Id="(@23 @142)" />
+    <Alias n="144" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/xtgmath.h" />
+    <Alias n="145" Id="(@23 @144)" />
+    <Alias n="146" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/ymath.h" />
+    <Alias n="147" Id="(@23 @146)" />
+    <Alias n="148" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/ucrt/math.h" />
+    <Alias n="149" Id="(@23 @148)" />
+    <Alias n="150" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/math.h" />
+    <Alias n="151" Id="(@23 @150)" />
+    <Alias n="152" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/corecrt_math.h" />
+    <Alias n="153" Id="(@23 @152)" />
+    <Alias n="154" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/use_ansi.h" />
+    <Alias n="155" Id="(@23 @154)" />
+    <Alias n="156" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/xkeycheck.h" />
+    <Alias n="157" Id="(@23 @156)" />
+    <Alias n="158" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/concurrencysal.h" />
+    <Alias n="159" Id="(@23 @158)" />
+    <Alias n="160" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/sal.h" />
+    <Alias n="161" Id="(@23 @160)" />
+    <Alias n="162" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/libraries/liblmdb/midl.h" />
+    <Alias n="163" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/Include/lmdb-dll.h" />
+    <Alias n="164" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/Include/midl-dll.h" />
+    <Alias n="165" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/Include/LMDBWindowsDll.h" />
+    <Alias n="166" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/vcruntime_exception.h" />
+    <Alias n="167" Id="(@23 @166)" />
+    <Alias n="168" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/xlocinfo.h" />
+    <Alias n="169" Id="(@23 @168)" />
+    <Alias n="170" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/vcruntime_typeinfo.h" />
+    <Alias n="171" Id="(@23 @170)" />
+    <Alias n="172" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/ucrt/corecrt_wstdio.h" />
+    <Alias n="173" Id="(@23 @172)" />
+    <Alias n="174" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/corecrt_wstdio.h" />
+    <Alias n="175" Id="(@23 @174)" />
+    <Alias n="176" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/ucrt/stdio.h" />
+    <Alias n="177" Id="(@23 @176)" />
+    <Alias n="178" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/stdio.h" />
+    <Alias n="179" Id="(@23 @178)" />
+    <Alias n="180" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/ucrt/corecrt_wconio.h" />
+    <Alias n="181" Id="(@23 @180)" />
+    <Alias n="182" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/corecrt_wconio.h" />
+    <Alias n="183" Id="(@23 @182)" />
+    <Alias n="184" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/ucrt/corecrt_wio.h" />
+    <Alias n="185" Id="(@23 @184)" />
+    <Alias n="186" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/corecrt_wio.h" />
+    <Alias n="187" Id="(@23 @186)" />
+    <Alias n="188" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/ucrt/errno.h" />
+    <Alias n="189" Id="(@23 @188)" />
+    <Alias n="190" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/errno.h" />
+    <Alias n="191" Id="(@23 @190)" />
+    <Alias n="192" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/ucrt/wchar.h" />
+    <Alias n="193" Id="(@23 @192)" />
+    <Alias n="194" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/wchar.h" />
+    <Alias n="195" Id="(@23 @194)" />
+    <Alias n="196" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/LMDBWrapper/header.h" />
+    <Alias n="197" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/Include/MyServer/Helper.h" />
+    <Alias n="198" Id="(@13 @197)" />
+    <Alias n="199" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/Include/LMDBWrapper.h" />
+    <Alias n="200" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/Include/CWrapper.h" />
+    <Alias n="201" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/MyServer/MyServer.h" />
+    <Alias n="202" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/ConsoleApplication1/targetver.h" />
+    <Alias n="203" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/HttpLMDB/targetver.h" />
+    <Alias n="204" Uri="File=$(VsSolutionUri)Dll/targetver.h" />
+    <Alias n="205" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/Admin/targetver.h" />
+    <Alias n="206" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/ConsoleApplication/targetver.h" />
+    <Alias n="207" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/LMDBWrapper/targetver.h" />
+    <Alias n="208" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/MyClient/targetver.h" />
+    <Alias n="209" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/HttpLMDB_Client/targetver.h" />
+    <Alias n="210" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/LMDBWrapper_Client/targetver.h" />
+    <Alias n="211" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/xpolymorphic_allocator.h" />
+    <Alias n="212" Id="(@23 @211)" />
+    <Alias n="213" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/corecrt_math_defines.h" />
+    <Alias n="214" Id="(@23 @213)" />
+    <Alias n="215" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/Include/MyServer/messagetypes.h" />
+    <Alias n="216" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/ucrt/sys/types.h" />
+    <Alias n="217" Id="(@23 @216)" />
+    <Alias n="218" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/sys/types.h" />
+    <Alias n="219" Id="(@23 @218)" />
+    <Alias n="220" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/MyServer/WorkerNodeAttributes.h" />
+    <Alias n="221" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/vadefs.h" />
+    <Alias n="222" Id="(@23 @221)" />
+    <Alias n="223" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/crtdefs.h" />
+    <Alias n="224" Id="(@23 @223)" />
+    <Alias n="225" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/yvals.h" />
+    <Alias n="226" Id="(@23 @225)" />
+    <Alias n="227" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/CodeAnalysis/sourceannotations.h" />
+    <Alias n="228" Id="(@23 @227)" />
+    <Alias n="229" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/ucrt/corecrt_wprocess.h" />
+    <Alias n="230" Id="(@23 @229)" />
+    <Alias n="231" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/corecrt_wprocess.h" />
+    <Alias n="232" Id="(@23 @231)" />
+    <Alias n="233" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/limits.h" />
+    <Alias n="234" Id="(@23 @233)" />
+    <Alias n="235" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/Include/MyServer/Constants.h" />
+    <Alias n="236" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/ucrt/corecrt_memcpy_s.h" />
+    <Alias n="237" Id="(@23 @236)" />
+    <Alias n="238" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/corecrt_memcpy_s.h" />
+    <Alias n="239" Id="(@23 @238)" />
+    <Alias n="240" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/ucrt/float.h" />
+    <Alias n="241" Id="(@23 @240)" />
+    <Alias n="242" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/float.h" />
+    <Alias n="243" Id="(@23 @242)" />
+    <Alias n="244" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/ucrt/sys/stat.h" />
+    <Alias n="245" Id="(@23 @244)" />
+    <Alias n="246" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/sys/stat.h" />
+    <Alias n="247" Id="(@23 @246)" />
+    <Alias n="248" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/ucrt/corecrt_wdirect.h" />
+    <Alias n="249" Id="(@23 @248)" />
+    <Alias n="250" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/corecrt_wdirect.h" />
+    <Alias n="251" Id="(@23 @250)" />
+    <Alias n="252" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/MyServer/WorkerNodeClient.h" />
+    <Alias n="253" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/stdint.h" />
+    <Alias n="254" Id="(@23 @253)" />
+    <Alias n="255" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/ucrt/corecrt.h" />
+    <Alias n="256" Id="(@23 @255)" />
+    <Alias n="257" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/corecrt.h" />
+    <Alias n="258" Id="(@23 @257)" />
+    <Alias n="259" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/xstring_insert.h" />
+    <Alias n="260" Id="(@23 @259)" />
+    <Alias n="261" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/vcruntime_new.h" />
+    <Alias n="262" Id="(@23 @261)" />
+    <Alias n="263" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/ConsoleApplication1/stdafx.h" />
+    <Alias n="264" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/HttpLMDB/stdafx.h" />
+    <Alias n="265" Uri="File=$(VsSolutionUri)Dll/stdafx.h" />
+    <Alias n="266" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/Admin/stdafx.h" />
+    <Alias n="267" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/ConsoleApplication/stdafx.h" />
+    <Alias n="268" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/MyServer/stdafx.h" />
+    <Alias n="269" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/MyClient/stdafx.h" />
+    <Alias n="270" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/HttpLMDB_Client/stdafx.h" />
+    <Alias n="271" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/LMDBWrapper_Client/stdafx.h" />
+    <Alias n="272" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/shared/winpackagefamily.h" />
+    <Alias n="273" Id="(@23 @272)" />
+    <Alias n="274" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/shared/winpackagefamily.h" />
+    <Alias n="275" Id="(@23 @274)" />
+    <Alias n="276" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/shared/winapifamily.h" />
+    <Alias n="277" Id="(@23 @276)" />
+    <Alias n="278" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/shared/winapifamily.h" />
+    <Alias n="279" Id="(@23 @278)" />
+    <Alias n="280" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.14393.0/ucrt/corecrt_memory.h" />
+    <Alias n="281" Id="(@23 @280)" />
+    <Alias n="282" Uri="File=$(ProgramFilesUri)/Windows Kits/10/Include/10.0.16299.0/ucrt/corecrt_memory.h" />
+    <Alias n="283" Id="(@23 @282)" />
+    <Alias n="284" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/cmath" />
+    <Alias n="285" Id="(@23 @284)" />
+    <Alias n="286" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/istream" />
+    <Alias n="287" Id="(@23 @286)" />
+    <Alias n="288" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/ostream" />
+    <Alias n="289" Id="(@23 @288)" />
+    <Alias n="290" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/xlocnum" />
+    <Alias n="291" Id="(@23 @290)" />
+    <Alias n="292" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/exception" />
+    <Alias n="293" Id="(@23 @292)" />
+    <Alias n="294" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/xtr1common" />
+    <Alias n="295" Id="(@23 @294)" />
+    <Alias n="296" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/xlocinfo" />
+    <Alias n="297" Id="(@23 @296)" />
+    <Alias n="298" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/typeinfo" />
+    <Alias n="299" Id="(@23 @298)" />
+    <Alias n="300" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/cstdio" />
+    <Alias n="301" Id="(@23 @300)" />
+    <Alias n="302" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/cerrno" />
+    <Alias n="303" Id="(@23 @302)" />
+    <Alias n="304" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/ConsoleApplication1/ConsoleApplication1.cpp" />
+    <Alias n="305" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/Include/Base64.cpp" />
+    <Alias n="306" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/MyServer/LMDBData.cpp" />
+    <Alias n="307" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/HttpLMDB/HttpLMDB.cpp" />
+    <Alias n="308" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/MyServer/CSWMRGuard.cpp" />
+    <Alias n="309" Uri="File=$(VsSolutionUri)Dll/LMDBWindowsDll.cpp" />
+    <Alias n="310" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/HttpLMDB/dllmain.cpp" />
+    <Alias n="311" Uri="File=$(VsSolutionUri)Dll/dllmain.cpp" />
+    <Alias n="312" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/MyServer/Main.cpp" />
+    <Alias n="313" Id="(@13 @312)" />
+    <Alias n="314" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/Admin/Admin.cpp" />
+    <Alias n="315" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/ConsoleApplication/ConsoleApplication.cpp" />
+    <Alias n="316" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/Include/MyServer/Helper.cpp" />
+    <Alias n="317" Id="(@13 @316)" />
+    <Alias n="318" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/LMDBWrapper/LMDBWrapper.cpp" />
+    <Alias n="319" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/LMDBWrapper/CWrapper.cpp" />
+    <Alias n="320" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/MyServer/MyServer.cpp" />
+    <Alias n="321" Id="(@13 @320)" />
+    <Alias n="322" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/MyServer/WorkerNodeAttributes.cpp" />
+    <Alias n="323" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/Include/MyServer/Constants.cpp" />
+    <Alias n="324" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/MyServer/WorkerNodeClient.cpp" />
+    <Alias n="325" Id="(@13 @324)" />
+    <Alias n="326" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/MyClient/Client.cpp" />
+    <Alias n="327" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/HttpLMDB_Client/HttpLMDB_Client.cpp" />
+    <Alias n="328" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/LMDBWrapper_Client/LMDBWrapper_Client.cpp" />
+    <Alias n="329" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/ConsoleApplication1/stdafx.cpp" />
+    <Alias n="330" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/HttpLMDB/stdafx.cpp" />
+    <Alias n="331" Uri="File=$(VsSolutionUri)Dll/stdafx.cpp" />
+    <Alias n="332" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/Admin/stdafx.cpp" />
+    <Alias n="333" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/ConsoleApplication/stdafx.cpp" />
+    <Alias n="334" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/MyServer/stdafx.cpp" />
+    <Alias n="335" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/MyClient/stdafx.cpp" />
+    <Alias n="336" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/HttpLMDB_Client/stdafx.cpp" />
+    <Alias n="337" Uri="File=file:///D:/Dev/GitHub_LMDBWindows/LMDBWrapper_Client/stdafx.cpp" />
+    <Alias n="338" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/cwchar" />
+    <Alias n="339" Id="(@23 @338)" />
+    <Alias n="340" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/system_error" />
+    <Alias n="341" Id="(@23 @340)" />
+    <Alias n="342" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/ios" />
+    <Alias n="343" Id="(@23 @342)" />
+    <Alias n="344" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/type_traits" />
+    <Alias n="345" Id="(@23 @344)" />
+    <Alias n="346" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/climits" />
+    <Alias n="347" Id="(@23 @346)" />
+    <Alias n="348" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/limits" />
+    <Alias n="349" Id="(@23 @348)" />
+    <Alias n="350" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/cfloat" />
+    <Alias n="351" Id="(@23 @350)" />
+    <Alias n="352" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/xfacet" />
+    <Alias n="353" Id="(@23 @352)" />
+    <Alias n="354" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/cstdint" />
+    <Alias n="355" Id="(@23 @354)" />
+    <Alias n="356" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/stdexcept" />
+    <Alias n="357" Id="(@23 @356)" />
+    <Alias n="358" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/initializer_list" />
+    <Alias n="359" Id="(@23 @358)" />
+    <Alias n="360" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/new" />
+    <Alias n="361" Id="(@23 @360)" />
+    <Alias n="362" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/xmemory" />
+    <Alias n="363" Id="(@23 @362)" />
+    <Alias n="364" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/memory" />
+    <Alias n="365" Id="(@23 @364)" />
+    <Alias n="366" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/xutility" />
+    <Alias n="367" Id="(@23 @366)" />
+    <Alias n="368" Uri="File=$(VsInstallDirUri)/VC/Tools/MSVC/14.14.26428/include/utility" />
+    <Alias n="369" Id="(@23 @368)" />
+  </IdentifierAliases>
+  <Styles>
+    <Style TargetType="Node" GroupLabel="C++ Project File" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_PoundIncludeFile')" />
+      <Setter Property="Background" Value="#FFEFEFEF" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Externals" ValueLabel="Has category">
+      <Condition Expression="HasCategory('Externals')" />
+      <Setter Property="Background" Value="#FFA08080" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Source File" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_ProjectItem')" />
+      <Setter Property="Background" Value="#FFC0C0C0" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="#include Group" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_PoundIncludeGroup')" />
+      <Setter Property="Background" Value="#FFEFEFEF" />
+    </Style>
+  </Styles>
+  <Paths>
+    <Path Id="ProgramFiles" Value="C:\Program Files (x86)" />
+    <Path Id="ProgramFilesUri" Value="file:///C:/Program Files (x86)" />
+    <Path Id="VsInstallDir" Value="C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise" />
+    <Path Id="VsInstallDirUri" Value="file:///C:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise" />
+    <Path Id="VsSolution" Value="D:\Dev\GitHub_LMDBWindows\LMDBWindows" />
+    <Path Id="VsSolutionUri" Value="file:///D:/Dev/GitHub_LMDBWindows/LMDBWindows" />
+  </Paths>
+</DirectedGraph>

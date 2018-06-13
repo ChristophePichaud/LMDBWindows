@@ -24,7 +24,7 @@
     <ClInclude Include="..\Include\CWrapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\Base64.h">
+    <ClInclude Include="..\Include\MyServer\Helper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -33,9 +33,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LMDBWrapper_Client.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Include\Base64.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

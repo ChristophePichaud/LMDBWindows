@@ -27,7 +27,7 @@
     <ClInclude Include="..\Include\HttpLMDB.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\Base64.h">
+    <ClInclude Include="..\Include\MyServer\Helper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -44,7 +44,7 @@
     <ClCompile Include="..\Include\MyServer\Constants.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Include\Base64.cpp">
+    <ClCompile Include="..\Include\MyServer\Helper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
