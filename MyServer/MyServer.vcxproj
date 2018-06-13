@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="..\Include\MyServer\Constants.cpp" />
     <ClCompile Include="..\Include\MyServer\Helper.cpp" />
+    <ClCompile Include="CLogger.cpp" />
     <ClCompile Include="CSWMRGuard.cpp" />
     <ClCompile Include="LMDBData.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -35,6 +36,7 @@
     <ClInclude Include="..\Include\MyServer\messagetypes.h" />
     <ClInclude Include="CSWMRGuard.h" />
     <ClInclude Include="LMDBData.h" />
+    <ClInclude Include="Logger.h" />
     <ClInclude Include="MyServer.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="WorkerNodeAttributes.h" />

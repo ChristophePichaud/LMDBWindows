@@ -3,8 +3,10 @@
 #include "..\Include\MyServer\Helper.h"
 #include "WorkerNodeClient.h"
 #include "..\Include\MyServer\Constants.h"
+#include "Logger.h"
 
 CSWMRGuard g_Guard;
+CLogger g_Logger;
 
 int wmain(int argc, wchar_t *argv[])
 {
@@ -44,6 +46,11 @@ int wmain(int argc, wchar_t *argv[])
 
 	if (mode == Constants::ModeWorkerNode)
 	{
+		TCHAR sz[255];
+		_stprintf_s(sz, _T("Node_%s_%s.log"), port.c_str(), name.c_str());
+		g_Logger.Init(sz);
+		g_Logger.WriteLog(_T("Init Node..."));
+
 		//
 		// Create the a worker node instance
 		//
@@ -61,6 +68,11 @@ int wmain(int argc, wchar_t *argv[])
 	}
 	else
 	{
+		TCHAR sz[255];
+		_stprintf_s(sz, _T("Node_%s_MASTER.log"), port.c_str());
+		g_Logger.Init(sz);
+		g_Logger.WriteLog(_T("Init Master..."));
+
 		//
 		// Create the server instance
 		//
