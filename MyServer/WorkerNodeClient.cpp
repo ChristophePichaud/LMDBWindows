@@ -54,31 +54,32 @@ bool WorkerNodeClient::RegisterToMaster()
 		<< _T("&server=") << this->_server
 		<< _T("&port=") << this->_port
 		<< _T("&name=") << this->_name;
+	g_Logger.WriteLog(buf.str());
 
 	http_response response;
 	http_client client(url);
 	response = client.request(methods::GET, buf.str()).get();
-	wcout << response.to_string() << endl;
+	g_Logger.WriteLog(response.to_string());
 
 	return true;
 }
 
 void WorkerNodeClient::handle_get(http_request message)
 {
-	std::wcout << _T("handle_get") << std::endl;
-	std::wcout << _T("Message") << _T(" ") << message.to_string() << endl;
-	std::wcout << _T("Relative URI") << _T(" ") << message.relative_uri().to_string() << endl;
+	g_Logger.WriteLog(_T("handle_get"));
+	g_Logger.WriteLog(_T("Message ") + message.to_string());
+	g_Logger.WriteLog(_T("Relative URI ") + message.relative_uri().to_string());
 
 	auto paths = uri::split_path(uri::decode(message.relative_uri().path()));
 	for (auto it1 = paths.begin(); it1 != paths.end(); it1++)
 	{
-		std::wcout << _T("Path") << _T(" ") << *it1 << endl;
+		g_Logger.WriteLog(_T("Path ") + *it1);
 	}
 
 	auto query = uri::split_query(uri::decode(message.relative_uri().query()));
 	for (auto it2 = query.begin(); it2 != query.end(); it2++)
 	{
-		std::wcout << _T("Query") << _T(" ") << it2->first << _T(" ") << it2->second << endl;
+		g_Logger.WriteLog(_T("Query ") + it2->first + _T(" ") + it2->second);
 	}
 
 	std::wstring request = CHelper::FindParameterInQuery(query, _T("request"));
@@ -88,7 +89,7 @@ void WorkerNodeClient::handle_get(http_request message)
 
 	if (request == Constants::VerbPing)
 	{
-		std::wcout << Constants::VerbPing << std::endl;
+		g_Logger.WriteLog(Constants::VerbPing);
 
 		PingData data;
 		data.ip = _server;
@@ -96,14 +97,14 @@ void WorkerNodeClient::handle_get(http_request message)
 		data.status = _T("OK");
 
 		std::wstring response = data.AsJSON().serialize();
-		std::wcout << response << endl;
+		g_Logger.WriteLog(response);
 
 		message.reply(status_codes::OK, data.AsJSON());
 	}
 
 	if (request == Constants::VerbSetNode)
 	{
-		std::wcout << Constants::VerbSetNode << std::endl;
+		g_Logger.WriteLog(Constants::VerbSetNode);
 		_dbName = dbname;
 		message.reply(status_codes::OK);
 
@@ -112,7 +113,7 @@ void WorkerNodeClient::handle_get(http_request message)
 
 	if (request == Constants::VerbReleaseDB)
 	{
-		std::wcout << Constants::VerbReleaseDB << std::endl;
+		g_Logger.WriteLog(Constants::VerbReleaseDB);
 		_dbName = dbname;
 		message.reply(status_codes::OK);
 
@@ -121,9 +122,11 @@ void WorkerNodeClient::handle_get(http_request message)
 
 	if (request == Constants::VerbGetData)
 	{
+		g_Logger.WriteLog(Constants::VerbGetData);
+
 		if (m_lmdb.m_Init == false)
 		{
-			std::wcout << _T("Init not done !") << endl;
+			g_Logger.WriteLog(_T("LMDB Init not done !"));
 			message.reply(status_codes::OK);
 			return;
 		}
@@ -145,7 +148,6 @@ void WorkerNodeClient::handle_get(http_request message)
 		mdb_dbi_open(m_lmdb.m_txn, NULL, 0, &m_lmdb.m_dbi);
 		int err = mdb_get(m_lmdb.m_txn, m_lmdb.m_dbi, &VKey, &VData);
 		mdb_txn_commit(m_lmdb.m_txn);
-		//mdb_env_stat(m_lmdb.m_env, &m_lmdb.m_mst);
 
 		if (err == MDB_NOTFOUND)
 		{
@@ -154,7 +156,7 @@ void WorkerNodeClient::handle_get(http_request message)
 			data.value = _T("");
 
 			std::wstring response = data.AsJSON().serialize();
-			std::wcout << response << endl;
+			g_Logger.WriteLog(response);
 
 			message.reply(status_codes::OK, data.AsJSON());
 		}
@@ -164,8 +166,10 @@ void WorkerNodeClient::handle_get(http_request message)
 			data.key = szKey;
 			data.value = (TCHAR *)VData.mv_data;
 
+			g_Logger.WriteLog(_T("Get Key:") + data.key + _T(" Value:") + data.value);
+
 			std::wstring response = data.AsJSON().serialize();
-			std::wcout << response << endl;
+			g_Logger.WriteLog(response);
 
 			message.reply(status_codes::OK, data.AsJSON());
 		}
@@ -175,9 +179,11 @@ void WorkerNodeClient::handle_get(http_request message)
 
 	if (request == Constants::VerbSetData)
 	{
+		g_Logger.WriteLog(Constants::VerbSetData);
+
 		if(m_lmdb.m_Init == false)
 		{
-			std::wcout << _T("Init not done !") << endl;
+			g_Logger.WriteLog(_T("LMDB Init not done !"));
 			message.reply(status_codes::OK);
 			return;
 		}
@@ -195,19 +201,20 @@ void WorkerNodeClient::handle_get(http_request message)
 		VKey.mv_data = szKey;
 		VData.mv_size = sizeof(szValue);
 		VData.mv_data = szValue;
-		_tprintf(_T("Add Key:%s Data:%s\n"), szKey, szValue);
+
+		g_Logger.WriteLog(_T("Set Key:") + std::wstring(szKey) + _T(" Value:") + std::wstring(szValue));
+		
 		mdb_txn_begin(m_lmdb.m_env, NULL, 0, &m_lmdb.m_txn);
 		mdb_dbi_open(m_lmdb.m_txn, NULL, 0, &m_lmdb.m_dbi);
 		mdb_put(m_lmdb.m_txn, m_lmdb.m_dbi, &VKey, &VData, MDB_NOOVERWRITE);
 		mdb_txn_commit(m_lmdb.m_txn);
-		//mdb_env_stat(m_lmdb.m_env, &m_lmdb.m_mst);
 
 		Data data;
 		data.key = szKey;
 		data.value = szValue;
 
 		std::wstring response = data.AsJSON().serialize();
-		std::wcout << response << endl;
+		g_Logger.WriteLog(response);
 
 		message.reply(status_codes::OK, data.AsJSON());
 
@@ -219,13 +226,12 @@ void WorkerNodeClient::handle_get(http_request message)
 		
 void WorkerNodeClient::Init_LMDB()
 {
-	USES_CONVERSION;
-
+	std::string dbName(_dbName.begin(), _dbName.end());
 	char sz[255];
-	sprintf_s(sz, "%s\\%s", Constants::LMDBRootPath.c_str(), W2A(_dbName.c_str()));
+	sprintf_s(sz, "%s\\%s", Constants::LMDBRootPath.c_str(), dbName.c_str());
 	::CreateDirectoryA(sz, NULL);
 
-	std::wcout << _T("Init LMDB") << std::endl;
+	g_Logger.WriteLog(_T("Init LMDB"));
 	mdb_env_create(&m_lmdb.m_env);
 	mdb_env_set_maxreaders(m_lmdb.m_env, 1);
 	mdb_env_set_mapsize(m_lmdb.m_env, 10485760);
@@ -235,7 +241,7 @@ void WorkerNodeClient::Init_LMDB()
 
 void WorkerNodeClient::Uninit_LMDB()
 {
-	std::wcout << _T("Uninit LMDB") << std::endl;
+	g_Logger.WriteLog(_T("Uninit LMDB"));
 
 	mdb_dbi_close(m_lmdb.m_env, m_lmdb.m_dbi);
 	mdb_env_close(m_lmdb.m_env);

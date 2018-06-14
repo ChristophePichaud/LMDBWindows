@@ -3,7 +3,6 @@
 #include "..\Include\MyServer\Helper.h"
 #include "WorkerNodeClient.h"
 #include "..\Include\MyServer\Constants.h"
-#include "Logger.h"
 
 CSWMRGuard g_Guard;
 CLogger g_Logger;
@@ -38,8 +37,6 @@ int wmain(int argc, wchar_t *argv[])
 	}
 
 	std::wstring ip = CHelper::GetIP();
-	std::wcout << L"IP : " << ip << std::endl;
-
 	std::wstring url = CHelper::BuildURL(ip, port);
 	http::uri uri = http::uri(url);
 	std::wstring address = uri.to_string();						
@@ -55,13 +52,15 @@ int wmain(int argc, wchar_t *argv[])
 		// Create the a worker node instance
 		//
 
+		g_Logger.WriteLog(_T("IP : ") + ip);
+
 		WorkerNodeClient client(address);
 		client._server = ip;
 		client._port = port;
 		client._name = name;
 		client.Init();
-		std::wcout << L"Worker node " << address << std::endl;
-		std::wcout << _T("Press ENTER to exit.") << std::endl;
+		g_Logger.WriteLog(_T("Worker node ") + address);
+		g_Logger.WriteLog(_T("Press ENTER to exit."));
 		std::string line;
 		std::getline(std::cin, line);
 		client.Close();
@@ -77,12 +76,14 @@ int wmain(int argc, wchar_t *argv[])
 		// Create the server instance
 		//
 
+		g_Logger.WriteLog(_T("IP : ") + ip);
+
 		MyServer server(address);
 		server._server = ip;
 		server._port = port;
 		server.Init();
-		std::wcout << L"Server node " << address << std::endl;
-		std::wcout << _T("Press ENTER to exit.") << std::endl;
+		g_Logger.WriteLog(_T("Server node ") + address);
+		g_Logger.WriteLog(_T("Press ENTER to exit."));
 		std::string line;
 		std::getline(std::cin, line);
 		server.Close();

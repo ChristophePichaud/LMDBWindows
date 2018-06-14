@@ -27,15 +27,35 @@ void CLogger::Init(std::wstring name)
 
 void CLogger::WriteLog(std::wstring message)
 {
-	std::string p(_path.begin(), _path.end());
-	std::string m(message.begin(), message.end());
+	std::string path(_path.begin(), _path.end());
 
-	HANDLE hFile = ::CreateFileA(p.c_str(), GENERIC_WRITE, FILE_SHARE_WRITE, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+	SYSTEMTIME st;
+	memset(&st, 0, sizeof(SYSTEMTIME));
+	::GetSystemTime(&st);
+
+	TCHAR sz[1024];
+	_stprintf_s(sz, 
+		_T("%02d:%02d:%02d.%03d - INFO - %s\r\n"), 
+		st.wHour, st.wMinute, st.wSecond, st.wMilliseconds, 
+		message.c_str());
+
+	std::wstring wsz = sz;
+	std::string msgToWrite(wsz.begin(), wsz.end());
+
+	HANDLE hFile = ::CreateFileA(path.c_str(), 
+		GENERIC_WRITE, FILE_SHARE_WRITE, 
+		NULL, OPEN_ALWAYS, 
+		FILE_ATTRIBUTE_NORMAL, NULL);
+
 	LONG l = 0;
 	::SetFilePointer(hFile, 0, &l, FILE_END);
+	
 	DWORD dwLen = 0;
-	::WriteFile(hFile, m.c_str(), message.length(), &dwLen, NULL);
-	dwLen = 0;
-	::WriteFile(hFile, "\r\n", 2, &dwLen, NULL);
+	::WriteFile(hFile, 
+		msgToWrite.c_str(), msgToWrite.length(), 
+		&dwLen, NULL);
+	
 	::CloseHandle(hFile);
+
+	printf_s(msgToWrite.c_str());
 }

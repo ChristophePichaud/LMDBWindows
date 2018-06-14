@@ -67,13 +67,13 @@ void MyServer::PingThread(LPVOID param)
 
 			try
 			{
-				wcout << _T("Ping testing ip:") << pObj->_server.c_str() << _T(" on port:") << pObj->_port.c_str() << endl;
+				g_Logger.WriteLog(_T("Ping testing ip:") + pObj->_server + _T(" on port:") + pObj->_port.c_str());
 				response = client.request(methods::GET, buf.str()).get();
-				wcout << response.to_string() << endl;
+				g_Logger.WriteLog(response.to_string());
 			}
 			catch (http_exception ex)
 			{
-				wcout << _T("http_exception... Node is removed.") << endl;
+				g_Logger.WriteLog(_T("http_exception... Node is removed."));
 				std::string err = ex.what();
 				// Something goes wrong !
 				pObj->_isActive = false;
@@ -88,7 +88,7 @@ void MyServer::PingThread(LPVOID param)
 
 			if (jdata.is_null())
 			{
-				std::wcout << _T("no JSON data...") << std::endl;
+				g_Logger.WriteLog(_T("no JSON data..."));
 
 				// Something goes wrong !
 				pObj->_isActive = false;
@@ -118,38 +118,38 @@ void MyServer::PingThread(LPVOID param)
 
 void MyServer::handle_post(http_request message)
 {
-	std::wcout <<  message.to_string() << endl;
+	g_Logger.WriteLog(message.to_string());
 	message.reply(status_codes::OK);
 };
 
 void MyServer::handle_delete(http_request message)
 {
-	std::wcout << message.to_string() << endl;
+	g_Logger.WriteLog(message.to_string());
 	message.reply(status_codes::OK);
 }
 
 void MyServer::handle_put(http_request message)
 {
-	std::wcout << message.to_string() << endl;
+	g_Logger.WriteLog(message.to_string());
 	message.reply(status_codes::OK);
 };
 
 void MyServer::handle_get(http_request message)
 {
-	std::wcout << _T("handle_get") << std::endl;
-	std::wcout << _T("Message") << _T(" ") << message.to_string() << endl;
-	std::wcout << _T("Relative URI") << _T(" ") << message.relative_uri().to_string() << endl;
+	g_Logger.WriteLog(_T("handle_get"));
+	g_Logger.WriteLog(_T("Message ") + message.to_string());
+	g_Logger.WriteLog(_T("Relative URI ") + message.relative_uri().to_string());
 
 	auto paths = uri::split_path(uri::decode(message.relative_uri().path()));
 	for (auto it1 = paths.begin(); it1 != paths.end(); it1++)
 	{
-		std::wcout << _T("Path") << _T(" ") << *it1 << endl;
+		g_Logger.WriteLog(_T("Path ") + *it1);
 	}
 
 	auto query = uri::split_query(uri::decode(message.relative_uri().query()));
 	for (auto it2 = query.begin(); it2 != query.end(); it2++)
 	{
-		std::wcout << _T("Query") << _T(" ") << it2->first << _T(" ") << it2->second << endl;
+		g_Logger.WriteLog(_T("Query ") + it2->first + _T(" ") + it2->second);
 	}
 
 	std::wstring request = CHelper::FindParameterInQuery(query, _T("request"));
@@ -160,11 +160,11 @@ void MyServer::handle_get(http_request message)
 
 	if (request == Constants::VerbRegisterNode)
 	{
-		std::wcout << Constants::VerbRegisterNode << std::endl;
+		g_Logger.WriteLog(Constants::VerbRegisterNode);
 
 		if (MyServer::ExistsNode(server, port, name) == true)
 		{
-			std::wcout << _T("Node already registered !") << std::endl;
+			g_Logger.WriteLog(_T("Node already registered !"));
 		}
 		else
 		{
@@ -176,7 +176,7 @@ void MyServer::handle_get(http_request message)
 
 			g_Guard.WaitToWrite();
 			_nodes.push_back(pNode);
-			std::wcout << _T("Node registered !") << _T(" count: ") << _nodes.size() << std::endl;
+			g_Logger.WriteLog(_T("Node registered !"));
 			g_Guard.Done();
 		}
 
@@ -186,7 +186,7 @@ void MyServer::handle_get(http_request message)
 		
 	if (request == Constants::VerbShowNodes)
 	{
-		std::wcout << Constants::VerbShowNodes << std::endl;
+		g_Logger.WriteLog(Constants::VerbShowNodes);
 		MyServer::ShowNodes();
 		message.reply(status_codes::OK);
 		return;
@@ -194,7 +194,7 @@ void MyServer::handle_get(http_request message)
 	
 	if (request == Constants::VerbGetNode)
 	{
-		std::wcout << Constants::VerbGetNode << std::endl;
+		g_Logger.WriteLog(Constants::VerbGetNode);
 			
 		std::shared_ptr<WorkerNodeAttributes> pObj = nullptr;
 
@@ -231,7 +231,7 @@ void MyServer::handle_get(http_request message)
 			data.dbName = dbname;
 
 			std::wstring response = data.AsJSON().serialize();
-			std::wcout << response << endl;
+			g_Logger.WriteLog(response);
 
 			message.reply(status_codes::OK, data.AsJSON());
 
@@ -239,7 +239,7 @@ void MyServer::handle_get(http_request message)
 		}
 		else
 		{
-			std::wcout << _T("No node available...") << std::endl;
+			g_Logger.WriteLog(_T("No node available..."));
 			message.reply(status_codes::OK);
 		}
 
@@ -250,7 +250,7 @@ void MyServer::handle_get(http_request message)
 
 	if (request == Constants::VerbReleaseNode)
 	{
-		std::wcout << Constants::VerbReleaseNode << std::endl;
+		g_Logger.WriteLog(Constants::VerbReleaseNode);
 
 		std::shared_ptr<WorkerNodeAttributes> pObj = nullptr;
 
@@ -281,7 +281,7 @@ void MyServer::handle_get(http_request message)
 			data.dbName = dbname;
 
 			std::wstring response = data.AsJSON().serialize();
-			std::wcout << response << endl;
+			g_Logger.WriteLog(response);
 
 			message.reply(status_codes::OK, data.AsJSON());
 
@@ -289,7 +289,7 @@ void MyServer::handle_get(http_request message)
 		}
 		else
 		{
-			std::wcout << _T("No node available...") << std::endl;
+			g_Logger.WriteLog(_T("No node available..."));
 			message.reply(status_codes::OK);
 		}
 
@@ -315,14 +315,14 @@ void MyServer::SendDbName(GetNodeData data)
 	http_response response;
 
 	response = client.request(methods::GET, buf.str()).get();
-	wcout << response.to_string() << endl;
+	g_Logger.WriteLog(response.to_string());
 
 	json::value jdata = json::value::array();
 	jdata = response.extract_json().get();
 
 	if (jdata.is_null())
 	{
-		std::wcout << _T("no JSON data...") << std::endl;
+		g_Logger.WriteLog(_T("no JSON data..."));
 		return;
 	}
 }
@@ -341,14 +341,14 @@ void MyServer::SendReleaseDbName(GetNodeData data)
 	http_response response;
 
 	response = client.request(methods::GET, buf.str()).get();
-	wcout << response.to_string() << endl;
+	g_Logger.WriteLog(response.to_string());
 
 	json::value jdata = json::value::array();
 	jdata = response.extract_json().get();
 
 	if (jdata.is_null())
 	{
-		std::wcout << _T("no JSON data...") << std::endl;
+		g_Logger.WriteLog(_T("no JSON data..."));
 		return;
 	}
 }
@@ -397,7 +397,7 @@ void MyServer::ShowNodes()
 
 		TCHAR sz[255];
 		_stprintf_s(sz, _T("Active:%d Server:%s Port:%s Name:%s DBName:%s\n"), pObj->_isActive, pObj->_server.c_str(), pObj->_port.c_str(), pObj->_name.c_str(), pObj->_dbName.c_str());
-		_tprintf(sz);
+		g_Logger.WriteLog(sz);
 	}
 
 	g_Guard.Done();
