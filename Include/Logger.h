@@ -14,5 +14,6 @@ public:
 private:
 	std::wstring _name;
 	std::wstring _path;
+	static CCriticalSection _cs;
 };
 

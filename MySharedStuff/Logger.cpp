@@ -1,18 +1,21 @@
 #include "stdafx.h"
+#include <atlsync.h>
 #include "..\Include\Logger.h"
 
+
+CCriticalSection CLogger::_cs;
 
 CLogger::CLogger()
 {
 }
-
 
 CLogger::~CLogger()
 {
 }
 
 void CLogger::Init(std::wstring name)
-{
+{																									
+	_cs.Enter();
 	_name = name;
 
 	TCHAR szTemp[255];
@@ -23,10 +26,12 @@ void CLogger::Init(std::wstring name)
 	_stprintf_s(szPath, _T("%s\\%s"), szTemp, name.c_str());
 
 	_path = szPath;
+	_cs.Leave();
 }
 
 void CLogger::WriteLog(std::wstring message)
 {
+	_cs.Enter();
 	std::string path(_path.begin(), _path.end());
 
 	SYSTEMTIME st;
@@ -58,4 +63,5 @@ void CLogger::WriteLog(std::wstring message)
 	::CloseHandle(hFile);
 
 	printf_s(msgToWrite.c_str());
+	_cs.Leave();
 }

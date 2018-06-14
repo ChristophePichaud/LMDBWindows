@@ -1,7 +1,6 @@
 #include "header.h"
 #include "..\Include\LMDBWrapper.h"
 #include "..\Include\CWrapper.h"
-#include "..\Include\LMDBWrapper.h"
 #include "..\Include\Constants.h"
 #include "..\Include\Helper.h"
 

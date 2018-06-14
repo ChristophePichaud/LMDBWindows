@@ -57,6 +57,8 @@
 #include <atlbase.h>
 #include <atlcom.h>
 #include <atlcomcli.h>
+#include <atlsync.h>
+
 
 #include <comutil.h>
 
