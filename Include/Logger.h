@@ -8,12 +8,13 @@ public:
 	virtual ~CLogger();
 
 public:
-	void Init(std::wstring name);
-	void WriteLog(std::wstring message);
+	void Init(LPTSTR lpszName);
+	void WriteLog(LPCTSTR message);
 
 private:
-	std::wstring _name;
-	std::wstring _path;
+	HANDLE _hFile;
+	TCHAR _szName[255];
+	TCHAR _szPath[255];
 	static CCriticalSection _cs;
 };
 

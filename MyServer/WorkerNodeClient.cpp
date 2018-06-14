@@ -54,32 +54,35 @@ bool WorkerNodeClient::RegisterToMaster()
 		<< _T("&server=") << this->_server
 		<< _T("&port=") << this->_port
 		<< _T("&name=") << this->_name;
-	g_Logger.WriteLog(buf.str());
+	g_Logger.WriteLog(buf.str().c_str());
 
 	http_response response;
 	http_client client(url);
 	response = client.request(methods::GET, buf.str()).get();
-	g_Logger.WriteLog(response.to_string());
+	g_Logger.WriteLog(response.to_string().c_str());
 
 	return true;
 }
 
 void WorkerNodeClient::handle_get(http_request message)
 {
+	TCHAR sz[255];
 	g_Logger.WriteLog(_T("handle_get"));
-	g_Logger.WriteLog(_T("Message ") + message.to_string());
-	g_Logger.WriteLog(_T("Relative URI ") + message.relative_uri().to_string());
+	g_Logger.WriteLog(message.to_string().c_str());
+	g_Logger.WriteLog(message.relative_uri().to_string().c_str());
 
 	auto paths = uri::split_path(uri::decode(message.relative_uri().path()));
 	for (auto it1 = paths.begin(); it1 != paths.end(); it1++)
 	{
-		g_Logger.WriteLog(_T("Path ") + *it1);
+		std::wstring path = *it1;
+		g_Logger.WriteLog(path.c_str());
 	}
 
 	auto query = uri::split_query(uri::decode(message.relative_uri().query()));
 	for (auto it2 = query.begin(); it2 != query.end(); it2++)
 	{
-		g_Logger.WriteLog(_T("Query ") + it2->first + _T(" ") + it2->second);
+		_stprintf_s(sz, _T("Query %s %s"), it2->first.c_str(), it2->second.c_str());
+		g_Logger.WriteLog(sz);
 	}
 
 	std::wstring request = CHelper::FindParameterInQuery(query, _T("request"));
@@ -89,7 +92,7 @@ void WorkerNodeClient::handle_get(http_request message)
 
 	if (request == Constants::VerbPing)
 	{
-		g_Logger.WriteLog(Constants::VerbPing);
+		g_Logger.WriteLog(Constants::VerbPing.c_str());
 
 		PingData data;
 		data.ip = _server;
@@ -97,14 +100,14 @@ void WorkerNodeClient::handle_get(http_request message)
 		data.status = _T("OK");
 
 		std::wstring response = data.AsJSON().serialize();
-		g_Logger.WriteLog(response);
+		g_Logger.WriteLog(response.c_str());
 
 		message.reply(status_codes::OK, data.AsJSON());
 	}
 
 	if (request == Constants::VerbSetNode)
 	{
-		g_Logger.WriteLog(Constants::VerbSetNode);
+		g_Logger.WriteLog(Constants::VerbSetNode.c_str());
 		_dbName = dbname;
 		message.reply(status_codes::OK);
 
@@ -113,7 +116,7 @@ void WorkerNodeClient::handle_get(http_request message)
 
 	if (request == Constants::VerbReleaseDB)
 	{
-		g_Logger.WriteLog(Constants::VerbReleaseDB);
+		g_Logger.WriteLog(Constants::VerbReleaseDB.c_str());
 		_dbName = dbname;
 		message.reply(status_codes::OK);
 
@@ -122,7 +125,7 @@ void WorkerNodeClient::handle_get(http_request message)
 
 	if (request == Constants::VerbGetData)
 	{
-		g_Logger.WriteLog(Constants::VerbGetData);
+		g_Logger.WriteLog(Constants::VerbGetData.c_str());
 
 		if (m_lmdb.m_Init == false)
 		{
@@ -156,7 +159,7 @@ void WorkerNodeClient::handle_get(http_request message)
 			data.value = _T("");
 
 			std::wstring response = data.AsJSON().serialize();
-			g_Logger.WriteLog(response);
+			g_Logger.WriteLog(response.c_str());
 
 			message.reply(status_codes::OK, data.AsJSON());
 		}
@@ -166,10 +169,12 @@ void WorkerNodeClient::handle_get(http_request message)
 			data.key = szKey;
 			data.value = (TCHAR *)VData.mv_data;
 
-			g_Logger.WriteLog(_T("Get Key:") + data.key + _T(" Value:") + data.value);
+			TCHAR sz[255];
+			_stprintf_s(sz, _T("Get Key:%s Value:%s"), data.key.c_str(), data.value.c_str());
+			g_Logger.WriteLog(sz);
 
 			std::wstring response = data.AsJSON().serialize();
-			g_Logger.WriteLog(response);
+			g_Logger.WriteLog(response.c_str());
 
 			message.reply(status_codes::OK, data.AsJSON());
 		}
@@ -179,7 +184,7 @@ void WorkerNodeClient::handle_get(http_request message)
 
 	if (request == Constants::VerbSetData)
 	{
-		g_Logger.WriteLog(Constants::VerbSetData);
+		g_Logger.WriteLog(Constants::VerbSetData.c_str());
 
 		if(m_lmdb.m_Init == false)
 		{
@@ -202,8 +207,10 @@ void WorkerNodeClient::handle_get(http_request message)
 		VData.mv_size = sizeof(szValue);
 		VData.mv_data = szValue;
 
-		g_Logger.WriteLog(_T("Set Key:") + std::wstring(szKey) + _T(" Value:") + std::wstring(szValue));
-		
+		TCHAR sz[255];
+		_stprintf_s(sz, _T("Set Key:%s Value:%s"), szKey, szValue);
+		g_Logger.WriteLog(sz);
+
 		mdb_txn_begin(m_lmdb.m_env, NULL, 0, &m_lmdb.m_txn);
 		mdb_dbi_open(m_lmdb.m_txn, NULL, 0, &m_lmdb.m_dbi);
 		mdb_put(m_lmdb.m_txn, m_lmdb.m_dbi, &VKey, &VData, MDB_NOOVERWRITE);
@@ -214,7 +221,7 @@ void WorkerNodeClient::handle_get(http_request message)
 		data.value = szValue;
 
 		std::wstring response = data.AsJSON().serialize();
-		g_Logger.WriteLog(response);
+		g_Logger.WriteLog(response.c_str());
 
 		message.reply(status_codes::OK, data.AsJSON());
 

@@ -11,29 +11,42 @@ CLogger::CLogger()
 
 CLogger::~CLogger()
 {
+	::CloseHandle(_hFile);
 }
 
-void CLogger::Init(std::wstring name)
+void CLogger::Init(LPTSTR lpszName)
 {																									
+	USES_CONVERSION;
+
 	_cs.Enter();
-	_name = name;
+	_tcscpy(_szName, lpszName);
 
 	TCHAR szTemp[255];
 	_stprintf_s(szTemp, _T("C:\\TEMP\\LOGS"));
 	::CreateDirectory(szTemp, NULL);
 
 	TCHAR szPath[255];
-	_stprintf_s(szPath, _T("%s\\%s"), szTemp, name.c_str());
+	_stprintf_s(szPath, _T("%s\\%s"), szTemp, lpszName);
 
-	_path = szPath;
+	_tcscpy(_szPath, szPath);
+
+	_hFile = ::CreateFileA(W2A(_szPath),
+		GENERIC_WRITE, FILE_SHARE_WRITE,
+		NULL, OPEN_ALWAYS,
+		FILE_ATTRIBUTE_NORMAL, NULL);
+
+	LONG l = 0;
+	::SetFilePointer(_hFile, 0, &l, FILE_END);
+
 	_cs.Leave();
 }
 
-void CLogger::WriteLog(std::wstring message)
+void CLogger::WriteLog(LPCTSTR lpszMessage)
 {
-	_cs.Enter();
-	std::string path(_path.begin(), _path.end());
+	USES_CONVERSION;
 
+	_cs.Enter();
+	
 	SYSTEMTIME st;
 	memset(&st, 0, sizeof(SYSTEMTIME));
 	::GetSystemTime(&st);
@@ -42,12 +55,19 @@ void CLogger::WriteLog(std::wstring message)
 	_stprintf_s(sz, 
 		_T("%02d:%02d:%02d.%03d - INFO - %s\r\n"), 
 		st.wHour, st.wMinute, st.wSecond, st.wMilliseconds, 
-		message.c_str());
+		lpszMessage);
 
-	std::wstring wsz = sz;
-	std::string msgToWrite(wsz.begin(), wsz.end());
+	LPSTR msg = W2A(sz);
 
-	HANDLE hFile = ::CreateFileA(path.c_str(), 
+	printf_s(msg);
+
+	DWORD dwLen = 0;
+	::WriteFile(_hFile,
+		msg, strlen(msg),
+		&dwLen, NULL);
+
+	/*
+	HANDLE hFile = ::CreateFileA(W2A(_szPath),
 		GENERIC_WRITE, FILE_SHARE_WRITE, 
 		NULL, OPEN_ALWAYS, 
 		FILE_ATTRIBUTE_NORMAL, NULL);
@@ -57,11 +77,10 @@ void CLogger::WriteLog(std::wstring message)
 	
 	DWORD dwLen = 0;
 	::WriteFile(hFile, 
-		msgToWrite.c_str(), msgToWrite.length(), 
+		msg, strlen(msg), 
 		&dwLen, NULL);
 	
 	::CloseHandle(hFile);
-
-	printf_s(msgToWrite.c_str());
+	*/
 	_cs.Leave();
 }

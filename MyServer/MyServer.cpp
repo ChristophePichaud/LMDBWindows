@@ -44,6 +44,8 @@ void MyServer::ActivatePingThread()
 
 void MyServer::PingThread(LPVOID param)
 {
+	TCHAR sz[255];
+
 	while (TRUE)
 	{
 
@@ -67,9 +69,11 @@ void MyServer::PingThread(LPVOID param)
 
 			try
 			{
-				g_Logger.WriteLog(_T("Ping testing ip:") + pObj->_server + _T(" on port:") + pObj->_port.c_str());
+
+				_stprintf_s(sz, _T("Ping testing ip:%s on port:%s"), pObj->_server.c_str(), pObj->_port.c_str());
+				g_Logger.WriteLog(sz);
 				response = client.request(methods::GET, buf.str()).get();
-				g_Logger.WriteLog(response.to_string());
+				g_Logger.WriteLog(response.to_string().c_str());
 			}
 			catch (http_exception ex)
 			{
@@ -118,38 +122,41 @@ void MyServer::PingThread(LPVOID param)
 
 void MyServer::handle_post(http_request message)
 {
-	g_Logger.WriteLog(message.to_string());
+	g_Logger.WriteLog(message.to_string().c_str());
 	message.reply(status_codes::OK);
 };
 
 void MyServer::handle_delete(http_request message)
 {
-	g_Logger.WriteLog(message.to_string());
+	g_Logger.WriteLog(message.to_string().c_str());
 	message.reply(status_codes::OK);
 }
 
 void MyServer::handle_put(http_request message)
 {
-	g_Logger.WriteLog(message.to_string());
+	g_Logger.WriteLog(message.to_string().c_str());
 	message.reply(status_codes::OK);
 };
 
 void MyServer::handle_get(http_request message)
 {
+	TCHAR sz[255];
 	g_Logger.WriteLog(_T("handle_get"));
-	g_Logger.WriteLog(_T("Message ") + message.to_string());
-	g_Logger.WriteLog(_T("Relative URI ") + message.relative_uri().to_string());
+	g_Logger.WriteLog(message.to_string().c_str());
+	g_Logger.WriteLog(message.relative_uri().to_string().c_str());
 
 	auto paths = uri::split_path(uri::decode(message.relative_uri().path()));
 	for (auto it1 = paths.begin(); it1 != paths.end(); it1++)
 	{
-		g_Logger.WriteLog(_T("Path ") + *it1);
+		std::wstring path = *it1;
+		g_Logger.WriteLog(path.c_str());
 	}
 
 	auto query = uri::split_query(uri::decode(message.relative_uri().query()));
 	for (auto it2 = query.begin(); it2 != query.end(); it2++)
 	{
-		g_Logger.WriteLog(_T("Query ") + it2->first + _T(" ") + it2->second);
+		_stprintf_s(sz, _T("Query %s %s"), it2->first.c_str(), it2->second.c_str());
+		g_Logger.WriteLog(sz);
 	}
 
 	std::wstring request = CHelper::FindParameterInQuery(query, _T("request"));
@@ -160,7 +167,7 @@ void MyServer::handle_get(http_request message)
 
 	if (request == Constants::VerbRegisterNode)
 	{
-		g_Logger.WriteLog(Constants::VerbRegisterNode);
+		g_Logger.WriteLog(Constants::VerbRegisterNode.c_str());
 
 		if (MyServer::ExistsNode(server, port, name) == true)
 		{
@@ -186,7 +193,7 @@ void MyServer::handle_get(http_request message)
 		
 	if (request == Constants::VerbShowNodes)
 	{
-		g_Logger.WriteLog(Constants::VerbShowNodes);
+		g_Logger.WriteLog(Constants::VerbShowNodes.c_str());
 		MyServer::ShowNodes();
 		message.reply(status_codes::OK);
 		return;
@@ -194,7 +201,7 @@ void MyServer::handle_get(http_request message)
 	
 	if (request == Constants::VerbGetNode)
 	{
-		g_Logger.WriteLog(Constants::VerbGetNode);
+		g_Logger.WriteLog(Constants::VerbGetNode.c_str());
 			
 		std::shared_ptr<WorkerNodeAttributes> pObj = nullptr;
 
@@ -231,7 +238,7 @@ void MyServer::handle_get(http_request message)
 			data.dbName = dbname;
 
 			std::wstring response = data.AsJSON().serialize();
-			g_Logger.WriteLog(response);
+			g_Logger.WriteLog(response.c_str());
 
 			message.reply(status_codes::OK, data.AsJSON());
 
@@ -250,7 +257,7 @@ void MyServer::handle_get(http_request message)
 
 	if (request == Constants::VerbReleaseNode)
 	{
-		g_Logger.WriteLog(Constants::VerbReleaseNode);
+		g_Logger.WriteLog(Constants::VerbReleaseNode.c_str());
 
 		std::shared_ptr<WorkerNodeAttributes> pObj = nullptr;
 
@@ -281,7 +288,7 @@ void MyServer::handle_get(http_request message)
 			data.dbName = dbname;
 
 			std::wstring response = data.AsJSON().serialize();
-			g_Logger.WriteLog(response);
+			g_Logger.WriteLog(response.c_str());
 
 			message.reply(status_codes::OK, data.AsJSON());
 
@@ -315,7 +322,7 @@ void MyServer::SendDbName(GetNodeData data)
 	http_response response;
 
 	response = client.request(methods::GET, buf.str()).get();
-	g_Logger.WriteLog(response.to_string());
+	g_Logger.WriteLog(response.to_string().c_str());
 
 	json::value jdata = json::value::array();
 	jdata = response.extract_json().get();
@@ -341,7 +348,7 @@ void MyServer::SendReleaseDbName(GetNodeData data)
 	http_response response;
 
 	response = client.request(methods::GET, buf.str()).get();
-	g_Logger.WriteLog(response.to_string());
+	g_Logger.WriteLog(response.to_string().c_str());
 
 	json::value jdata = json::value::array();
 	jdata = response.extract_json().get();

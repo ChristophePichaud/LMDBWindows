@@ -51,15 +51,17 @@ int wmain(int argc, wchar_t *argv[])
 		//
 		// Create the a worker node instance
 		//
-
-		g_Logger.WriteLog(_T("IP : ") + ip);
+		
+		_stprintf_s(sz, _T("IP : %s"), ip.c_str());
+		g_Logger.WriteLog(sz);
 
 		WorkerNodeClient client(address);
 		client._server = ip;
 		client._port = port;
 		client._name = name;
 		client.Init();
-		g_Logger.WriteLog(_T("Worker node ") + address);
+		_stprintf_s(sz, _T("Worker node %s"), address.c_str());
+		g_Logger.WriteLog(sz);
 		g_Logger.WriteLog(_T("Press ENTER to exit."));
 		std::string line;
 		std::getline(std::cin, line);
@@ -76,13 +78,15 @@ int wmain(int argc, wchar_t *argv[])
 		// Create the server instance
 		//
 
-		g_Logger.WriteLog(_T("IP : ") + ip);
+		_stprintf_s(sz, _T("IP : %s"), ip.c_str());
+		g_Logger.WriteLog(sz);
 
 		MyServer server(address);
 		server._server = ip;
 		server._port = port;
 		server.Init();
-		g_Logger.WriteLog(_T("Server node ") + address);
+		_stprintf_s(sz, _T("Worker node %s"), address.c_str());
+		g_Logger.WriteLog(sz);
 		g_Logger.WriteLog(_T("Press ENTER to exit."));
 		std::string line;
 		std::getline(std::cin, line);
