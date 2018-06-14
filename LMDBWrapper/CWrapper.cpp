@@ -2,8 +2,8 @@
 #include "..\Include\LMDBWrapper.h"
 #include "..\Include\CWrapper.h"
 #include "..\Include\LMDBWrapper.h"
-#include "..\Include\MyServer\Constants.h"
-#include "..\Include\MyServer\Helper.h"
+#include "..\Include\Constants.h"
+#include "..\Include\Helper.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

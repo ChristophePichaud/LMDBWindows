@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "MyServer.h"
-#include "..\Include\MyServer\Helper.h"
+#include "..\Include\Helper.h"
 #include "WorkerNodeClient.h"
-#include "..\Include\MyServer\Constants.h"
+#include "..\Include\Constants.h"
 
 
 std::vector<std::shared_ptr<WorkerNodeAttributes>> MyServer::_nodes;

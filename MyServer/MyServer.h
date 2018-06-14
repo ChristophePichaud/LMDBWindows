@@ -1,7 +1,7 @@
 #pragma once
 
 #include "LMDBData.h"
-#include "MyServer\\messagetypes.h"
+#include "..\Include\messagetypes.h"
 #include "WorkerNodeAttributes.h"
 
 class MyServer

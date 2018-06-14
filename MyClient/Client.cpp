@@ -1,8 +1,8 @@
 #include "stdafx.h"
 
-#include "MyServer/messagetypes.h"
-#include "..\Include\MyServer\Helper.h"
-#include "..\Include\MyServer\Constants.h"
+#include "..\Include\messagetypes.h"
+#include "..\Include\Helper.h"
+#include "..\Include\Constants.h"
 
 #ifdef _WIN32
 # define iequals(x, y) (_stricmp((x), (y))==0)

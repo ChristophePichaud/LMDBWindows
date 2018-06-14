@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "WorkerNodeClient.h"
 #include "LMDBData.h"
-#include "MyServer\\messagetypes.h"
-#include "..\Include\MyServer\Helper.h"
-#include "..\Include\MyServer\Constants.h"
+#include "..\Include\messagetypes.h"
+#include "..\Include\Helper.h"
+#include "..\Include\Constants.h"
 
 
 LMDBData WorkerNodeClient::m_lmdb;

@@ -1,6 +1,7 @@
 #pragma once
+#include "MySharedStuff.h"
 
-class CSWMRGuard
+class MYSHAREDSTUFF_API CSWMRGuard
 {
 public:
 	CSWMRGuard();                 // Constructor

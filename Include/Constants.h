@@ -1,4 +1,5 @@
 #pragma once
+#include "MySharedStuff.h"
 
 /*
 #define _MASTER_NODE_PORT_		_T("7001")
@@ -16,7 +17,7 @@
 #define _MODE_WORKER_NODE_		_T("node")
 */
 
-class Constants
+class MYSHAREDSTUFF_API Constants
 {
 public:
 	static const std::wstring MasterNodePort;

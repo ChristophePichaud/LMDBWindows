@@ -1,6 +1,5 @@
-#include <tchar.h>
-#include <string>
-#include "Constants.h"
+#include "stdafx.h"
+#include "..\Include\Constants.h"
 
 const std::wstring Constants::MasterNodePort	= _T("7001");
 const std::wstring Constants::Request			= _T("?request=");
@@ -18,3 +17,4 @@ const std::wstring Constants::StatusOK			= _T("OK");
 const std::wstring Constants::ModeMasterNode	= _T("master");
 const std::wstring Constants::ModeWorkerNode	= _T("node");
 
+			

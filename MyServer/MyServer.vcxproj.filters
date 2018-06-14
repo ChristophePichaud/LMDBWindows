@@ -27,22 +27,10 @@
     <ClCompile Include="LMDBData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CSWMRGuard.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="WorkerNodeClient.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WorkerNodeAttributes.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Include\MyServer\Constants.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Include\MyServer\Helper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CLogger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,13 +41,7 @@
     <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\MyServer\messagetypes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="LMDBData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CSWMRGuard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WorkerNodeClient.h">
@@ -68,13 +50,7 @@
     <ClInclude Include="WorkerNodeAttributes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\MyServer\Constants.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\MyServer\Helper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Logger.h">
+    <ClInclude Include="..\Include\messagetypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

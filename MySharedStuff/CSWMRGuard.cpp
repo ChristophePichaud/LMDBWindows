@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "CSWMRGuard.h"
+#include "..\Include\CSWMRGuard.h"
 
 CSWMRGuard::CSWMRGuard()
 {

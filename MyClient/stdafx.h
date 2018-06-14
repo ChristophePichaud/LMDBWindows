@@ -60,6 +60,7 @@ using namespace http::client;
 	#ifdef _DEBUG
 		#pragma comment (lib, "..\\Lib\\LMDBWindowsDllD64.lib")
 		#pragma comment (lib, "..\\Lib\\cpprest141d_2_10.lib")
+		#pragma comment (lib, "..\\Lib\\MySharedStuff.lib")
 	#else
 		#pragma comment (lib, "..\\Lib\\LMDBWindowsDll64.lib")
 		#pragma comment (lib, "..\\Lib\\cpprest141_2_10.lib")

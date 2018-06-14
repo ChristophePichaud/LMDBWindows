@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Logger.h"
+#include "..\Include\Logger.h"
 
 
 CLogger::CLogger()

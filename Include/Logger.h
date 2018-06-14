@@ -1,7 +1,7 @@
 #pragma once
-#include <string>
+#include "MySharedStuff.h"
 
-class CLogger
+class MYSHAREDSTUFF_API CLogger
 {
 public:
 	CLogger();

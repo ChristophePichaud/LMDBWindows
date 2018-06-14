@@ -154,15 +154,11 @@
   <ItemGroup>
     <ClInclude Include="..\Include\CWrapper.h" />
     <ClInclude Include="..\Include\LMDBWrapper.h" />
-    <ClInclude Include="..\Include\MyServer\Constants.h" />
-    <ClInclude Include="..\Include\MyServer\Helper.h" />
     <ClInclude Include="header.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Include\MyServer\Constants.cpp" />
-    <ClCompile Include="..\Include\MyServer\Helper.cpp" />
     <ClCompile Include="CWrapper.cpp" />
     <ClCompile Include="LMDBWrapper.cpp" />
   </ItemGroup>
