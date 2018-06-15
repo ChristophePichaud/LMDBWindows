@@ -22,6 +22,7 @@
     <ClCompile Include="LMDBData.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MyServer.cpp" />
+    <ClCompile Include="MyServerHelper.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="WorkerNodeAttributes.cpp" />
     <ClCompile Include="WorkerNodeClient.cpp" />
@@ -30,6 +31,7 @@
     <ClInclude Include="..\Include\messagetypes.h" />
     <ClInclude Include="LMDBData.h" />
     <ClInclude Include="MyServer.h" />
+    <ClInclude Include="MyServerHelper.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="WorkerNodeAttributes.h" />
     <ClInclude Include="WorkerNodeClient.h" />

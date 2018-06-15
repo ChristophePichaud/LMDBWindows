@@ -73,6 +73,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetName>MYSHAREDSTUFF</TargetName>
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(IncludePath);..\Include</IncludePath>
+    <LibraryPath>$(LibraryPath);..\Lib</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <TargetName>MYSHAREDSTUFF</TargetName>
@@ -147,21 +149,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Include\Base64Helper.h" />
     <ClInclude Include="..\Include\Constants.h" />
     <ClInclude Include="..\Include\CSWMRGuard.h" />
-    <ClInclude Include="..\Include\Helper.h" />
     <ClInclude Include="..\Include\Logger.h" />
     <ClInclude Include="..\Include\MySharedStuff.h" />
+    <ClInclude Include="..\Include\ServerHelper.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Base64Helper.cpp" />
     <ClCompile Include="Constants.cpp" />
     <ClCompile Include="CSWMRGuard.cpp" />
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="Helper.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="MySharedStuff.cpp" />
+    <ClCompile Include="ServerHelper.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

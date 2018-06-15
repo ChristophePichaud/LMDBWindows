@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "MyServer.h"
-#include "..\Include\Helper.h"
+#include "..\Include\ServerHelper.h"
 #include "WorkerNodeClient.h"
 #include "..\Include\Constants.h"
+#include "MyServerHelper.h"
 
 
 std::vector<std::shared_ptr<WorkerNodeAttributes>> MyServer::_nodes;
@@ -59,7 +60,7 @@ void MyServer::PingThread(LPVOID param)
 		{
 			pObj = *itr;
 
-			std::wstring url = CHelper::BuildURL(pObj->_server, pObj->_port);
+			std::wstring url = ServerHelper::BuildURL(pObj->_server, pObj->_port);
 			http_client client(url);
 
 			std::wostringstream buf;
@@ -69,7 +70,6 @@ void MyServer::PingThread(LPVOID param)
 
 			try
 			{
-
 				_stprintf_s(sz, _T("Ping testing ip:%s on port:%s"), pObj->_server.c_str(), pObj->_port.c_str());
 				g_Logger.WriteLog(sz);
 				response = client.request(methods::GET, buf.str()).get();
@@ -140,177 +140,184 @@ void MyServer::handle_put(http_request message)
 
 void MyServer::handle_get(http_request message)
 {
-	TCHAR sz[255];
 	g_Logger.WriteLog(_T("handle_get"));
-	g_Logger.WriteLog(message.to_string().c_str());
-	g_Logger.WriteLog(message.relative_uri().to_string().c_str());
 
-	auto paths = uri::split_path(uri::decode(message.relative_uri().path()));
-	for (auto it1 = paths.begin(); it1 != paths.end(); it1++)
-	{
-		std::wstring path = *it1;
-		g_Logger.WriteLog(path.c_str());
-	}
+	MyServerHelper::PrintRequest(message);
 
-	auto query = uri::split_query(uri::decode(message.relative_uri().query()));
-	for (auto it2 = query.begin(); it2 != query.end(); it2++)
-	{
-		_stprintf_s(sz, _T("Query %s %s"), it2->first.c_str(), it2->second.c_str());
-		g_Logger.WriteLog(sz);
-	}
-
-	std::wstring request = CHelper::FindParameterInQuery(query, _T("request"));
-	std::wstring server = CHelper::FindParameterInQuery(query, _T("server"));
-	std::wstring port = CHelper::FindParameterInQuery(query, _T("port"));
-	std::wstring name = CHelper::FindParameterInQuery(query, _T("name"));
-	std::wstring dbname = CHelper::FindParameterInQuery(query, _T("dbname"));
+	std::wstring request = ServerHelper::FindParameter(message, _T("request"));
 
 	if (request == Constants::VerbRegisterNode)
 	{
-		g_Logger.WriteLog(Constants::VerbRegisterNode.c_str());
-
-		if (MyServer::ExistsNode(server, port, name) == true)
-		{
-			g_Logger.WriteLog(_T("Node already registered !"));
-		}
-		else
-		{
-			std::shared_ptr<WorkerNodeAttributes> pNode = std::make_shared<WorkerNodeAttributes>();
-			pNode->_server = server;
-			pNode->_port = port;
-			pNode->_name = name;
-			pNode->_dbName = _T("");
-
-			g_Guard.WaitToWrite();
-			_nodes.push_back(pNode);
-			g_Logger.WriteLog(_T("Node registered !"));
-			g_Guard.Done();
-		}
-
-		message.reply(status_codes::OK);
+		RequestVerbRegisterNode(message);
 		return;
 	}
 		
 	if (request == Constants::VerbShowNodes)
 	{
-		g_Logger.WriteLog(Constants::VerbShowNodes.c_str());
-		MyServer::ShowNodes();
-		message.reply(status_codes::OK);
+		RequestVerbShowNodes(message);
 		return;
 	}
 	
 	if (request == Constants::VerbGetNode)
 	{
-		g_Logger.WriteLog(Constants::VerbGetNode.c_str());
-			
-		std::shared_ptr<WorkerNodeAttributes> pObj = nullptr;
-
-		g_Guard.WaitToWrite();
-
-		for (auto itr = _nodes.begin(); itr != _nodes.end(); itr++)
-		{
-			pObj = *itr;
-
-			if (pObj->_dbName == dbname) // && pObj->_isActive == true
-			{
-				// We find an existing entry
-				*itr = pObj;
-				break;
-			}
-			else if (pObj->_isActive == false)
-			{
-				// We find an entry
-				pObj->_isActive = true;
-				pObj->_dbName = dbname;
-				*itr = pObj;
-				break;
-			}
-			else
-				pObj = nullptr;
-		}
-				
-		if (pObj != nullptr)
-		{
-			GetNodeData data;
-			data.ip = pObj->_server;
-			data.port = pObj->_port;
-			data.name = pObj->_name;
-			data.dbName = dbname;
-
-			std::wstring response = data.AsJSON().serialize();
-			g_Logger.WriteLog(response.c_str());
-
-			message.reply(status_codes::OK, data.AsJSON());
-
-			MyServer::SendDbName(data);
-		}
-		else
-		{
-			g_Logger.WriteLog(_T("No node available..."));
-			message.reply(status_codes::OK);
-		}
-
-		g_Guard.Done();
-
+		RequestVerbGetNode(message);
 		return;
 	}
 
 	if (request == Constants::VerbReleaseNode)
 	{
-		g_Logger.WriteLog(Constants::VerbReleaseNode.c_str());
-
-		std::shared_ptr<WorkerNodeAttributes> pObj = nullptr;
-
-		g_Guard.WaitToWrite();
-
-		for (auto itr = _nodes.begin(); itr != _nodes.end(); itr++)
-		{
-			pObj = *itr;
-
-			if (pObj->_dbName == dbname) // && pObj->_isActive == true
-			{
-				// We find an existing entry
-				pObj->_isActive = false;
-				pObj->_dbName = _T("");
-				*itr = pObj;
-				break;
-			}
-			else
-				pObj = nullptr;
-		}
-
-		if (pObj != nullptr)
-		{
-			GetNodeData data;
-			data.ip = pObj->_server;
-			data.port = pObj->_port;
-			data.name = pObj->_name;
-			data.dbName = dbname;
-
-			std::wstring response = data.AsJSON().serialize();
-			g_Logger.WriteLog(response.c_str());
-
-			message.reply(status_codes::OK, data.AsJSON());
-
-			MyServer::SendReleaseDbName(data);
-		}
-		else
-		{
-			g_Logger.WriteLog(_T("No node available..."));
-			message.reply(status_codes::OK);
-		}
-
-		g_Guard.Done();
-
+		RequestVerbReleaseNode(message);
 		return;
 	}
 		
 	message.reply(status_codes::OK);
 };
 
+void MyServer::RequestVerbRegisterNode(http_request message)
+{
+	g_Logger.WriteLog(Constants::VerbRegisterNode.c_str());
+
+	std::wstring server = ServerHelper::FindParameter(message, _T("server"));
+	std::wstring port = ServerHelper::FindParameter(message, _T("port"));
+	std::wstring name = ServerHelper::FindParameter(message, _T("name"));
+
+	if (MyServer::ExistsNode(server, port, name) == true)
+	{
+		g_Logger.WriteLog(_T("Node already registered !"));
+	}
+	else
+	{
+		std::shared_ptr<WorkerNodeAttributes> pNode = std::make_shared<WorkerNodeAttributes>();
+		pNode->_server = server;
+		pNode->_port = port;
+		pNode->_name = name;
+		pNode->_dbName = _T("");
+
+		g_Guard.WaitToWrite();
+		_nodes.push_back(pNode);
+		g_Logger.WriteLog(_T("Node registered !"));
+		g_Guard.Done();
+	}
+
+	message.reply(status_codes::OK);
+}
+
+void MyServer::RequestVerbShowNodes(http_request message)
+{
+	g_Logger.WriteLog(Constants::VerbShowNodes.c_str());
+	MyServer::ShowNodes();
+	message.reply(status_codes::OK);
+}
+
+void MyServer::RequestVerbGetNode(http_request message)
+{
+	g_Logger.WriteLog(Constants::VerbGetNode.c_str());
+
+	std::wstring dbname = ServerHelper::FindParameter(message, _T("dbname"));
+
+	std::shared_ptr<WorkerNodeAttributes> pObj = nullptr;
+
+	g_Guard.WaitToWrite();
+
+	for (auto itr = _nodes.begin(); itr != _nodes.end(); itr++)
+	{
+		pObj = *itr;
+
+		if (pObj->_dbName == dbname) // && pObj->_isActive == true
+		{
+			// We find an existing entry
+			*itr = pObj;
+			break;
+		}
+		else if (pObj->_isActive == false)
+		{
+			// We find an entry
+			pObj->_isActive = true;
+			pObj->_dbName = dbname;
+			*itr = pObj;
+			break;
+		}
+		else
+			pObj = nullptr;
+	}
+
+	if (pObj != nullptr)
+	{
+		GetNodeData data;
+		data.ip = pObj->_server;
+		data.port = pObj->_port;
+		data.name = pObj->_name;
+		data.dbName = dbname;
+
+		std::wstring response = data.AsJSON().serialize();
+		g_Logger.WriteLog(response.c_str());
+
+		message.reply(status_codes::OK, data.AsJSON());
+
+		MyServer::SendDbName(data);
+	}
+	else
+	{
+		g_Logger.WriteLog(_T("No node available..."));
+		message.reply(status_codes::OK);
+	}
+
+	g_Guard.Done();
+}
+
+void MyServer::RequestVerbReleaseNode(http_request message)
+{
+	g_Logger.WriteLog(Constants::VerbReleaseNode.c_str());
+
+	std::wstring dbname = ServerHelper::FindParameter(message, _T("dbname"));
+
+	std::shared_ptr<WorkerNodeAttributes> pObj = nullptr;
+
+	g_Guard.WaitToWrite();
+
+	for (auto itr = _nodes.begin(); itr != _nodes.end(); itr++)
+	{
+		pObj = *itr;
+
+		if (pObj->_dbName == dbname) // && pObj->_isActive == true
+		{
+			// We find an existing entry
+			pObj->_isActive = false;
+			pObj->_dbName = _T("");
+			*itr = pObj;
+			break;
+		}
+		else
+			pObj = nullptr;
+	}
+
+	if (pObj != nullptr)
+	{
+		GetNodeData data;
+		data.ip = pObj->_server;
+		data.port = pObj->_port;
+		data.name = pObj->_name;
+		data.dbName = dbname;
+
+		std::wstring response = data.AsJSON().serialize();
+		g_Logger.WriteLog(response.c_str());
+
+		message.reply(status_codes::OK, data.AsJSON());
+
+		MyServer::SendReleaseDbName(data);
+	}
+	else
+	{
+		g_Logger.WriteLog(_T("No node available..."));
+		message.reply(status_codes::OK);
+	}
+
+	g_Guard.Done();
+}
+
 void MyServer::SendDbName(GetNodeData data)
 {
-	std::wstring url = CHelper::BuildURL(data.ip, data.port);
+	std::wstring url = ServerHelper::BuildURL(data.ip, data.port);
 	std::wstring address = url;
 
 	http_client client(address);
@@ -336,7 +343,7 @@ void MyServer::SendDbName(GetNodeData data)
 
 void MyServer::SendReleaseDbName(GetNodeData data)
 {
-	std::wstring url = CHelper::BuildURL(data.ip, data.port);
+	std::wstring url = ServerHelper::BuildURL(data.ip, data.port);
 	std::wstring address = url;
 
 	http_client client(address);

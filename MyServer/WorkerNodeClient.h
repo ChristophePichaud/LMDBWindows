@@ -12,7 +12,13 @@ public:
 	bool RegisterToMaster();
 	static void Init_LMDB();
 	static void Uninit_LMDB();
+	static void RequestVerbPing(http_request message);
+	static void RequestVerbSetNode(http_request message);
+	static void RequestVerbReleaseDB(http_request message);
+	static void RequestVerbGetData(http_request message);
+	static void RequestVerbSetData(http_request message);
 
+public:
 	pplx::task<void> open() { return m_listener.open(); }
 	pplx::task<void> close() { return m_listener.close(); }
 

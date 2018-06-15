@@ -1,7 +1,7 @@
 #include "stdafx.h"
 
 #include "..\Include\messagetypes.h"
-#include "..\Include\Helper.h"
+#include "..\Include\ServerHelper.h"
 #include "..\Include\Constants.h"
 
 #ifdef _WIN32
@@ -42,7 +42,7 @@ int wmain(int argc, wchar_t *argv[])
 		count = _wtoi(argv[4]);
 	}
 
-	std::wstring url = CHelper::BuildURL(defaultAddress, port);
+	std::wstring url = ServerHelper::BuildURL(defaultAddress, port);
 	std::wcout << L"Client " << url << std::endl;
 	std::wcout << L"count: " << count << std::endl;
 	
@@ -81,7 +81,7 @@ int wmain(int argc, wchar_t *argv[])
 
 	::Sleep(1000);
 
-	url = CHelper::BuildURL(data.ip, data.port);
+	url = ServerHelper::BuildURL(data.ip, data.port);
 	http_client client_lmdb(url);
 
 	DWORD dwStart = GetTickCount();

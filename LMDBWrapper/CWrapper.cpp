@@ -2,7 +2,8 @@
 #include "..\Include\LMDBWrapper.h"
 #include "..\Include\CWrapper.h"
 #include "..\Include\Constants.h"
-#include "..\Include\Helper.h"
+#include "..\Include\ServerHelper.h"
+#include "..\Include\Base64Helper.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -94,7 +95,7 @@ bool CLMDBWrapper::SetData(LPSTR lpszKey, LPSTR lpszValueb64, DWORD dwLen)
 	char szKey[255];
 	strcpy(szKey, lpszKey);
 
-	std::string buffer = CHelper::base64_encode((const unsigned char*)lpszValueb64, dwLen);
+	std::string buffer = Base64Helper::base64_encode((const unsigned char*)lpszValueb64, dwLen);
 
 	MDB_val VKey;
 	MDB_val VData;

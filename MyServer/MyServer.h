@@ -14,7 +14,12 @@ public:
 	void Close();
 	void ActivatePingThread();
 	static void PingThread(LPVOID param);
+	static void RequestVerbRegisterNode(http_request message);
+	static void RequestVerbShowNodes(http_request message);
+	static void RequestVerbGetNode(http_request message);
+	static void RequestVerbReleaseNode(http_request message);
 
+public:
 	pplx::task<void> open() { return m_listener.open(); }
 	pplx::task<void> close() { return m_listener.close(); }
 

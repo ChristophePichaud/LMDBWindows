@@ -2,8 +2,9 @@
 #include "WorkerNodeClient.h"
 #include "LMDBData.h"
 #include "..\Include\messagetypes.h"
-#include "..\Include\Helper.h"
+#include "..\Include\ServerHelper.h"
 #include "..\Include\Constants.h"
+#include "MyServerHelper.h"
 
 
 LMDBData WorkerNodeClient::m_lmdb;
@@ -45,9 +46,9 @@ void WorkerNodeClient::Close()
 
 bool WorkerNodeClient::RegisterToMaster()
 {
-	std::wstring ip = CHelper::GetIP();
+	std::wstring ip = ServerHelper::GetIP();
 	std::wstring port = Constants::MasterNodePort;
-	std::wstring url = CHelper::BuildURL(ip, port);
+	std::wstring url = ServerHelper::BuildURL(ip, port);
 
 	std::wostringstream buf;
 	buf << Constants::Request << Constants::VerbRegisterNode
@@ -66,171 +67,192 @@ bool WorkerNodeClient::RegisterToMaster()
 
 void WorkerNodeClient::handle_get(http_request message)
 {
-	TCHAR sz[255];
 	g_Logger.WriteLog(_T("handle_get"));
-	g_Logger.WriteLog(message.to_string().c_str());
-	g_Logger.WriteLog(message.relative_uri().to_string().c_str());
 
-	auto paths = uri::split_path(uri::decode(message.relative_uri().path()));
-	for (auto it1 = paths.begin(); it1 != paths.end(); it1++)
-	{
-		std::wstring path = *it1;
-		g_Logger.WriteLog(path.c_str());
-	}
+	MyServerHelper::PrintRequest(message);
 
-	auto query = uri::split_query(uri::decode(message.relative_uri().query()));
-	for (auto it2 = query.begin(); it2 != query.end(); it2++)
-	{
-		_stprintf_s(sz, _T("Query %s %s"), it2->first.c_str(), it2->second.c_str());
-		g_Logger.WriteLog(sz);
-	}
-
-	std::wstring request = CHelper::FindParameterInQuery(query, _T("request"));
-	std::wstring dbname = CHelper::FindParameterInQuery(query, _T("dbname"));
-	std::wstring key = CHelper::FindParameterInQuery(query, _T("key"));
-	std::wstring value = CHelper::FindParameterInQuery(query, _T("value"));
+	std::wstring request = ServerHelper::FindParameter(message, _T("request"));
 
 	if (request == Constants::VerbPing)
 	{
-		g_Logger.WriteLog(Constants::VerbPing.c_str());
-
-		PingData data;
-		data.ip = _server;
-		data.port = _port;
-		data.status = _T("OK");
-
-		std::wstring response = data.AsJSON().serialize();
-		g_Logger.WriteLog(response.c_str());
-
-		message.reply(status_codes::OK, data.AsJSON());
+		RequestVerbPing(message);
+		return;
 	}
 
 	if (request == Constants::VerbSetNode)
 	{
-		g_Logger.WriteLog(Constants::VerbSetNode.c_str());
-		_dbName = dbname;
-		message.reply(status_codes::OK);
-
-		Init_LMDB();
+		RequestVerbSetNode(message);
+		return;
 	}
 
 	if (request == Constants::VerbReleaseDB)
 	{
-		g_Logger.WriteLog(Constants::VerbReleaseDB.c_str());
-		_dbName = dbname;
-		message.reply(status_codes::OK);
-
-		Uninit_LMDB();
+		RequestVerbReleaseDB(message);
+		return;
 	}
 
 	if (request == Constants::VerbGetData)
 	{
-		g_Logger.WriteLog(Constants::VerbGetData.c_str());
-
-		if (m_lmdb.m_Init == false)
-		{
-			g_Logger.WriteLog(_T("LMDB Init not done !"));
-			message.reply(status_codes::OK);
-			return;
-		}
-
-		TCHAR szKey[255];
-		TCHAR szValue[255];
-
-		MDB_val VKey;
-		MDB_val VData;
-
-		_tcscpy_s(szKey, key.c_str());
-
-		VKey.mv_size = sizeof(szKey);
-		VKey.mv_data = szKey;
-		VData.mv_size = sizeof(szValue);
-		VData.mv_data = szValue;
-
-		mdb_txn_begin(m_lmdb.m_env, NULL, 0, &m_lmdb.m_txn);
-		mdb_dbi_open(m_lmdb.m_txn, NULL, 0, &m_lmdb.m_dbi);
-		int err = mdb_get(m_lmdb.m_txn, m_lmdb.m_dbi, &VKey, &VData);
-		mdb_txn_commit(m_lmdb.m_txn);
-
-		if (err == MDB_NOTFOUND)
-		{
-			Data data;
-			data.key = szKey;
-			data.value = _T("");
-
-			std::wstring response = data.AsJSON().serialize();
-			g_Logger.WriteLog(response.c_str());
-
-			message.reply(status_codes::OK, data.AsJSON());
-		}
-		else
-		{
-			Data data;
-			data.key = szKey;
-			data.value = (TCHAR *)VData.mv_data;
-
-			TCHAR sz[255];
-			_stprintf_s(sz, _T("Get Key:%s Value:%s"), data.key.c_str(), data.value.c_str());
-			g_Logger.WriteLog(sz);
-
-			std::wstring response = data.AsJSON().serialize();
-			g_Logger.WriteLog(response.c_str());
-
-			message.reply(status_codes::OK, data.AsJSON());
-		}
-
+		RequestVerbGetData(message);
 		return;
 	}
 
 	if (request == Constants::VerbSetData)
 	{
-		g_Logger.WriteLog(Constants::VerbSetData.c_str());
-
-		if(m_lmdb.m_Init == false)
-		{
-			g_Logger.WriteLog(_T("LMDB Init not done !"));
-			message.reply(status_codes::OK);
-			return;
-		}
-
-		TCHAR szKey[255];
-		TCHAR szValue[255];
-
-		MDB_val VKey;
-		MDB_val VData;
-
-		_tcscpy_s(szKey, key.c_str());
-		_tcscpy_s(szValue, value.c_str());
-
- 		VKey.mv_size = sizeof(szKey);
-		VKey.mv_data = szKey;
-		VData.mv_size = sizeof(szValue);
-		VData.mv_data = szValue;
-
-		TCHAR sz[255];
-		_stprintf_s(sz, _T("Set Key:%s Value:%s"), szKey, szValue);
-		g_Logger.WriteLog(sz);
-
-		mdb_txn_begin(m_lmdb.m_env, NULL, 0, &m_lmdb.m_txn);
-		mdb_dbi_open(m_lmdb.m_txn, NULL, 0, &m_lmdb.m_dbi);
-		mdb_put(m_lmdb.m_txn, m_lmdb.m_dbi, &VKey, &VData, MDB_NOOVERWRITE);
-		mdb_txn_commit(m_lmdb.m_txn);
-
-		Data data;
-		data.key = szKey;
-		data.value = szValue;
-
-		std::wstring response = data.AsJSON().serialize();
-		g_Logger.WriteLog(response.c_str());
-
-		message.reply(status_codes::OK, data.AsJSON());
-
+		RequestVerbSetData(message);
 		return;
 	}
 
 	message.reply(status_codes::OK);
 }
-		
+
+void WorkerNodeClient::RequestVerbPing(http_request message)
+{
+	g_Logger.WriteLog(Constants::VerbPing.c_str());
+
+	PingData data;
+	data.ip = _server;
+	data.port = _port;
+	data.status = _T("OK");
+
+	std::wstring response = data.AsJSON().serialize();
+	g_Logger.WriteLog(response.c_str());
+
+	message.reply(status_codes::OK, data.AsJSON());
+
+}
+
+void WorkerNodeClient::RequestVerbSetNode(http_request message)
+{
+
+	g_Logger.WriteLog(Constants::VerbSetNode.c_str());
+
+	std::wstring dbname = ServerHelper::FindParameter(message, _T("dbname"));
+
+	_dbName = dbname;
+	message.reply(status_codes::OK);
+
+	Init_LMDB();
+}
+
+void WorkerNodeClient::RequestVerbReleaseDB(http_request message)
+{
+	g_Logger.WriteLog(Constants::VerbReleaseDB.c_str());
+
+	std::wstring dbname = ServerHelper::FindParameter(message, _T("dbname"));
+
+	_dbName = dbname;
+	message.reply(status_codes::OK);
+
+	Uninit_LMDB();
+}
+
+void WorkerNodeClient::RequestVerbGetData(http_request message)
+{
+	g_Logger.WriteLog(Constants::VerbGetData.c_str());
+
+	std::wstring key = ServerHelper::FindParameter(message, _T("key"));
+
+	if (m_lmdb.m_Init == false)
+	{
+		g_Logger.WriteLog(_T("LMDB Init not done !"));
+		message.reply(status_codes::OK);
+		return;
+	}
+
+	TCHAR szKey[255];
+	TCHAR szValue[255];
+
+	MDB_val VKey;
+	MDB_val VData;
+
+	_tcscpy_s(szKey, key.c_str());
+
+	VKey.mv_size = sizeof(szKey);
+	VKey.mv_data = szKey;
+	VData.mv_size = sizeof(szValue);
+	VData.mv_data = szValue;
+
+	mdb_txn_begin(m_lmdb.m_env, NULL, 0, &m_lmdb.m_txn);
+	mdb_dbi_open(m_lmdb.m_txn, NULL, 0, &m_lmdb.m_dbi);
+	int err = mdb_get(m_lmdb.m_txn, m_lmdb.m_dbi, &VKey, &VData);
+	mdb_txn_commit(m_lmdb.m_txn);
+
+	if (err == MDB_NOTFOUND)
+	{
+		Data data;
+		data.key = szKey;
+		data.value = _T("");
+
+		std::wstring response = data.AsJSON().serialize();
+		g_Logger.WriteLog(response.c_str());
+
+		message.reply(status_codes::OK, data.AsJSON());
+	}
+	else
+	{
+		Data data;
+		data.key = szKey;
+		data.value = (TCHAR *)VData.mv_data;
+
+		TCHAR sz[255];
+		_stprintf_s(sz, _T("Get Key:%s Value:%s"), data.key.c_str(), data.value.c_str());
+		g_Logger.WriteLog(sz);
+
+		std::wstring response = data.AsJSON().serialize();
+		g_Logger.WriteLog(response.c_str());
+
+		message.reply(status_codes::OK, data.AsJSON());
+	}
+}
+
+void WorkerNodeClient::RequestVerbSetData(http_request message)
+{
+	g_Logger.WriteLog(Constants::VerbSetData.c_str());
+
+	std::wstring key = ServerHelper::FindParameter(message, _T("key"));
+	std::wstring value = ServerHelper::FindParameter(message, _T("value"));
+
+	if (m_lmdb.m_Init == false)
+	{
+		g_Logger.WriteLog(_T("LMDB Init not done !"));
+		message.reply(status_codes::OK);
+		return;
+	}
+
+	TCHAR szKey[255];
+	TCHAR szValue[255];
+
+	MDB_val VKey;
+	MDB_val VData;
+
+	_tcscpy_s(szKey, key.c_str());
+	_tcscpy_s(szValue, value.c_str());
+
+	VKey.mv_size = sizeof(szKey);
+	VKey.mv_data = szKey;
+	VData.mv_size = sizeof(szValue);
+	VData.mv_data = szValue;
+
+	TCHAR sz[255];
+	_stprintf_s(sz, _T("Set Key:%s Value:%s"), szKey, szValue);
+	g_Logger.WriteLog(sz);
+
+	mdb_txn_begin(m_lmdb.m_env, NULL, 0, &m_lmdb.m_txn);
+	mdb_dbi_open(m_lmdb.m_txn, NULL, 0, &m_lmdb.m_dbi);
+	mdb_put(m_lmdb.m_txn, m_lmdb.m_dbi, &VKey, &VData, MDB_NOOVERWRITE);
+	mdb_txn_commit(m_lmdb.m_txn);
+
+	Data data;
+	data.key = szKey;
+	data.value = szValue;
+
+	std::wstring response = data.AsJSON().serialize();
+	g_Logger.WriteLog(response.c_str());
+
+	message.reply(status_codes::OK, data.AsJSON());
+}
+
 void WorkerNodeClient::Init_LMDB()
 {
 	std::string dbName(_dbName.begin(), _dbName.end());

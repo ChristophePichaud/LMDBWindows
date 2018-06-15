@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "MyServer.h"
-#include "..\Include\Helper.h"
+#include "..\Include\ServerHelper.h"
 #include "WorkerNodeClient.h"
 #include "..\Include\Constants.h"
 
@@ -36,8 +36,8 @@ int wmain(int argc, wchar_t *argv[])
 		name = argv[4];
 	}
 
-	std::wstring ip = CHelper::GetIP();
-	std::wstring url = CHelper::BuildURL(ip, port);
+	std::wstring ip = ServerHelper::GetIP();
+	std::wstring url = ServerHelper::BuildURL(ip, port);
 	http::uri uri = http::uri(url);
 	std::wstring address = uri.to_string();						
 
