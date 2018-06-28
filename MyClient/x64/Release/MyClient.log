@@ -1,12 +1,1 @@
-﻿  Client.cpp
-d:\dev\github_lmdbwindows\myclient\client.cpp(71): warning C4996: '_swprintf': This function or variable may be unsafe. Consider using _swprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.14393.0\ucrt\corecrt_wstdio.h(1446): note: see declaration of '_swprintf'
-d:\dev\github_lmdbwindows\myclient\client.cpp(101): warning C4996: '_swprintf': This function or variable may be unsafe. Consider using _swprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.14393.0\ucrt\corecrt_wstdio.h(1446): note: see declaration of '_swprintf'
-d:\dev\github_lmdbwindows\myclient\client.cpp(105): warning C4996: '_swprintf': This function or variable may be unsafe. Consider using _swprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.14393.0\ucrt\corecrt_wstdio.h(1446): note: see declaration of '_swprintf'
-  stdafx.cpp
-  Generating code
-  All 1174 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
-  Finished generating code
-  MyClient.vcxproj -> D:\Dev\GitHub_LMDBWindows\LMDBWindows\x64\Release\MyClient.exe
+﻿

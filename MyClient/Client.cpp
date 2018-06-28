@@ -100,7 +100,8 @@ int wmain(int argc, wchar_t *argv[])
 		std::wostringstream buf;
 		buf << Constants::Request << Constants::VerbSetData
 			<< _T("&key=") << key
-			<< _T("&value=") << value;
+			<< _T("&value=") << value
+			<< _T("&name=") << name;
 
 		http_response response;
 		response = client_lmdb.request(methods::GET, buf.str()).get();
@@ -125,7 +126,8 @@ int wmain(int argc, wchar_t *argv[])
 
 		std::wostringstream buf;
 		buf << Constants::Request << Constants::VerbGetData
-			<< _T("&key=") << key;
+			<< _T("&key=") << key
+			<< _T("&name=") << name;	
 
 		wcout << buf.str() << endl;
 

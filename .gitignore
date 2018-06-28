@@ -36,3 +36,7 @@
 /LMDBWrapper_Client/x64/Debug
 /libraries/liblmdb/.vs
 /MySharedStuff/x64/Debug
+/ConsoleApplication1/x64/Release
+/HttpLMDB/x64/Release
+/HttpLMDB_Client/x64/Release
+/Admin/x64/Release

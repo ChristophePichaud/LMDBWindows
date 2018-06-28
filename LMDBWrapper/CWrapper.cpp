@@ -10,14 +10,14 @@
 #endif
 
 
-LMDBData::LMDBData()
+LMDBPrivateData::LMDBPrivateData()
 {
 	m_dbi = 0;
 	m_env = nullptr;
 	m_txn = nullptr;
 }
 
-LMDBData::~LMDBData()
+LMDBPrivateData::~LMDBPrivateData()
 {
 }
 

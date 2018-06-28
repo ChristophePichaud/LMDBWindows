@@ -71,6 +71,9 @@
 #include "..\Include\lmdb-dll.h"
 #include "..\Include\midl-dll.h"
 
+#include "..\Include\LMDBWrapper.h"
+#include "..\Include\CWrapper.h"
+
 #include "CSWMRGuard.h"
 extern CSWMRGuard g_Guard;
 
@@ -89,11 +92,14 @@ using namespace web::http::experimental::listener;
 	#ifdef _DEBUG
 		#pragma comment (lib, "..\\Lib\\LMDBWindowsDllD64.lib")
 		#pragma comment (lib, "..\\Lib\\cpprest141d_2_10.lib")
-		#pragma comment (lib, "..\\Lib\\MySharedStuff.lib")
-	#else
+		#pragma comment (lib, "..\\Lib\\MySharedStuffD64.lib")
+		#pragma comment (lib, "..\\Lib\\LMDBWrapperD64.lib")
+#else
 		#pragma comment (lib, "..\\Lib\\LMDBWindowsDll64.lib")
 		#pragma comment (lib, "..\\Lib\\cpprest141_2_10.lib")
-	#endif
+		#pragma comment (lib, "..\\Lib\\MySharedStuff64.lib")
+		#pragma comment (lib, "..\\Lib\\LMDBWrapper64.lib")
+#endif
 #else
 	#ifdef _DEBUG
 		#pragma comment (lib, "..\\Lib\\LMDBWindowsDllD.lib")

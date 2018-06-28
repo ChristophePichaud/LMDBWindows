@@ -3,11 +3,11 @@
 #include "lmdb-dll.h"
 #include "midl-dll.h"
 
-class LMDBWRAPPER_API LMDBData
+class LMDBWRAPPER_API LMDBPrivateData
 {
 public:
-	LMDBData();
-	virtual ~LMDBData();
+	LMDBPrivateData();
+	virtual ~LMDBPrivateData();
 
 public:
 	bool m_Init = false;
@@ -30,7 +30,7 @@ public:
 	bool GetData(LPSTR lpszKey, LPSTR * lpszValue);
 
 private:
-	LMDBData m_lmdb;
+	LMDBPrivateData m_lmdb;
 };
 
 extern LMDBWRAPPER_API int nLMDBWrapper;

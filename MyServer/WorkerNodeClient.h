@@ -33,7 +33,7 @@ public:
 	static std::wstring _port;
 	static std::wstring _name;
 	static std::wstring _dbName;
-	static LMDBData m_lmdb;
+	//static LMDBData m_lmdb;
 
 public:
 	std::unique_ptr<WorkerNodeClient> _http;

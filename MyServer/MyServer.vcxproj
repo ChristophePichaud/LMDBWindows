@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LMDBData.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MyServer.cpp" />
     <ClCompile Include="MyServerHelper.cpp" />
@@ -29,12 +28,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Include\messagetypes.h" />
-    <ClInclude Include="LMDBData.h" />
     <ClInclude Include="MyServer.h" />
     <ClInclude Include="MyServerHelper.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="WorkerNodeAttributes.h" />
     <ClInclude Include="WorkerNodeClient.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
