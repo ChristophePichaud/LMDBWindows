@@ -40,3 +40,7 @@
 /HttpLMDB/x64/Release
 /HttpLMDB_Client/x64/Release
 /Admin/x64/Release
+/LMDBNet/bin
+/LMDBNet/obj
+/LMDBNet_Client/bin
+/LMDBNet_Client/obj
