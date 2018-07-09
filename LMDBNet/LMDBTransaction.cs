@@ -9,7 +9,7 @@ namespace LMDBNet
     /// <summary>
     /// Represents a transaction.
     /// </summary>
-    public class LightningTransaction : IDisposable
+    public class LMDBTransaction : IDisposable
     {
         /// <summary>
         /// Default options used to begin new transactions.
@@ -20,12 +20,12 @@ namespace LMDBNet
         private readonly IntPtr _originalHandle;
 
         /// <summary>
-        /// Created new instance of LightningTransaction
+        /// Created new instance of LMDBTransaction
         /// </summary>
         /// <param name="environment">Environment.</param>
         /// <param name="parent">Parent transaction or null.</param>
         /// <param name="flags">Transaction open options.</param>
-        internal LightningTransaction(LightningEnvironment environment, LightningTransaction parent, TransactionBeginFlags flags)
+        internal LMDBTransaction(LMDBEnvironment environment, LMDBTransaction parent, TransactionBeginFlags flags)
         {
             if (environment == null)
                 throw new ArgumentNullException(nameof(environment));
@@ -33,7 +33,7 @@ namespace LMDBNet
             Environment = environment;
             ParentTransaction = parent;
             IsReadOnly = (flags & TransactionBeginFlags.ReadOnly) == TransactionBeginFlags.ReadOnly;
-            State = LightningTransactionState.Active;
+            State = TransactionState.Active;
             Environment.Disposing += Dispose;
             if (parent != null)
             {
@@ -51,12 +51,12 @@ namespace LMDBNet
             return _handle;
         }
 
-        private void OnParentStateChanging(LightningTransactionState state)
+        private void OnParentStateChanging(TransactionState state)
         {
             switch (state)
             {
-                case LightningTransactionState.Aborted:
-                case LightningTransactionState.Commited:
+                case TransactionState.Aborted:
+                case TransactionState.Commited:
                     Abort();
                     break;
                 default:
@@ -65,28 +65,28 @@ namespace LMDBNet
         }
 
         public event Action Disposing;
-        private event Action<LightningTransactionState> StateChanging;
+        private event Action<TransactionState> StateChanging;
 
         /// <summary>
         /// Current transaction state.
         /// </summary>
-        public LightningTransactionState State { get; internal set; }
+        public TransactionState State { get; internal set; }
 
         /// <summary>
         /// Begin a child transaction.
         /// </summary>
         /// <param name="beginFlags">Options for a new transaction.</param>
         /// <returns>New child transaction.</returns>
-        public LightningTransaction BeginTransaction(TransactionBeginFlags beginFlags)
+        public LMDBTransaction BeginTransaction(TransactionBeginFlags beginFlags)
         {
-            return new LightningTransaction(Environment, this, beginFlags);
+            return new LMDBTransaction(Environment, this, beginFlags);
         }
 
         /// <summary>
         /// Begins a child transaction.
         /// </summary>
         /// <returns>New child transaction with default options.</returns>
-        public LightningTransaction BeginTransaction()
+        public LMDBTransaction BeginTransaction()
         {
             return BeginTransaction(DefaultTransactionBeginFlags);
         }
@@ -97,17 +97,17 @@ namespace LMDBNet
         /// <param name="name">Database name (optional). If null then the default name is used.</param>
         /// <param name="configuration">Database open options.</param>
         /// <returns>Created database wrapper.</returns>
-        public LightningDatabase OpenDatabase(string name = null, DatabaseConfiguration configuration = null)
+        public LMDBDatabase OpenDatabase(string name = null, DatabaseConfiguration configuration = null)
         {
             configuration = configuration ?? new DatabaseConfiguration();
-            var db = new LightningDatabase(name, this, configuration);
+            var db = new LMDBDatabase(name, this, configuration);
             return db;
         }
 
         /// <summary>
         /// Drops the database.
         /// </summary>
-        public void DropDatabase(LightningDatabase database)
+        public void DropDatabase(LMDBDatabase database)
         {
             database.Drop(this);
         }
@@ -115,7 +115,7 @@ namespace LMDBNet
         /// <summary>
         /// Truncates all data from the database.
         /// </summary>
-        public void TruncateDatabase(LightningDatabase database)
+        public void TruncateDatabase(LMDBDatabase database)
         {
             database.Truncate(this);
         }
@@ -126,7 +126,7 @@ namespace LMDBNet
         /// <param name="db">Database </param>
         /// <param name="key">Key byte array.</param>
         /// <returns>Requested value's byte array if exists, or null if not.</returns>
-        public byte[] Get(LightningDatabase db, byte[] key)
+        public byte[] Get(LMDBDatabase db, byte[] key)
         {
             byte[] value;
             TryGet(db, key, out value);
@@ -140,7 +140,7 @@ namespace LMDBNet
         /// <param name="key">Key byte array.</param>
         /// <param name="value">Value byte array if exists.</param>
         /// <returns>True if key exists, false if not.</returns>
-        public bool TryGet(LightningDatabase db, byte[] key, out byte[] value)
+        public bool TryGet(LMDBDatabase db, byte[] key, out byte[] value)
         {
             if (db == null)
                 throw new ArgumentNullException(nameof(db));
@@ -154,7 +154,7 @@ namespace LMDBNet
         /// <param name="db">Database.</param>
         /// <param name="key">Key.</param>
         /// <returns>True if key exists, false if not.</returns>
-        public bool ContainsKey(LightningDatabase db, byte[] key)
+        public bool ContainsKey(LMDBDatabase db, byte[] key)
         {
             if (db == null)
                 throw new ArgumentNullException(nameof(db));
@@ -170,7 +170,7 @@ namespace LMDBNet
         /// <param name="key">Key byte array.</param>
         /// <param name="value">Value byte array.</param>
         /// <param name="options">Operation options (optional).</param>
-        public void Put(LightningDatabase db, byte[] key, byte[] value, PutOptions options = PutOptions.None)
+        public void Put(LMDBDatabase db, byte[] key, byte[] value, PutOptions options = PutOptions.None)
         {
             if (db == null)
                 throw new ArgumentNullException(nameof(db));
@@ -189,7 +189,7 @@ namespace LMDBNet
         /// <param name="db">A database handle returned by mdb_dbi_open()</param>
         /// <param name="key">The key to delete from the database</param>
         /// <param name="value">The data to delete (optional)</param>
-        public void Delete(LightningDatabase db, byte[] key, byte[] value)
+        public void Delete(LMDBDatabase db, byte[] key, byte[] value)
         {
             if (db == null)
                 throw new ArgumentNullException(nameof(db));
@@ -207,7 +207,7 @@ namespace LMDBNet
         /// </summary>
         /// <param name="db">A database handle returned by mdb_dbi_open()</param>
         /// <param name="key">The key to delete from the database</param>
-        public void Delete(LightningDatabase db, byte[] key)
+        public void Delete(LMDBDatabase db, byte[] key)
         {
             Lmdb.mdb_del(_handle, db.Handle(), key);
         }
@@ -221,7 +221,7 @@ namespace LMDBNet
                 throw new InvalidOperationException("Can't reset non-readonly transaction");
 
             Lmdb.mdb_txn_reset(_handle);
-            State = LightningTransactionState.Reseted;
+            State = TransactionState.Reseted;
         }
 
         /// <summary>
@@ -232,11 +232,11 @@ namespace LMDBNet
             if (!IsReadOnly)
                 throw new InvalidOperationException("Can't renew non-readonly transaction");
 
-            if (State != LightningTransactionState.Reseted)
+            if (State != TransactionState.Reseted)
                 throw new InvalidOperationException("Transaction should be reseted first");
 
             Lmdb.mdb_txn_renew(_handle);
-            State = LightningTransactionState.Active;
+            State = TransactionState.Active;
         }
 
         /// <summary>
@@ -246,7 +246,7 @@ namespace LMDBNet
         /// </summary>
         public void Commit()
         {
-            State = LightningTransactionState.Commited;
+            State = TransactionState.Commited;
             StateChanging?.Invoke(State);
             Lmdb.mdb_txn_commit(_handle);
         }
@@ -258,7 +258,7 @@ namespace LMDBNet
         /// </summary>
         public void Abort()
         {
-            State = LightningTransactionState.Aborted;
+            State = TransactionState.Aborted;
             StateChanging?.Invoke(State);
             Lmdb.mdb_txn_abort(_handle);
         }
@@ -268,7 +268,7 @@ namespace LMDBNet
         /// </summary>
         /// <param name="db">The database we are counting items in.</param>
         /// <returns>The number of items.</returns>
-        public long GetEntriesCount(LightningDatabase db)
+        public long GetEntriesCount(LMDBDatabase db)
         {
             MDBStat stat;
             Lmdb.mdb_stat(_handle, db.Handle(), out stat);
@@ -279,12 +279,12 @@ namespace LMDBNet
         /// <summary>
         /// Environment in which the transaction was opened.
         /// </summary>
-        public LightningEnvironment Environment { get; }
+        public LMDBEnvironment Environment { get; }
 
         /// <summary>
         /// Parent transaction of this transaction.
         /// </summary>
-        public LightningTransaction ParentTransaction { get; }
+        public LMDBTransaction ParentTransaction { get; }
 
         /// <summary>
         /// Whether this transaction is read-only.
@@ -309,7 +309,7 @@ namespace LMDBNet
 
             Disposing?.Invoke();
 
-            if (State == LightningTransactionState.Active || State == LightningTransactionState.Reseted)
+            if (State == TransactionState.Active || State == TransactionState.Reseted)
                 Abort();
 
             _handle = IntPtr.Zero;
@@ -328,7 +328,7 @@ namespace LMDBNet
             Dispose(true);
         }
 
-        ~LightningTransaction()
+        ~LMDBTransaction()
         {
             Dispose(false);
         }
@@ -340,7 +340,7 @@ namespace LMDBNet
 
         public override bool Equals(object obj)
         {
-            var tran = obj as LightningTransaction;
+            var tran = obj as LMDBTransaction;
             if (tran == null)
                 return false;
 

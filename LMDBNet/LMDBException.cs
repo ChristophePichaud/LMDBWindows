@@ -9,14 +9,14 @@ namespace LMDBNet
     /// <summary>
     /// An exception caused by lmdb operations.
     /// </summary>
-    public class LightningException : Exception
+    public class LMDBException : Exception
     {
-        internal LightningException(string message, int statusCode) : base(message)
+        internal LMDBException(string message, int statusCode) : base(message)
         {
             StatusCode = statusCode;
         }
 
-        internal LightningException(string message, Exception innerException) : base(message, innerException)
+        internal LMDBException(string message, Exception innerException) : base(message, innerException)
         {
         }
 
@@ -27,7 +27,7 @@ namespace LMDBNet
 
         public override string ToString()
         {
-            return $"LightningDB {StatusCode}: {Message}";
+            return $"LMDB Exception {StatusCode}: {Message}";
         }
     }
 }

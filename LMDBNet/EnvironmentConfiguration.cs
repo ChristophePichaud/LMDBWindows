@@ -35,7 +35,7 @@ namespace LMDBNet
 
         public bool AutoReduceMapSizeIn32BitProcess { get; set; }
 
-        internal void Configure(LightningEnvironment env)
+        internal void Configure(LMDBEnvironment env)
         {
             if (_mapSize.HasValue)
                 env.MapSize = _mapSize.Value;

@@ -69,7 +69,7 @@ namespace LMDBNet
             if (statusCode != 0)
             {
                 var message = mdb_strerror(statusCode);
-                throw new   LightningException(message, statusCode);
+                throw new   LMDBException(message, statusCode);
             }
             return statusCode;
         }
@@ -118,7 +118,7 @@ namespace LMDBNet
         {
             var statusCode = LmdbMethods.mdb_dbi_open(txn, name, flags, out db);
             if (statusCode == MDB_NOTFOUND)
-                throw new LightningException($"Error opening database {name}: {mdb_strerror(statusCode)}", statusCode);
+                throw new LMDBException($"Error opening database {name}: {mdb_strerror(statusCode)}", statusCode);
             return check(statusCode);
         }
 

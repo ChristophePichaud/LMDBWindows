@@ -7,21 +7,21 @@ using System.Threading.Tasks;
 namespace LMDBNet
 {
     /// <summary>
-    /// Lightning database.
+    /// LMDB database.
     /// </summary>
-    public class LightningDatabase : IDisposable
+    public class LMDBDatabase : IDisposable
     {
         private uint _handle;
         private readonly DatabaseConfiguration _configuration;
         private readonly IDisposable _pinnedConfig;
 
         /// <summary>
-        /// Creates a LightningDatabase instance.
+        /// Creates a LMDBDatabase instance.
         /// </summary>
         /// <param name="name">Database name.</param>
         /// <param name="transaction">Active transaction.</param>
         /// <param name="configuration">Options for the database, like encoding, option flags, and comparison logic.</param>
-        internal LightningDatabase(string name, LightningTransaction transaction, DatabaseConfiguration configuration)
+        internal LMDBDatabase(string name, LMDBTransaction transaction, DatabaseConfiguration configuration)
         {
             if (transaction == null)
                 throw new ArgumentNullException(nameof(transaction));
@@ -61,7 +61,7 @@ namespace LMDBNet
         /// <summary>
         /// Environment in which the database was opened.
         /// </summary>
-        public LightningEnvironment Environment { get; }
+        public LMDBEnvironment Environment { get; }
 
         /// <summary>
         /// Flags with which the database was opened.
@@ -71,7 +71,7 @@ namespace LMDBNet
         /// <summary>
         /// Drops the database.
         /// </summary>
-        public void Drop(LightningTransaction transaction)
+        public void Drop(LMDBTransaction transaction)
         {
             Lmdb.mdb_drop(transaction.Handle(), _handle, true);
             IsOpened = false;
@@ -81,7 +81,7 @@ namespace LMDBNet
         /// <summary>
         /// Truncates all data from the database.
         /// </summary>
-        public void Truncate(LightningTransaction transaction)
+        public void Truncate(LMDBTransaction transaction)
         {
             Lmdb.mdb_drop(transaction.Handle(), _handle, false);
         }
@@ -114,7 +114,7 @@ namespace LMDBNet
             Dispose(true);
         }
 
-        ~LightningDatabase()
+        ~LMDBDatabase()
         {
             Dispose(false);
         }

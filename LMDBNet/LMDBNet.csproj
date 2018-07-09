@@ -49,11 +49,11 @@
     <Compile Include="EnvironmentCopyFlags.cs" />
     <Compile Include="EnvironmentOpenFlags.cs" />
     <Compile Include="HelperExtensions.cs" />
-    <Compile Include="LightningDatabase.cs" />
-    <Compile Include="LightningEnvironment.cs" />
-    <Compile Include="LightningException.cs" />
-    <Compile Include="LightningTransaction.cs" />
-    <Compile Include="LightningTransactionState.cs" />
+    <Compile Include="LMDBDatabase.cs" />
+    <Compile Include="LMDBEnvironment.cs" />
+    <Compile Include="LMDBException.cs" />
+    <Compile Include="LMDBTransaction.cs" />
+    <Compile Include="TransactionState.cs" />
     <Compile Include="Lmdb.cs" />
     <Compile Include="LmdbMethods.cs" />
     <Compile Include="MarshalMultipleValueStructure.cs" />

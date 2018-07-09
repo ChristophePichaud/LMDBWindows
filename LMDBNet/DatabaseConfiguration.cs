@@ -20,7 +20,7 @@ namespace LMDBNet
         public DatabaseOpenFlags Flags { get; set; }
 
 
-        internal IDisposable ConfigureDatabase(LightningTransaction tx, LightningDatabase db)
+        internal IDisposable ConfigureDatabase(LMDBTransaction tx, LMDBDatabase db)
         {
             var pinnedComparer = new ComparerKeepAlive();
             if (_comparer != null)

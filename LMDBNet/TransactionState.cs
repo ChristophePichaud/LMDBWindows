@@ -9,7 +9,7 @@ namespace LMDBNet
     /// <summary>
     /// Transaction state.
     /// </summary>
-    public enum LightningTransactionState
+    public enum TransactionState
     {
         /// <summary>
         /// Transaction is currently active.

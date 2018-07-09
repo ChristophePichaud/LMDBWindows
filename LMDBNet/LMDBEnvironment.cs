@@ -10,7 +10,7 @@ namespace LMDBNet
     /// <summary>
     /// LMDB Environment.
     /// </summary>
-    public class LightningEnvironment : IDisposable
+    public class LMDBEnvironment : IDisposable
     {
         private readonly EnvironmentConfiguration _config = new EnvironmentConfiguration();
 
@@ -19,11 +19,11 @@ namespace LMDBNet
         public event Action Disposing;
 
         /// <summary>
-        /// Creates a new instance of LightningEnvironment.
+        /// Creates a new instance of LMDBEnvironment.
         /// </summary>
         /// <param name="path">Directory for storing database files.</param>
         /// <param name="configuration">Configuration for the environment.</param>
-        public LightningEnvironment(string path, EnvironmentConfiguration configuration = null)
+        public LMDBEnvironment(string path, EnvironmentConfiguration configuration = null)
         {
             if (string.IsNullOrWhiteSpace(path))
                 throw new ArgumentException("Invalid directory name");
@@ -137,7 +137,7 @@ namespace LMDBNet
             }
             catch (Exception ex)
             {
-                throw new LightningException($"Failed to open environment at path {Path}", ex);
+                throw new LMDBException($"Failed to open environment at path {Path}", ex);
             }
 
             IsOpened = true;
@@ -159,14 +159,14 @@ namespace LMDBNet
         /// Special options for this transaction. 
         /// </param>
         /// <returns>
-        /// New LightningTransaction
+        /// New LMDBTransaction
         /// </returns>
-        public LightningTransaction BeginTransaction(LightningTransaction parent, TransactionBeginFlags beginFlags)
+        public LMDBTransaction BeginTransaction(LMDBTransaction parent, TransactionBeginFlags beginFlags)
         {
             if (!IsOpened)
                 throw new InvalidOperationException("Environment must be opened before starting a transaction");
 
-            return new LightningTransaction(this, parent, beginFlags);
+            return new LMDBTransaction(this, parent, beginFlags);
         }
 
         /// <summary>
@@ -180,9 +180,9 @@ namespace LMDBNet
         /// Special options for this transaction. 
         /// </param>
         /// <returns>
-        /// New LightningTransaction
+        /// New LMDBTransaction
         /// </returns>
-        public LightningTransaction BeginTransaction(TransactionBeginFlags beginFlags)
+        public LMDBTransaction BeginTransaction(TransactionBeginFlags beginFlags)
         {
             return BeginTransaction(null, beginFlags);
         }
@@ -195,11 +195,11 @@ namespace LMDBNet
         /// Cursors may not span transactions; each cursor must be opened and closed within a single transaction.
         /// </summary>        
         /// <returns>
-        /// New LightningTransaction
+        /// New LMDBTransaction
         /// </returns>
-        public LightningTransaction BeginTransaction()
+        public LMDBTransaction BeginTransaction()
         {
-            return BeginTransaction(null, LightningTransaction.DefaultTransactionBeginFlags);
+            return BeginTransaction(null, LMDBTransaction.DefaultTransactionBeginFlags);
         }
 
         /// <summary>
@@ -222,7 +222,7 @@ namespace LMDBNet
         //TODO: tests
         /// <summary>
         /// Flush the data buffers to disk. 
-        /// Data is always written to disk when LightningTransaction.Commit is called, but the operating system may keep it buffered. 
+        /// Data is always written to disk when LMDBTransaction.Commit is called, but the operating system may keep it buffered. 
         /// MDB always flushes the OS buffers upon commit as well, unless the environment was opened with EnvironmentOpenFlags.NoSync or in part EnvironmentOpenFlags.NoMetaSync.
         /// </summary>
         /// <param name="force">If true, force a synchronous flush. Otherwise if the environment has the EnvironmentOpenFlags.NoSync flag set the flushes will be omitted, and with MDB_MAPASYNC they will be asynchronous.</param>
@@ -273,7 +273,7 @@ namespace LMDBNet
             Dispose(true);
         }
 
-        ~LightningEnvironment()
+        ~LMDBEnvironment()
         {
             Dispose(false);
         }

@@ -55,18 +55,18 @@ namespace LMDBNet_Client
             string str = String.Format("count={0}", count);
             Logger.LogInfo(str);
 
-            LightningEnvironment _env;
-            LightningTransaction _txn;
+            LMDBEnvironment _env;
             string dir = "c:\\temp\\cache_net10A";
-            _env = new LightningEnvironment(dir);
+            _env = new LMDBEnvironment(dir);
             //This is here to assert that previous issues with the way manager
             //classes (since removed) worked don't happen anymore.
             _env.MaxDatabases = 2;
+            _env.MapSize = 10485760 * 100;
             _env.Open();
 
             DateTime dtStart = DateTime.Now;
             var tx = _env.BeginTransaction();
-            var db = tx.OpenDatabase("custom", new DatabaseConfiguration { Flags = DatabaseOpenFlags.Create });
+            var db = tx.OpenDatabase("DB", new DatabaseConfiguration { Flags = DatabaseOpenFlags.Create });
             for (int i = 0; i < count; i++)
             {
                 string key = String.Format("key_{0}", i);
@@ -74,19 +74,39 @@ namespace LMDBNet_Client
 
                 tx.Put(db, key, value);
             }
-
             tx.Put(db, "hello", "world");
             tx.Commit();
             db.Dispose();
+
             DateTime dtStop = DateTime.Now;
             TimeSpan ts = dtStop - dtStart;
-            str = String.Format("Time elapsed:{0} ms", ts.TotalMilliseconds);
+            str = String.Format("Time elapsed for set:{0} ms", ts.TotalMilliseconds);
             Logger.LogInfo(str);
 
+            dtStart = DateTime.Now;
             tx = _env.BeginTransaction(TransactionBeginFlags.ReadOnly);
-            db = tx.OpenDatabase("custom");
+            db = tx.OpenDatabase("DB");
+            for (int i = 0; i < count; i++)
+            {
+                string key = String.Format("key_{0}", i);
+                //string value = String.Format("value_{0}", i);
+
+                var value = tx.Get(db, key);
+                if (i % 10000 == 0)
+                {
+                    string strD = String.Format("key:{0} => value:{1}", key, value);
+                    Logger.LogInfo(strD);
+                }
+            }
             var result = tx.Get(db, "hello");
-            tx.Dispose();
+            Logger.LogInfo(result);
+            tx.Commit();
+            db.Dispose();
+
+            dtStop = DateTime.Now;
+            ts = dtStop - dtStart;
+            str = String.Format("Time elapsed for get:{0} ms", ts.TotalMilliseconds);
+            Logger.LogInfo(str);
 
             _env.Dispose();
         }
