@@ -46,3 +46,8 @@
 /LMDBNet_Client/obj
 /LMDBNet_ClientFiles/bin/Debug
 /LMDBNet_ClientFiles/obj/Debug
+/LMDBService/x64/Debug
+/LMDBWcf_Client/bin/Debug
+/LMDBWcf_Client/obj/Debug
+/LMDB_Wcf/obj/Debug
+/LMDB_Wcf/bin

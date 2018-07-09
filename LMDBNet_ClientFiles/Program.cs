@@ -52,12 +52,9 @@ namespace LMDBNet_ClientFiles
             string value = String.Empty;
             byte[] buffer = File.ReadAllBytes(path);
 
-            int count = 0;
             LMDBEnvironment _env;
             string dir = "c:\\temp\\cache_net10B";
             _env = new LMDBEnvironment(dir);
-            //This is here to assert that previous issues with the way manager
-            //classes (since removed) worked don't happen anymore.
             _env.MaxDatabases = 2;
             _env.MapSize = 10485760 * 100;
             _env.Open();
