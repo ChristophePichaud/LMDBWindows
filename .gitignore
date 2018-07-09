@@ -44,3 +44,5 @@
 /LMDBNet/obj
 /LMDBNet_Client/bin
 /LMDBNet_Client/obj
+/LMDBNet_ClientFiles/bin/Debug
+/LMDBNet_ClientFiles/obj/Debug
