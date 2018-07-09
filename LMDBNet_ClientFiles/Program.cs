@@ -26,10 +26,28 @@ namespace LMDBNet_ClientFiles
 
             bool bFile = false;
             if( File.Exists(path))
-            {
                 bFile = true;
+
+            bool bDir = false;
+            if( Directory.Exists(path))
+                bDir = true;
+
+            if (bFile == true)
+            {
+                StoreFile(path);
+            }
+            else if (bDir == true)
+            {
+                foreach (string file in Directory.GetFiles(path))
+                {
+                    StoreFile(file);
+                }
             }
 
+        }
+
+        private static void StoreFile(string path)
+        {
             string key = path;
             string value = String.Empty;
             byte[] buffer = File.ReadAllBytes(path);
@@ -54,7 +72,7 @@ namespace LMDBNet_ClientFiles
 
             DateTime dtStop = DateTime.Now;
             TimeSpan ts = dtStop - dtStart;
-            str = String.Format("Time elapsed for set:{0} ms", ts.TotalMilliseconds);
+            string str = String.Format("Time elapsed for set:{0} ms", ts.TotalMilliseconds);
             Logger.LogInfo(str);
 
             _env.Dispose();
