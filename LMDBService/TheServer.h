@@ -11,6 +11,7 @@ public:
 	static void RequestVerbPing(http_request message);
 	static void RequestVerbGetData(http_request message);
 	static void RequestVerbSetData(http_request message);
+	static void RequestVerbSetData2(http_request message);
 
 public:
 	pplx::task<void> open() { return m_listener.open(); }
@@ -19,6 +20,9 @@ public:
 private:
 	static void PrintRequest(http_request request);
 	static void handle_get(http_request message);
+	static void handle_post(http_request message);
+	static void handle_del(http_request message);
+	static void handle_put(http_request message);
 
 private:
 	http_listener m_listener;

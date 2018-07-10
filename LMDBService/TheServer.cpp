@@ -20,6 +20,13 @@ TheServer::TheServer(std::wstring url) : m_listener(url)
 {
 	std::function<void(http_request)> fnGet = &TheServer::handle_get;
 	m_listener.support(methods::GET, fnGet);
+	std::function<void(http_request)> fnPost = &TheServer::handle_post;
+	m_listener.support(methods::POST, fnPost);
+	std::function<void(http_request)> fnDel = &TheServer::handle_del;
+	m_listener.support(methods::DEL, fnDel);
+	std::function<void(http_request)> fnPut = &TheServer::handle_put;
+	m_listener.support(methods::PUT, fnPut);
+
 	this->_url = url;
 }
 
@@ -45,6 +52,8 @@ void TheServer::handle_get(http_request message)
 	PrintRequest(message);
 
 	// http://192.168.175.241:7001/MyServer/LMDB/?request=set-data&key=toto0&value=toto1&name=cache2
+	// http://192.168.175.241:7001/MyServer/LMDB/?request=get-data&key=toto2_k&name=cache3
+
 	std::wstring request = ServerHelper::FindParameter(message, _T("request"));
 
 	if (request == Constants::VerbPing)
@@ -67,6 +76,32 @@ void TheServer::handle_get(http_request message)
 
 	message.reply(status_codes::OK);
 }
+
+void TheServer::handle_post(http_request message)
+{
+	g_Logger.WriteLog(message.to_string().c_str());
+
+	PrintRequest(message);
+
+	std::wstring request = ServerHelper::FindParameter(message, _T("request"));
+
+	if (request == Constants::VerbSetData)
+	{
+		RequestVerbSetData2(message);
+		return;
+	}
+
+	message.reply(status_codes::OK);
+};
+
+void TheServer::handle_del(http_request message)
+{
+}
+
+void TheServer::handle_put(http_request message)
+{
+}
+
 
 void TheServer::RequestVerbPing(http_request message)
 {
@@ -139,6 +174,45 @@ void TheServer::RequestVerbSetData(http_request message)
 
 	std::wstring key = ServerHelper::FindParameter(message, _T("key"));
 	std::wstring value = ServerHelper::FindParameter(message, _T("value"));
+	std::wstring dbNameW = ServerHelper::FindParameter(message, _T("name"));
+	std::string dbName(dbNameW.begin(), dbNameW.end());
+
+	if (lmdb.Init((LPSTR)dbName.c_str()) == false)
+	{
+		g_Logger.WriteLog(_T("LMDB Init not done !"));
+		message.reply(status_codes::OK);
+		return;
+	}
+
+	LPSTR lpszKey = W2A(key.c_str());
+	LPSTR lpszValue = W2A(value.c_str());
+	lmdb.SetData(lpszKey, lpszValue);
+
+	char sz[255];
+	sprintf_s(sz, "Set Key:%s Value:%s", lpszKey, lpszValue);
+	g_Logger.WriteLog(A2W(sz));
+
+	Data data;
+	data.key = A2W(lpszKey);
+	data.value = A2W(lpszValue);
+
+	std::wstring response = data.AsJSON().serialize();
+	g_Logger.WriteLog(response.c_str());
+
+	message.reply(status_codes::OK, data.AsJSON());
+
+	lmdb.Uninit((LPSTR)dbName.c_str());
+}
+
+void TheServer::RequestVerbSetData2(http_request message)
+{
+	USES_CONVERSION;
+	CLMDBWrapper lmdb;
+	g_Logger.WriteLog(Constants::VerbSetData.c_str());
+
+	std::wstring key = ServerHelper::FindParameter(message, _T("key"));
+	std::wstring value = ServerHelper::FindParameter(message, _T("value"));
+	std::wstring len = ServerHelper::FindParameter(message, _T("len"));
 	std::wstring dbNameW = ServerHelper::FindParameter(message, _T("name"));
 	std::string dbName(dbNameW.begin(), dbNameW.end());
 
