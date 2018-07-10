@@ -3,6 +3,7 @@
 #include "..\Include\messagetypes.h"
 #include "..\Include\ServerHelper.h"
 #include "..\Include\Constants.h"
+#include "..\Include\Base64Helper.h"
 
 
 std::wstring TheServer::_server;
@@ -85,9 +86,15 @@ void TheServer::handle_post(http_request message)
 
 	std::wstring request = ServerHelper::FindParameter(message, _T("request"));
 
-	if (request == Constants::VerbSetData)
+	if (request == Constants::VerbSetDataB64)
 	{
 		RequestVerbSetData2(message);
+		return;
+	}
+
+	if (request == Constants::VerbGetDataB64)
+	{
+		RequestVerbGetData2(message);
 		return;
 	}
 
@@ -146,6 +153,58 @@ void TheServer::RequestVerbGetData(http_request message)
 		Data data;
 		data.key = key;
 		data.value = std::wstring((A2W(lpszValue)));
+
+		free(lpszValue);
+
+		TCHAR sz[255];
+		_stprintf_s(sz, _T("Get Key:%s Value:%s"), data.key.c_str(), data.value.c_str());
+		g_Logger.WriteLog(sz);
+
+		std::wstring response = data.AsJSON().serialize();
+		g_Logger.WriteLog(response.c_str());
+
+		message.reply(status_codes::OK, data.AsJSON());
+	}
+	else
+	{
+		message.reply(status_codes::OK);
+	}
+
+	lmdb.Uninit((LPSTR)dbName.c_str());
+}
+
+void TheServer::RequestVerbGetData2(http_request message)
+{
+	USES_CONVERSION;
+	CLMDBWrapper lmdb;
+
+	g_Logger.WriteLog(Constants::VerbGetData.c_str());
+
+	std::wstring key = ServerHelper::FindParameter(message, _T("key"));
+	std::wstring dbNameW = ServerHelper::FindParameter(message, _T("name"));
+	std::string dbName(dbNameW.begin(), dbNameW.end());
+
+	if (lmdb.Init((LPSTR)dbName.c_str()) == false)
+	{
+		g_Logger.WriteLog(_T("LMDB Init not done !"));
+		message.reply(status_codes::OK);
+		return;
+	}
+
+	char szKey[255];
+	LPSTR lpszValue;
+
+	strcpy_s(szKey, W2A(key.c_str()));
+
+	if (lmdb.GetData((LPSTR)szKey, &lpszValue) == true)
+	{
+		Data data;
+		data.key = key;
+
+		std::string valueb64 = lpszValue;
+		std::string value = Base64Helper::base64_decode(valueb64.c_str());
+
+		data.value = std::wstring((A2W(value.c_str())));
 
 		free(lpszValue);
 

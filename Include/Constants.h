@@ -25,6 +25,8 @@ public:
 	static const std::wstring VerbPing;
 	static const std::wstring VerbGetData;
 	static const std::wstring VerbSetData;
+	static const std::wstring VerbGetDataB64;
+	static const std::wstring VerbSetDataB64;
 	static const std::wstring VerbRegisterNode;
 	static const std::wstring VerbShowNodes;
 	static const std::wstring VerbGetNode;
