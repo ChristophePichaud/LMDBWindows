@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "CServiceModule.h"
-
+#include "TheServer.h"
+#include "..\Include\messagetypes.h"
+#include "..\Include\ServerHelper.h"
+#include "..\Include\Constants.h"
 
 CServiceModule::CServiceModule()
 {
@@ -201,6 +204,36 @@ DWORD AutomateThread(LPVOID pParam)
 
 		std::wcout << _T("Running in console mode... Entering while()...") << std::endl;
 
+		std::wstring port = Constants::MasterNodePort;
+		std::wstring ip = ServerHelper::GetIP();
+		std::wstring url = ServerHelper::BuildURL(ip, port);
+		http::uri uri = http::uri(url);
+		std::wstring address = uri.to_string();
+		std::wstring name = _T("Master");
+
+		TCHAR sz[255];
+		_stprintf_s(sz, _T("Node_%s_%s.log"), port.c_str(), name.c_str());
+		g_Logger.Init(sz);
+		g_Logger.WriteLog(_T("Init Node..."));
+
+		//
+		// Create the a worker node instance
+		//
+
+		_stprintf_s(sz, _T("IP : %s"), ip.c_str());
+		g_Logger.WriteLog(sz);
+
+		TheServer client(address);
+		client._server = ip;
+		client._port = port;
+		client._name = name;
+		client.Init();
+		_stprintf_s(sz, _T("Worker node %s"), address.c_str());
+		g_Logger.WriteLog(sz);
+		//g_Logger.WriteLog(_T("Press ENTER to exit."));
+		//std::string line;
+		//std::getline(std::cin, line);
+
 		while (TRUE)
 		{
 			if (_Module.m_bStop)
@@ -214,6 +247,8 @@ DWORD AutomateThread(LPVOID pParam)
 		} // Main loop
 
 	stop_service:
+		client.Close();
+
 		strLog.Format(_T("Arrêt du service"));
 		//_Module.LogEvent(strLog);
 		_Module.SetServiceStatus(SERVICE_STOP_PENDING);

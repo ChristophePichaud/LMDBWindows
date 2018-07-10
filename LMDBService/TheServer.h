@@ -8,12 +8,7 @@ public:
 
 	void Init();
 	void Close();
-	bool RegisterToMaster();
-	static void Init_LMDB();
-	static void Uninit_LMDB();
 	static void RequestVerbPing(http_request message);
-	static void RequestVerbSetNode(http_request message);
-	static void RequestVerbReleaseDB(http_request message);
 	static void RequestVerbGetData(http_request message);
 	static void RequestVerbSetData(http_request message);
 
@@ -32,8 +27,6 @@ public:
 	static std::wstring _server;
 	static std::wstring _port;
 	static std::wstring _name;
-	static std::wstring _dbName;
-	//static LMDBData m_lmdb;
 
 public:
 	std::unique_ptr<TheServer> _http;

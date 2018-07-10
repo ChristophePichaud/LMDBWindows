@@ -5,7 +5,6 @@
 #include "..\Include\Constants.h"
 
 
-std::wstring TheServer::_dbName;
 std::wstring TheServer::_server;
 std::wstring  TheServer::_port;
 std::wstring TheServer::_name;
@@ -32,33 +31,11 @@ void TheServer::Init()
 {
 	this->_http = std::unique_ptr<TheServer>(new TheServer(this->_url));
 	this->_http->open().wait();
-	RegisterToMaster();
 }
 
 void TheServer::Close()
 {
 	this->_http->close().wait();
-}
-
-bool TheServer::RegisterToMaster()
-{
-	std::wstring ip = ServerHelper::GetIP();
-	std::wstring port = Constants::MasterNodePort;
-	std::wstring url = ServerHelper::BuildURL(ip, port);
-
-	std::wostringstream buf;
-	buf << Constants::Request << Constants::VerbRegisterNode
-		<< _T("&server=") << this->_server
-		<< _T("&port=") << this->_port
-		<< _T("&name=") << this->_name;
-	g_Logger.WriteLog(buf.str().c_str());
-
-	http_response response;
-	http_client client(url);
-	response = client.request(methods::GET, buf.str()).get();
-	g_Logger.WriteLog(response.to_string().c_str());
-
-	return true;
 }
 
 void TheServer::handle_get(http_request message)
@@ -67,23 +44,12 @@ void TheServer::handle_get(http_request message)
 
 	PrintRequest(message);
 
+	// http://192.168.175.241:7001/MyServer/LMDB/?request=set-data&key=toto0&value=toto1&name=cache2
 	std::wstring request = ServerHelper::FindParameter(message, _T("request"));
 
 	if (request == Constants::VerbPing)
 	{
 		RequestVerbPing(message);
-		return;
-	}
-
-	if (request == Constants::VerbSetNode)
-	{
-		RequestVerbSetNode(message);
-		return;
-	}
-
-	if (request == Constants::VerbReleaseDB)
-	{
-		RequestVerbReleaseDB(message);
 		return;
 	}
 
@@ -115,32 +81,6 @@ void TheServer::RequestVerbPing(http_request message)
 	g_Logger.WriteLog(response.c_str());
 
 	message.reply(status_codes::OK, data.AsJSON());
-
-}
-
-void TheServer::RequestVerbSetNode(http_request message)
-{
-
-	g_Logger.WriteLog(Constants::VerbSetNode.c_str());
-
-	std::wstring dbname = ServerHelper::FindParameter(message, _T("dbname"));
-
-	_dbName = dbname;
-	message.reply(status_codes::OK);
-
-	Init_LMDB();
-}
-
-void TheServer::RequestVerbReleaseDB(http_request message)
-{
-	g_Logger.WriteLog(Constants::VerbReleaseDB.c_str());
-
-	std::wstring dbname = ServerHelper::FindParameter(message, _T("dbname"));
-
-	_dbName = dbname;
-	message.reply(status_codes::OK);
-
-	Uninit_LMDB();
 }
 
 void TheServer::RequestVerbGetData(http_request message)
@@ -227,14 +167,6 @@ void TheServer::RequestVerbSetData(http_request message)
 	message.reply(status_codes::OK, data.AsJSON());
 
 	lmdb.Uninit((LPSTR)dbName.c_str());
-}
-
-void TheServer::Init_LMDB()
-{
-}
-
-void TheServer::Uninit_LMDB()
-{
 }
 
 void TheServer::PrintRequest(http_request message)
