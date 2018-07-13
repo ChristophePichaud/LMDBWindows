@@ -151,7 +151,7 @@ void CServiceModule::Handler(DWORD dwOpcode)
 	{
 	case SERVICE_CONTROL_STOP:
 		m_bStop = TRUE;
-		SetServiceStatus(SERVICE_PAUSED);
+		SetServiceStatus(SERVICE_STOPPED);
 		break;
 	case SERVICE_CONTROL_PAUSE:
 		break;
@@ -203,7 +203,6 @@ DWORD AutomateThread(LPVOID pParam)
 		CoInitialize(NULL);
 
 		std::wcout << _T("Running in console mode... Entering while()...") << std::endl;
-
 		std::wstring port = Constants::MasterNodePort;
 		std::wstring ip = ServerHelper::GetIP();
 		std::wstring url = ServerHelper::BuildURL(ip, port);
@@ -217,7 +216,7 @@ DWORD AutomateThread(LPVOID pParam)
 		g_Logger.WriteLog(_T("Init Node..."));
 
 		//
-		// Create the a worker node instance
+		// Create the server instance
 		//
 
 		_stprintf_s(sz, _T("IP : %s"), ip.c_str());
@@ -233,7 +232,6 @@ DWORD AutomateThread(LPVOID pParam)
 		//g_Logger.WriteLog(_T("Press ENTER to exit."));
 		//std::string line;
 		//std::getline(std::cin, line);
-
 		while (TRUE)
 		{
 			if (_Module.m_bStop)
