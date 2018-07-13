@@ -152,7 +152,12 @@ void TheServer::RequestVerbGetData(http_request message)
 	{
 		Data data;
 		data.key = key;
-		data.value = std::wstring((A2W(lpszValue)));
+
+		int len = strlen(lpszValue);
+		if (len == 0)
+			data.value = _T("");
+		else
+			data.value = std::wstring((A2W(lpszValue)));
 
 		free(lpszValue);
 

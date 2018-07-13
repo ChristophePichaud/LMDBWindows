@@ -140,15 +140,16 @@ bool CLMDBWrapper::GetData(LPSTR lpszKey, LPSTR * lpszValue)
 	//printf("Get Key:%s Data:%s\n", VKey.mv_data, VData.mv_data);
 	mdb_txn_commit(m_lmdb.m_txn);
 
-	*lpszValue = (char*)malloc(VData.mv_size + 1);
-
 	if (err == MDB_NOTFOUND)
 	{
 		lpszValue = NULL;
+		return false;
 	}
 	else
 	{
+		*lpszValue = (char*)malloc(VData.mv_size + 1);
 		strcpy(*lpszValue, (char *)VData.mv_data);
+		return true;
 	}
 
 	return true;
