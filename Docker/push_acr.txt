@@ -1,0 +1,1 @@
+docker login lmdbws.azurecr.io -u lmdbws -p fzVlEg=8F2Z0ViQqUEv7pWn6MWuDJ0Oa 

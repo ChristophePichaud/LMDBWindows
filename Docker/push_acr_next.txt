@@ -1,0 +1,15 @@
+D:\Dev\Docker>docker tag mydocker/myserver lmdbws.azurecr.io/lmdb
+
+D:\Dev\Docker>docker push lmdbws.azurecr.io/lmdb
+The push refers to repository [lmdbws.azurecr.io/lmdb]
+d9cd54b41ce6: Pushing [==================================================>]  4.934MB
+90f94b51263e: Pushed
+b8bd9d95cf78: Pushed
+dc420943451d: Pushing [============================>                      ]  2.848MB/4.955MB
+d1d232f5dadb: Pushing [==================================================>]  5.044MB
+f450c36ac5a7: Pushing [>                                                  ]  1.105MB/108.2MB
+9b168be83f47: Waiting
+a6195b903e58: Waiting
+737bb5d50516: Waiting
+6574cdce643f: Waiting
+f358be10862c: Waiting

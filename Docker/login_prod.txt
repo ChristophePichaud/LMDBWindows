@@ -1,0 +1,1 @@
+docker login lmdbwsprod.azurecr.io -u lmdbwsprod -p CbYWLsx1jPvIRGx=WwsMyzLIIF7JTH8Y 

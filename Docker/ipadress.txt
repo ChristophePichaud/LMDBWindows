@@ -1,2 +1,1 @@
-docker ps –a
 docker inspect -f "{{ .NetworkSettings.Networks.nat.IPAddress }}" 543e57f54047 

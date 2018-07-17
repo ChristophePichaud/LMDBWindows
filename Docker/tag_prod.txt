@@ -1,0 +1,1 @@
+docker tag mydocker/myserver lmdbwsprod.azurecr.io/prod 
