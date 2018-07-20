@@ -48,54 +48,90 @@ void TheServer::Close()
 
 void TheServer::handle_get(http_request message)
 {
-	g_Logger.WriteLog(_T("handle_get"));
-
-	PrintRequest(message);
-
-	// http://192.168.175.241:7001/MyServer/LMDB/?request=set-data&key=toto0&value=toto1&name=cache2
-	// http://192.168.175.241:7001/MyServer/LMDB/?request=get-data&key=toto2_k&name=cache3
-
-	std::wstring request = ServerHelper::FindParameter(message, _T("request"));
-
-	if (request == Constants::VerbPing)
+	try
 	{
-		RequestVerbPing(message);
-		return;
-	}
+		g_Logger.WriteLog(_T("handle_get"));
 
-	if (request == Constants::VerbGetData)
+		PrintRequest(message);
+
+		//http://192.168.175.241:7001/MyServer/LMDB/?request=set-data&key=toto0&value=toto1&name=cache2
+		//http://192.168.175.241:7001/MyServer/LMDB/?request=get-data&key=toto2_k&name=cache3
+
+		std::wstring request = ServerHelper::FindParameter(message, _T("request"));
+
+		if (request == Constants::VerbPing)
+		{
+			RequestVerbPing(message);
+			return;
+		}
+		else if (request == Constants::VerbGetData)
+		{
+			RequestVerbGetData(message);
+			return;
+		}
+		else if (request == Constants::VerbSetData)
+		{
+			RequestVerbSetData(message);
+			return;
+		}
+		else if (request == Constants::VerbSetDataB64)
+		{
+			RequestVerbSetData2(message);
+			return;
+		}
+		else if (request == Constants::VerbGetDataB64)
+		{
+			RequestVerbGetData2(message);
+			return;
+		}
+		else
+		{
+			RequestUsage(message);
+			return;
+		}
+	}
+	catch (...)
 	{
-		RequestVerbGetData(message);
-		return;
+		// an internal problem occured
 	}
-
-	if (request == Constants::VerbSetData)
-	{
-		RequestVerbSetData(message);
-		return;
-	}
-
 	message.reply(status_codes::OK);
+}
+
+void TheServer::RequestUsage(http_request message)
+{
+	UsageData data;
+	data.company = _T("NEOS-SDI France");
+	data.version = _T("July 2018 BETA 0.1");
+	data.description = _T("Built by Christophe Pichaud");
+	//std::wstring response = data.AsJSON().serialize();
+	message.reply(status_codes::OK, data.AsJSON());
 }
 
 void TheServer::handle_post(http_request message)
 {
-	g_Logger.WriteLog(message.to_string().c_str());
-
-	PrintRequest(message);
-
-	std::wstring request = ServerHelper::FindParameter(message, _T("request"));
-
-	if (request == Constants::VerbSetDataB64)
+	try
 	{
-		RequestVerbSetData2(message);
-		return;
+		g_Logger.WriteLog(_T("handle_post"));
+
+		PrintRequest(message);
+
+		std::wstring request = ServerHelper::FindParameter(message, _T("request"));
+
+		if (request == Constants::VerbSetDataB64)
+		{
+			RequestVerbSetData2(message);
+			return;
+		}
+
+		if (request == Constants::VerbGetDataB64)
+		{
+			RequestVerbGetData2(message);
+			return;
+		}
 	}
-
-	if (request == Constants::VerbGetDataB64)
+	catch (...)
 	{
-		RequestVerbGetData2(message);
-		return;
+		// an internal problem occured
 	}
 
 	message.reply(status_codes::OK);
@@ -161,12 +197,12 @@ void TheServer::RequestVerbGetData(http_request message)
 
 		free(lpszValue);
 
-		TCHAR sz[255];
-		_stprintf_s(sz, _T("Get Key:%s Value:%s"), data.key.c_str(), data.value.c_str());
-		g_Logger.WriteLog(sz);
+		//TCHAR sz[255];
+		//_stprintf_s(sz, _T("Get Key:%s Value:%s"), data.key.c_str(), data.value.c_str());
+		//g_Logger.WriteLog(sz);
 
 		std::wstring response = data.AsJSON().serialize();
-		g_Logger.WriteLog(response.c_str());
+		//g_Logger.WriteLog(response.c_str());
 
 		message.reply(status_codes::OK, data.AsJSON());
 	}
@@ -183,7 +219,7 @@ void TheServer::RequestVerbGetData2(http_request message)
 	USES_CONVERSION;
 	CLMDBWrapper lmdb;
 
-	g_Logger.WriteLog(Constants::VerbGetData.c_str());
+	g_Logger.WriteLog(Constants::VerbGetDataB64.c_str());
 
 	std::wstring key = ServerHelper::FindParameter(message, _T("key"));
 	std::wstring dbNameW = ServerHelper::FindParameter(message, _T("name"));
@@ -213,12 +249,12 @@ void TheServer::RequestVerbGetData2(http_request message)
 
 		free(lpszValue);
 
-		TCHAR sz[255];
-		_stprintf_s(sz, _T("Get Key:%s Value:%s"), data.key.c_str(), data.value.c_str());
-		g_Logger.WriteLog(sz);
+		//TCHAR sz[255];
+		//_stprintf_s(sz, _T("Get Key:%s Value:%s"), data.key.c_str(), data.value.c_str());
+		//g_Logger.WriteLog(sz);
 
 		std::wstring response = data.AsJSON().serialize();
-		g_Logger.WriteLog(response.c_str());
+		//g_Logger.WriteLog(response.c_str());
 
 		message.reply(status_codes::OK, data.AsJSON());
 	}
@@ -252,16 +288,16 @@ void TheServer::RequestVerbSetData(http_request message)
 	LPSTR lpszValue = W2A(value.c_str());
 	lmdb.SetData(lpszKey, lpszValue);
 
-	char sz[255];
-	sprintf_s(sz, "Set Key:%s Value:%s", lpszKey, lpszValue);
-	g_Logger.WriteLog(A2W(sz));
+	//char sz[255];
+	//sprintf_s(sz, "Set Key:%s Value:%s", lpszKey, lpszValue);
+	//g_Logger.WriteLog(A2W(sz));
 
 	Data data;
 	data.key = A2W(lpszKey);
 	data.value = A2W(lpszValue);
 
 	std::wstring response = data.AsJSON().serialize();
-	g_Logger.WriteLog(response.c_str());
+	//g_Logger.WriteLog(response.c_str());
 
 	message.reply(status_codes::OK, data.AsJSON());
 
@@ -272,7 +308,7 @@ void TheServer::RequestVerbSetData2(http_request message)
 {
 	USES_CONVERSION;
 	CLMDBWrapper lmdb;
-	g_Logger.WriteLog(Constants::VerbSetData.c_str());
+	g_Logger.WriteLog(Constants::VerbSetDataB64.c_str());
 
 	std::wstring key = ServerHelper::FindParameter(message, _T("key"));
 	std::wstring value = ServerHelper::FindParameter(message, _T("value"));
@@ -289,18 +325,18 @@ void TheServer::RequestVerbSetData2(http_request message)
 
 	LPSTR lpszKey = W2A(key.c_str());
 	LPSTR lpszValue = W2A(value.c_str());
-	lmdb.SetData(lpszKey, lpszValue);
+	lmdb.SetData(lpszKey, lpszValue, strlen(lpszValue));
 
-	char sz[255];
-	sprintf_s(sz, "Set Key:%s Value:%s", lpszKey, lpszValue);
-	g_Logger.WriteLog(A2W(sz));
+	//char sz[255];
+	//sprintf_s(sz, "Set Key:%s Value:%s", lpszKey, lpszValue);
+	//g_Logger.WriteLog(A2W(sz));
 
 	Data data;
 	data.key = A2W(lpszKey);
 	data.value = A2W(lpszValue);
 
 	std::wstring response = data.AsJSON().serialize();
-	g_Logger.WriteLog(response.c_str());
+	//g_Logger.WriteLog(response.c_str());
 
 	message.reply(status_codes::OK, data.AsJSON());
 
@@ -309,9 +345,12 @@ void TheServer::RequestVerbSetData2(http_request message)
 
 void TheServer::PrintRequest(http_request message)
 {
+	return;
+
+
 	TCHAR sz[255];
-	g_Logger.WriteLog(message.to_string().c_str());
-	g_Logger.WriteLog(message.relative_uri().to_string().c_str());
+	//g_Logger.WriteLog(message.to_string().c_str());
+	//g_Logger.WriteLog(message.relative_uri().to_string().c_str());
 
 	auto paths = uri::split_path(uri::decode(message.relative_uri().path()));
 	for (auto it1 = paths.begin(); it1 != paths.end(); it1++)

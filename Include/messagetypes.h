@@ -76,3 +76,29 @@ struct PingData
 		return result;
 	}
 };
+
+struct UsageData
+{
+	std::wstring company;
+	std::wstring version;
+	std::wstring description;
+
+	static UsageData FromJSON(const web::json::object & object)
+	{
+		UsageData result;
+		result.company = object.at(_T("company")).as_string();
+		result.version = object.at(_T("version")).as_string();
+		result.description = object.at(_T("description")).as_string();
+		return result;
+	}
+
+	web::json::value AsJSON() const
+	{
+		web::json::value result = web::json::value::object();
+		result[_T("company")] = web::json::value::string(company);
+		result[_T("version")] = web::json::value::string(version);
+		result[_T("description")] = web::json::value::string(description);
+		return result;
+	}
+};
+

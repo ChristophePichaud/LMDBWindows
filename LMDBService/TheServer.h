@@ -13,6 +13,7 @@ public:
 	static void RequestVerbSetData(http_request message);
 	static void RequestVerbGetData2(http_request message);
 	static void RequestVerbSetData2(http_request message);
+	static void RequestUsage(http_request message);
 
 public:
 	pplx::task<void> open() { return m_listener.open(); }

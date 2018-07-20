@@ -63,7 +63,7 @@ bool CLMDBWrapper::SetData(LPSTR lpszKey, LPSTR lpszValue)
 	}
 
 	char szKey[255];
-	char szValue[255];
+	char szValue[255000];
 
 	strcpy(szKey, lpszKey);
 	strcpy(szValue, lpszValue);

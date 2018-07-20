@@ -37,7 +37,7 @@ std::wstring ServerHelper::FindParameterInQuery(std::map<std::wstring, std::wstr
 	if (it != query.end())
 	{
 		value = it->second;
-		std::wcout << _T("Extracted param ") << var << _T(": ") << value << std::endl;
+		//std::wcout << _T("Extracted param ") << var << _T(": ") << value << std::endl;
 	}
 	return value;
 }
