@@ -95,7 +95,9 @@ bool CLMDBWrapper::SetData(LPSTR lpszKey, LPSTR lpszValueb64, DWORD dwLen)
 	char szKey[255];
 	strcpy(szKey, lpszKey);
 
-	std::string buffer = Base64Helper::base64_encode((const unsigned char*)lpszValueb64, dwLen);
+	//std::string buffer = Base64Helper::base64_encode((const unsigned char*)lpszValueb64, dwLen);
+	std::string buffer = lpszValueb64;
+
 
 	MDB_val VKey;
 	MDB_val VData;

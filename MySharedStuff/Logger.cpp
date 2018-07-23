@@ -51,7 +51,7 @@ void CLogger::WriteLog(LPCTSTR lpszMessage)
 	memset(&st, 0, sizeof(SYSTEMTIME));
 	::GetSystemTime(&st);
 
-	TCHAR sz[1024];
+	TCHAR sz[10240];
 	_stprintf_s(sz, 
 		_T("%02d:%02d:%02d.%03d - INFO - %s\r\n"), 
 		st.wHour, st.wMinute, st.wSecond, st.wMilliseconds, 

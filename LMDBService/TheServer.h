@@ -11,8 +11,8 @@ public:
 	static void RequestVerbPing(http_request message);
 	static void RequestVerbGetData(http_request message);
 	static void RequestVerbSetData(http_request message);
-	static void RequestVerbGetData2(http_request message);
-	static void RequestVerbSetData2(http_request message);
+	static void RequestVerbGetData64(http_request message);
+	static void RequestVerbSetData64(http_request message);
 	static void RequestUsage(http_request message);
 
 public:

@@ -74,17 +74,7 @@ void TheServer::handle_get(http_request message)
 			RequestVerbSetData(message);
 			return;
 		}
-		else if (request == Constants::VerbSetDataB64)
-		{
-			RequestVerbSetData2(message);
-			return;
-		}
-		else if (request == Constants::VerbGetDataB64)
-		{
-			RequestVerbGetData2(message);
-			return;
-		}
-		else
+			else
 		{
 			RequestUsage(message);
 			return;
@@ -93,7 +83,9 @@ void TheServer::handle_get(http_request message)
 	catch (...)
 	{
 		// an internal problem occured
+		g_Logger.WriteLog(_T("handle_get exception..."));
 	}
+
 	message.reply(status_codes::OK);
 }
 
@@ -116,22 +108,23 @@ void TheServer::handle_post(http_request message)
 		PrintRequest(message);
 
 		std::wstring request = ServerHelper::FindParameter(message, _T("request"));
+		g_Logger.WriteLog(request.c_str());
 
 		if (request == Constants::VerbSetDataB64)
 		{
-			RequestVerbSetData2(message);
+			RequestVerbSetData64(message);
 			return;
 		}
-
-		if (request == Constants::VerbGetDataB64)
+		else if (request == Constants::VerbGetDataB64)
 		{
-			RequestVerbGetData2(message);
+			RequestVerbGetData64(message);
 			return;
 		}
 	}
 	catch (...)
 	{
 		// an internal problem occured
+		g_Logger.WriteLog(_T("handle_post exception..."));
 	}
 
 	message.reply(status_codes::OK);
@@ -214,7 +207,7 @@ void TheServer::RequestVerbGetData(http_request message)
 	lmdb.Uninit((LPSTR)dbName.c_str());
 }
 
-void TheServer::RequestVerbGetData2(http_request message)
+void TheServer::RequestVerbGetData64(http_request message)
 {
 	USES_CONVERSION;
 	CLMDBWrapper lmdb;
@@ -304,17 +297,22 @@ void TheServer::RequestVerbSetData(http_request message)
 	lmdb.Uninit((LPSTR)dbName.c_str());
 }
 
-void TheServer::RequestVerbSetData2(http_request message)
+void TheServer::RequestVerbSetData64(http_request message)
 {
 	USES_CONVERSION;
 	CLMDBWrapper lmdb;
 	g_Logger.WriteLog(Constants::VerbSetDataB64.c_str());
 
-	std::wstring key = ServerHelper::FindParameter(message, _T("key"));
-	std::wstring value = ServerHelper::FindParameter(message, _T("value"));
-	std::wstring len = ServerHelper::FindParameter(message, _T("len"));
 	std::wstring dbNameW = ServerHelper::FindParameter(message, _T("name"));
 	std::string dbName(dbNameW.begin(), dbNameW.end());
+
+	std::wstring json;
+	web::json::value jsonV = message.extract_json().get();
+
+	Data data = Data::FromJSON(jsonV.as_object());
+	TCHAR sz[255];
+	_stprintf_s(sz, _T("Data key:%s value:..."), data.key.c_str());
+	g_Logger.WriteLog(sz);
 
 	if (lmdb.Init((LPSTR)dbName.c_str()) == false)
 	{
@@ -323,22 +321,17 @@ void TheServer::RequestVerbSetData2(http_request message)
 		return;
 	}
 
-	LPSTR lpszKey = W2A(key.c_str());
-	LPSTR lpszValue = W2A(value.c_str());
-	lmdb.SetData(lpszKey, lpszValue, strlen(lpszValue));
+	std::string key(data.key.begin(), data.key.end());
+	std::string value(data.value.begin(), data.value.end());
 
-	//char sz[255];
-	//sprintf_s(sz, "Set Key:%s Value:%s", lpszKey, lpszValue);
-	//g_Logger.WriteLog(A2W(sz));
+	//LPSTR lpszKey = W2A(data.key.c_str());
+	//LPSTR lpszValue = W2A(data.value.c_str());
+	LPSTR lpszKey = (LPSTR)key.c_str();
+	LPSTR lpszValue = (LPSTR)value.c_str();
+	DWORD dwLen = strlen(lpszValue);
+	lmdb.SetData(lpszKey, lpszValue, dwLen);
 
-	Data data;
-	data.key = A2W(lpszKey);
-	data.value = A2W(lpszValue);
-
-	std::wstring response = data.AsJSON().serialize();
-	//g_Logger.WriteLog(response.c_str());
-
-	message.reply(status_codes::OK, data.AsJSON());
+	message.reply(status_codes::OK);
 
 	lmdb.Uninit((LPSTR)dbName.c_str());
 }
@@ -347,10 +340,9 @@ void TheServer::PrintRequest(http_request message)
 {
 	return;
 
-
-	TCHAR sz[255];
-	//g_Logger.WriteLog(message.to_string().c_str());
-	//g_Logger.WriteLog(message.relative_uri().to_string().c_str());
+	TCHAR sz[10240];
+	g_Logger.WriteLog(message.to_string().c_str());
+	g_Logger.WriteLog(message.relative_uri().to_string().c_str());
 
 	auto paths = uri::split_path(uri::decode(message.relative_uri().path()));
 	for (auto it1 = paths.begin(); it1 != paths.end(); it1++)

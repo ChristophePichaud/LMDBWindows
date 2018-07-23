@@ -30,6 +30,10 @@ namespace LMDBService_ConsoleApp
                     paramUrl = args[1];
                     path = args[2];
                 }
+                if (arg == "-post")
+                {
+                    paramUrl = args[1];
+                }
             }
             else
             {
@@ -90,6 +94,107 @@ namespace LMDBService_ConsoleApp
                 }
             }
 
+            if (arg == "-post")
+            {
+                string cache = "cache_NET";
+                string base_url = String.Format("http://{0}:7001/MyServer/LMDB/?request=set-data-b64&name={1}", paramUrl, cache);
+
+                MakeWPost(base_url);
+            }
+        }
+
+        private static void MakeWPost(string url)
+        {
+            HttpWebRequest r = (HttpWebRequest)WebRequest.Create(url);
+            string c = "\"";
+            string a1 = "{";
+            string a2 = "}";
+
+            string value = String.Empty;
+            for (int i = 0; i < 10000; i++)
+            {
+                value += "azertyuiopqsdfghjklmwxcvbn";
+            }
+            string valueb64 = Base64Helper.Base64Encode(value);
+            string key = String.Format("key_{0}", DateTime.Now.Ticks);
+
+            string postData = String.Format("{1}{0}key{0}:{0}{4}{0}, {0}value{0}:{0}{3}{0}{2}", c, a1, a2, valueb64, key); // url;
+            //Logger.LogInfo(postData);
+
+            var data = Encoding.ASCII.GetBytes(postData);
+            r.Method = "POST";
+            r.ContentType = "application/json;";
+            r.ContentLength = data.Length;
+            r.KeepAlive = false;
+
+            using (var stream = r.GetRequestStream())
+            {
+                stream.Write(data, 0, data.Length);
+            }
+
+            WebResponse wr = r.GetResponse();
+            //Logger.LogInfo(wr.ContentType);
+            Stream s = wr.GetResponseStream();
+            Encoding encode = System.Text.Encoding.GetEncoding("utf-8");
+            StreamReader reader = new StreamReader(s, encode);
+            string buffer = reader.ReadToEnd();
+            Logger.LogInfo(buffer);
+            reader.Close();
+            wr.Close();
+        }
+
+        private static void StoreFile(string url, string path)
+        {
+            string cache = "cache_NET";
+            string base_url = String.Format("http://{0}:7001/MyServer/LMDB/?request=set-data-b64&name={1}", url, cache);
+
+            var enc = System.Text.Encoding.UTF8;
+
+            string key = path;
+            string value = String.Empty;
+            byte[] buffer = File.ReadAllBytes(path);
+            string buffer2 = enc.GetString(buffer);
+
+            value = Base64Helper.Base64Encode(buffer2);
+
+            MakePostBuffer(base_url, value);
+        }
+
+        private static void MakePostBuffer(string url, string valueb64)
+        {
+            HttpWebRequest r = (HttpWebRequest)WebRequest.Create(url);
+            string c = "\"";
+            string a1 = "{";
+            string a2 = "}";
+
+            string key = String.Format("key_{0}", DateTime.Now.Ticks);
+
+            string postData = String.Format("{1}{0}key{0}:{0}{4}{0}, {0}value{0}:{0}{3}{0}{2}", c, a1, a2, valueb64, key); // url;
+            //Logger.LogInfo(postData);
+
+            var data = Encoding.ASCII.GetBytes(postData);
+            r.Method = "POST";
+            r.ContentType = "application/json;";
+            r.ContentLength = data.Length;
+            r.KeepAlive = false;
+
+            using (var stream = r.GetRequestStream())
+            {
+                stream.Write(data, 0, data.Length);
+            }
+
+            string str = String.Format("Sending {0} bytes on {1}", data.Length, url);
+            Logger.LogInfo(str);
+
+            WebResponse wr = r.GetResponse();
+            //Logger.LogInfo(wr.ContentType);
+            Stream s = wr.GetResponseStream();
+            Encoding encode = System.Text.Encoding.GetEncoding("utf-8");
+            StreamReader reader = new StreamReader(s, encode);
+            string buffer = reader.ReadToEnd();
+            Logger.LogInfo(buffer);
+            reader.Close();
+            wr.Close();
         }
 
         private static void WGet(string url)
@@ -162,7 +267,7 @@ namespace LMDBService_ConsoleApp
             wr.Close();
         }
 
-        private static void StoreFile(string paramUrl, string path)
+        private static void StoreFile_GET(string paramUrl, string path)
         {
   
             var enc = System.Text.Encoding.UTF8;
@@ -190,7 +295,6 @@ namespace LMDBService_ConsoleApp
 
     class Base64Helper
     {
-
         public static string Base64Encode(string plainText)
         {
             var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
