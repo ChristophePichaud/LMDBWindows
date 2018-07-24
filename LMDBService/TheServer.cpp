@@ -230,9 +230,10 @@ void TheServer::RequestVerbGetData64(http_request message)
 		return;
 	}
 
+	std::string akey(key.begin(), key.end());
 	LPSTR lpszValue;
 
-	if (lmdb.GetData((LPSTR)key.c_str(), &lpszValue) == true)
+	if (lmdb.GetData((LPSTR)akey.c_str(), &lpszValue) == true)
 	{
 		Data data;
 		data.key = key;
@@ -247,9 +248,6 @@ void TheServer::RequestVerbGetData64(http_request message)
 		TCHAR sz[255];
 		_stprintf_s(sz, _T("Get Key:%s Value:..."), data.key.c_str());
 		g_Logger.WriteLog(sz);
-
-		message.reply(status_codes::OK, wvalue.c_str());
-		return;
 
 		std::wstring response = data.AsJSON().serialize();
 		//g_Logger.WriteLog(response.c_str());
