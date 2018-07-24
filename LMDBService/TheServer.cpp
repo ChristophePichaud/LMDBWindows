@@ -74,7 +74,12 @@ void TheServer::handle_get(http_request message)
 			RequestVerbSetData(message);
 			return;
 		}
-			else
+		else if (request == Constants::VerbGetDataB64)
+		{
+			RequestVerbGetData64(message);
+			return;
+		}
+		else
 		{
 			RequestUsage(message);
 			return;
@@ -242,6 +247,9 @@ void TheServer::RequestVerbGetData64(http_request message)
 		TCHAR sz[255];
 		_stprintf_s(sz, _T("Get Key:%s Value:..."), data.key.c_str());
 		g_Logger.WriteLog(sz);
+
+		message.reply(status_codes::OK, wvalue.c_str());
+		return;
 
 		std::wstring response = data.AsJSON().serialize();
 		//g_Logger.WriteLog(response.c_str());
