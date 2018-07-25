@@ -301,7 +301,6 @@ void TheServer::RequestVerbSetData(http_request message)
 
 void TheServer::RequestVerbSetData64(http_request message)
 {
-	USES_CONVERSION;
 	CLMDBWrapper lmdb;
 	g_Logger.WriteLog(Constants::VerbSetDataB64.c_str());
 
