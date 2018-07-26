@@ -179,7 +179,7 @@ void TheServer::RequestVerbGetData(http_request message)
 	LPSTR lpszValue;
 	std::string akey(key.begin(), key.end());
 
-	if (lmdb.GetData((LPSTR)akey.c_str(), &lpszValue) == true)
+	if (lmdb.Get((LPSTR)akey.c_str(), &lpszValue) == true)
 	{
 		Data data;
 		data.key = key;
@@ -201,7 +201,7 @@ void TheServer::RequestVerbGetData(http_request message)
 		g_Logger.WriteLog(sz);
 
 		std::wstring response = data.AsJSON().serialize();
-		//g_Logger.WriteLog(response.c_str());
+		g_Logger.WriteLog(response.c_str());
 
 		message.reply(status_codes::OK, data.AsJSON());
 	}
@@ -210,7 +210,7 @@ void TheServer::RequestVerbGetData(http_request message)
 		message.reply(status_codes::OK);
 	}
 
-	lmdb.Uninit((LPSTR)dbName.c_str());
+	lmdb.Uninit();
 }
 
 void TheServer::RequestVerbGetData64(http_request message)
@@ -233,7 +233,7 @@ void TheServer::RequestVerbGetData64(http_request message)
 	std::string akey(key.begin(), key.end());
 	LPSTR lpszValue;
 
-	if (lmdb.GetData((LPSTR)akey.c_str(), &lpszValue) == true)
+	if (lmdb.Get((LPSTR)akey.c_str(), &lpszValue) == true)
 	{
 		Data data;
 		data.key = key;
@@ -248,9 +248,11 @@ void TheServer::RequestVerbGetData64(http_request message)
 		TCHAR sz[255];
 		_stprintf_s(sz, _T("Get Key:%s Value:..."), data.key.c_str());
 		g_Logger.WriteLog(sz);
+		_stprintf_s(sz, _T("Get Key:%s Value:%s"), data.key.c_str(), data.value.c_str());
+		g_Logger.WriteLog(sz);
 
 		std::wstring response = data.AsJSON().serialize();
-		//g_Logger.WriteLog(response.c_str());
+		g_Logger.WriteLog(response.c_str());
 
 		message.reply(status_codes::OK, data.AsJSON());
 	}
@@ -259,7 +261,7 @@ void TheServer::RequestVerbGetData64(http_request message)
 		message.reply(status_codes::OK);
 	}
 
-	lmdb.Uninit((LPSTR)dbName.c_str());
+	lmdb.Uninit();
 }
 
 void TheServer::RequestVerbSetData(http_request message)
@@ -281,7 +283,7 @@ void TheServer::RequestVerbSetData(http_request message)
 
 	std::string akey(key.begin(), key.end());
 	std::string avalue(value.begin(), value.end());
-	lmdb.SetData((LPSTR)akey.c_str(), (LPSTR)avalue.c_str());
+	lmdb.Set((LPSTR)akey.c_str(), (LPSTR)avalue.c_str());
 
 	TCHAR sz[10240];
 	_stprintf_s(sz, _T("Set Key:%s Value:%s"), key.c_str(), value.c_str());
@@ -296,7 +298,7 @@ void TheServer::RequestVerbSetData(http_request message)
 
 	message.reply(status_codes::OK, data.AsJSON());
 
-	lmdb.Uninit((LPSTR)dbName.c_str());
+	lmdb.Uninit();
 }
 
 void TheServer::RequestVerbSetData64(http_request message)
@@ -304,6 +306,7 @@ void TheServer::RequestVerbSetData64(http_request message)
 	CLMDBWrapper lmdb;
 	g_Logger.WriteLog(Constants::VerbSetDataB64.c_str());
 
+	std::wstring key = ServerHelper::FindParameter(message, _T("key"));
 	std::wstring dbNameW = ServerHelper::FindParameter(message, _T("name"));
 	std::string dbName(dbNameW.begin(), dbNameW.end());
 
@@ -322,24 +325,24 @@ void TheServer::RequestVerbSetData64(http_request message)
 		return;
 	}
 
-	std::string key(data.key.begin(), data.key.end());
+	std::string akey(key.begin(), key.end());
 	std::string value(data.value.begin(), data.value.end());
 
-	//LPSTR lpszKey = W2A(data.key.c_str());
-	//LPSTR lpszValue = W2A(data.value.c_str());
-	LPSTR lpszKey = (LPSTR)key.c_str();
-	LPSTR lpszValue = (LPSTR)value.c_str();
+	std::string valueb64 = Base64Helper::base64_encode((const unsigned char *)value.c_str(), value.length());
+
+	LPSTR lpszKey = (LPSTR)akey.c_str();
+	LPSTR lpszValue = (LPSTR)valueb64.c_str();
 	DWORD dwLen = strlen(lpszValue);
-	lmdb.SetData(lpszKey, lpszValue, dwLen);
+	lmdb.Set(lpszKey, lpszValue, dwLen);
 
 	message.reply(status_codes::OK);
 
-	lmdb.Uninit((LPSTR)dbName.c_str());
+	lmdb.Uninit();
 }
 
 void TheServer::PrintRequest(http_request message)
 {
-	return;
+	//return;
 
 	TCHAR sz[10240];
 	g_Logger.WriteLog(message.to_string().c_str());

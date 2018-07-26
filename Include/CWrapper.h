@@ -23,14 +23,27 @@ public:
 	CLMDBWrapper(void) { }
 	~CLMDBWrapper() { }
 
-	bool Init(LPSTR lpszDbName);
-	bool Uninit(LPSTR lpszDbName);
-	bool SetData(LPSTR lpszKey, LPSTR lpszValue);
-	bool SetData(LPSTR lpszKey, LPSTR lpszValue, DWORD dwLen);
-	bool GetData(LPSTR lpszKey, LPSTR * lpszValue);
+	//bool Init2(LPSTR lpszDbName);
+	bool Init(LPSTR lpszDatabase);
+	bool Uninit();
+	//bool SetData(LPSTR lpszKey, LPSTR lpszValue);
+	//bool SetData(LPSTR lpszKey, LPSTR lpszValue, DWORD dwLen);
+	//bool GetData(LPSTR lpszKey, LPSTR * lpszValue);
+	bool GetSet();
+	bool Set(LPSTR lpszKey, LPSTR lpszValue);
+	bool Set(LPSTR lpszKey, LPSTR lpszValue, DWORD dwLen);
+	bool Get(LPSTR lpszKey, LPSTR * lpszValue);
 
 private:
-	LMDBPrivateData m_lmdb;
+	bool m_Init = false;
+
+	MDB_env *env;
+	MDB_dbi dbi;
+	MDB_txn *txn;
+
+	char szKey[255];
+	char szValue[255];
+	MDB_val key, data;
 };
 
 extern LMDBWRAPPER_API int nLMDBWrapper;

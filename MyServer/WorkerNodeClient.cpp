@@ -172,7 +172,7 @@ void WorkerNodeClient::RequestVerbGetData(http_request message)
 
 	strcpy(szKey, W2A(key.c_str()));
 
-	if (lmdb.GetData((LPSTR) szKey, &lpszValue) == true )
+	if (lmdb.Get((LPSTR) szKey, &lpszValue) == true )
 	{
 		Data data;
 		data.key = key;
@@ -194,7 +194,7 @@ void WorkerNodeClient::RequestVerbGetData(http_request message)
 		message.reply(status_codes::OK);
 	}
 
-	lmdb.Uninit((LPSTR)dbName.c_str());
+	lmdb.Uninit();
 }
 
 void WorkerNodeClient::RequestVerbSetData(http_request message)
@@ -217,7 +217,7 @@ void WorkerNodeClient::RequestVerbSetData(http_request message)
 
 	LPSTR lpszKey = W2A(key.c_str());
 	LPSTR lpszValue = W2A(value.c_str());
-	lmdb.SetData(lpszKey, lpszValue);
+	lmdb.Set(lpszKey, lpszValue);
 
 	char sz[255];
 	sprintf_s(sz, "Set Key:%s Value:%s", lpszKey, lpszValue);
@@ -232,7 +232,7 @@ void WorkerNodeClient::RequestVerbSetData(http_request message)
 
 	message.reply(status_codes::OK, data.AsJSON());
 
-	lmdb.Uninit((LPSTR)dbName.c_str());
+	lmdb.Uninit();
 }
 
 void WorkerNodeClient::Init_LMDB()
