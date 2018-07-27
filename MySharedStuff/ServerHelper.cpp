@@ -3,8 +3,6 @@
 
 std::wstring ServerHelper::GetIP()
 {
-	USES_CONVERSION;
-
 	// Init WinSock
 	WSADATA wsa_Data;
 	int wsa_ReturnCode = WSAStartup(0x101, &wsa_Data);
@@ -18,8 +16,9 @@ std::wstring ServerHelper::GetIP()
 	szLocalIP = inet_ntoa(*(struct in_addr *)*host_entry->h_addr_list);
 	WSACleanup();
 
-	std::wstring ip = A2W(szLocalIP);
-	return ip;
+	std::string ip = szLocalIP;
+	std::wstring ipw(ip.begin(), ip.end());
+	return ipw;
 }
 
 std::wstring ServerHelper::BuildURL(std::wstring server, std::wstring port)

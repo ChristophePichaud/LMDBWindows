@@ -75,6 +75,9 @@ d:\dev\github_lmdb2\include\constants.h(39): warning C4251: 'Constants::ModeWork
   MyServerHelper.cpp
 d:\dev\github_lmdb2\include\logger.h(18): warning C4251: 'CLogger::_cs': class 'ATL::CCriticalSection' needs to have dll-interface to be used by clients of class 'CLogger'
   c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.14.26428\atlmfc\include\atlsync.h(29): note: see declaration of 'ATL::CCriticalSection'
+  stdafx.cpp
+d:\dev\github_lmdb2\include\logger.h(18): warning C4251: 'CLogger::_cs': class 'ATL::CCriticalSection' needs to have dll-interface to be used by clients of class 'CLogger'
+  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.14.26428\atlmfc\include\atlsync.h(29): note: see declaration of 'ATL::CCriticalSection'
   WorkerNodeAttributes.cpp
 d:\dev\github_lmdb2\include\logger.h(18): warning C4251: 'CLogger::_cs': class 'ATL::CCriticalSection' needs to have dll-interface to be used by clients of class 'CLogger'
   c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.14.26428\atlmfc\include\atlsync.h(29): note: see declaration of 'ATL::CCriticalSection'
@@ -117,12 +120,7 @@ d:\dev\github_lmdb2\include\constants.h(39): warning C4251: 'Constants::ModeWork
   c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.14.26428\include\xstring(4348): note: see declaration of 'std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>'
 d:\dev\github_lmdb2\myserver\workernodeclient.cpp(173): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.14393.0\ucrt\string.h(125): note: see declaration of 'strcpy'
-  stdafx.cpp
-d:\dev\github_lmdb2\include\logger.h(18): warning C4251: 'CLogger::_cs': class 'ATL::CCriticalSection' needs to have dll-interface to be used by clients of class 'CLogger'
-  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.14.26428\atlmfc\include\atlsync.h(29): note: see declaration of 'ATL::CCriticalSection'
   Generating code
-  3 of 4898 functions (<0.1%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    1 functions had inline decision re-evaluated but remain unchanged
+  All 4898 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   MyServer.vcxproj -> D:\Dev\GitHub_LMDB2\LMDBWindows\x64\Release\MyServer.exe

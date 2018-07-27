@@ -9,6 +9,7 @@
 std::wstring TheServer::_server;
 std::wstring  TheServer::_port;
 std::wstring TheServer::_name;
+std::map<std::wstring, std::shared_ptr<CLMDBWrapper>> TheServer::_mapWrapper;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -159,27 +160,47 @@ void TheServer::RequestVerbPing(http_request message)
 	message.reply(status_codes::OK, data.AsJSON());
 }
 
+std::shared_ptr<CLMDBWrapper> TheServer::GetLMDBWrapper(std::wstring dbName)
+{	
+	std::shared_ptr<CLMDBWrapper> wr;
+	auto it = _mapWrapper.find(dbName);
+	if (it == _mapWrapper.end())
+	{
+		 wr = std::make_shared<CLMDBWrapper>();
+		 std::string name(dbName.begin(), dbName.end());
+		 wr->Init((LPSTR)name.c_str());
+
+		 _mapWrapper[dbName] = wr;
+
+		 TCHAR sz[255];
+		 _stprintf_s(sz, _T("LMDB Init DB %s"), dbName.c_str());
+		 g_Logger.WriteLog(sz);
+	}
+	else
+	{
+		wr = it->second;
+
+		TCHAR sz[255];
+		_stprintf_s(sz, _T("Reuse DB %s"), dbName.c_str());
+		g_Logger.WriteLog(sz);
+	}
+	return wr;
+}
+
 void TheServer::RequestVerbGetData(http_request message)
 {
-	CLMDBWrapper lmdb;
-
 	g_Logger.WriteLog(Constants::VerbGetData.c_str());
 
 	std::wstring key = ServerHelper::FindParameter(message, _T("key"));
 	std::wstring dbNameW = ServerHelper::FindParameter(message, _T("name"));
 	std::string dbName(dbNameW.begin(), dbNameW.end());
 
-	if (lmdb.Init((LPSTR)dbName.c_str()) == false)
-	{
-		g_Logger.WriteLog(_T("LMDB Init not done !"));
-		message.reply(status_codes::OK);
-		return;
-	}
+	std::shared_ptr<CLMDBWrapper> lmdb = GetLMDBWrapper(dbNameW);
 
 	LPSTR lpszValue;
 	std::string akey(key.begin(), key.end());
 
-	if (lmdb.Get((LPSTR)akey.c_str(), &lpszValue) == true)
+	if (lmdb->Get((LPSTR)akey.c_str(), &lpszValue) == true)
 	{
 		Data data;
 		data.key = key;
@@ -209,31 +230,22 @@ void TheServer::RequestVerbGetData(http_request message)
 	{
 		message.reply(status_codes::OK);
 	}
-
-	lmdb.Uninit();
 }
 
 void TheServer::RequestVerbGetData64(http_request message)
 {
-	CLMDBWrapper lmdb;
-
 	g_Logger.WriteLog(Constants::VerbGetDataB64.c_str());
 
 	std::wstring key = ServerHelper::FindParameter(message, _T("key"));
 	std::wstring dbNameW = ServerHelper::FindParameter(message, _T("name"));
 	std::string dbName(dbNameW.begin(), dbNameW.end());
 
-	if (lmdb.Init((LPSTR)dbName.c_str()) == false)
-	{
-		g_Logger.WriteLog(_T("LMDB Init not done !"));
-		message.reply(status_codes::OK);
-		return;
-	}
+	std::shared_ptr<CLMDBWrapper> lmdb = GetLMDBWrapper(dbNameW);
 
 	std::string akey(key.begin(), key.end());
 	LPSTR lpszValue;
 
-	if (lmdb.Get((LPSTR)akey.c_str(), &lpszValue) == true)
+	if (lmdb->Get((LPSTR)akey.c_str(), &lpszValue) == true)
 	{
 		Data data;
 		data.key = key;
@@ -260,13 +272,10 @@ void TheServer::RequestVerbGetData64(http_request message)
 	{
 		message.reply(status_codes::OK);
 	}
-
-	lmdb.Uninit();
 }
 
 void TheServer::RequestVerbSetData(http_request message)
 {
-	CLMDBWrapper lmdb;
 	g_Logger.WriteLog(Constants::VerbSetData.c_str());
 
 	std::wstring key = ServerHelper::FindParameter(message, _T("key"));
@@ -274,16 +283,11 @@ void TheServer::RequestVerbSetData(http_request message)
 	std::wstring dbNameW = ServerHelper::FindParameter(message, _T("name"));
 	std::string dbName(dbNameW.begin(), dbNameW.end());
 
-	if (lmdb.Init((LPSTR)dbName.c_str()) == false)
-	{
-		g_Logger.WriteLog(_T("LMDB Init not done !"));
-		message.reply(status_codes::OK);
-		return;
-	}
+	std::shared_ptr<CLMDBWrapper> lmdb = GetLMDBWrapper(dbNameW);
 
 	std::string akey(key.begin(), key.end());
 	std::string avalue(value.begin(), value.end());
-	lmdb.Set((LPSTR)akey.c_str(), (LPSTR)avalue.c_str());
+	lmdb->Set((LPSTR)akey.c_str(), (LPSTR)avalue.c_str());
 
 	TCHAR sz[10240];
 	_stprintf_s(sz, _T("Set Key:%s Value:%s"), key.c_str(), value.c_str());
@@ -297,18 +301,17 @@ void TheServer::RequestVerbSetData(http_request message)
 	//g_Logger.WriteLog(response.c_str());
 
 	message.reply(status_codes::OK, data.AsJSON());
-
-	lmdb.Uninit();
 }
 
 void TheServer::RequestVerbSetData64(http_request message)
 {
-	CLMDBWrapper lmdb;
 	g_Logger.WriteLog(Constants::VerbSetDataB64.c_str());
 
 	std::wstring key = ServerHelper::FindParameter(message, _T("key"));
 	std::wstring dbNameW = ServerHelper::FindParameter(message, _T("name"));
 	std::string dbName(dbNameW.begin(), dbNameW.end());
+
+	std::shared_ptr<CLMDBWrapper> lmdb = GetLMDBWrapper(dbNameW);
 
 	std::wstring json;
 	web::json::value jsonV = message.extract_json().get();
@@ -318,13 +321,6 @@ void TheServer::RequestVerbSetData64(http_request message)
 	_stprintf_s(sz, _T("Data key:%s value:..."), data.key.c_str());
 	g_Logger.WriteLog(sz);
 
-	if (lmdb.Init((LPSTR)dbName.c_str()) == false)
-	{
-		g_Logger.WriteLog(_T("LMDB Init not done !"));
-		message.reply(status_codes::OK);
-		return;
-	}
-
 	std::string akey(key.begin(), key.end());
 	std::string value(data.value.begin(), data.value.end());
 
@@ -333,11 +329,9 @@ void TheServer::RequestVerbSetData64(http_request message)
 	LPSTR lpszKey = (LPSTR)akey.c_str();
 	LPSTR lpszValue = (LPSTR)valueb64.c_str();
 	DWORD dwLen = strlen(lpszValue);
-	lmdb.Set(lpszKey, lpszValue, dwLen);
+	lmdb->Set(lpszKey, lpszValue, dwLen);
 
 	message.reply(status_codes::OK);
-
-	lmdb.Uninit();
 }
 
 void TheServer::PrintRequest(http_request message)

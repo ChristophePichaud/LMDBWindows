@@ -255,8 +255,8 @@ bool CLMDBWrapper::Get(LPSTR lpszKey, LPSTR * lpszValue)
 
 	key.mv_size = sizeof(szKey);
 	key.mv_data = szKey;
-	data.mv_size = 0; // sizeof(szValue);
-	data.mv_data = NULL; // szValue;
+	//data.mv_size = sizeof(szValue);
+	//data.mv_data = NULL; // szValue;
 
 	err = mdb_get(txn, dbi, &key, &data);
 	//printf("Get err=%d Key:%s Data:%s\n", err, key.mv_data, data.mv_data);
