@@ -28,6 +28,8 @@ public:
 	bool Set(LPSTR lpszKey, LPSTR lpszValue);
 	bool Set(LPSTR lpszKey, LPSTR lpszValue, DWORD dwLen);
 	bool Get(LPSTR lpszKey, LPSTR * lpszValue);
+	bool Get(std::string key, std::string & value);
+	bool Set(std::string key, std::string value);
 
 private:
 	bool m_Init = false;

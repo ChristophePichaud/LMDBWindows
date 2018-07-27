@@ -46,6 +46,8 @@ d:\dev\github_lmdb2\lmdbwrapper\cwrapper.cpp(115): warning C4996: 'strcpy': This
   c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: see declaration of 'strcpy'
 d:\dev\github_lmdb2\lmdbwrapper\cwrapper.cpp(138): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: see declaration of 'strcpy'
+  LMDBWrapper.cpp
+  Generating Code...
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(1205,5): warning MSB8012: TargetPath(D:\Dev\GitHub_LMDB2\LMDBWindows\x64\Release\LMDBWrapper.dll) does not match the Linker's OutputFile property value (D:\Dev\GitHub_LMDB2\LMDBWindows\x64\Release\LMDBWrapper64.dll). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(1207,5): warning MSB8012: TargetName(LMDBWrapper) does not match the Linker's OutputFile property value (LMDBWrapper64). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
 CWrapper.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:ICF' specification

@@ -59,6 +59,8 @@ C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VC\VC
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(1207,5): warning MSB8012: TargetName(MySharedStuff) does not match the Linker's OutputFile property value (MySharedStuff64). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
      Creating library D:\Dev\GitHub_LMDB2\LMDBWindows\x64\Release\MySharedStuff64.lib and object D:\Dev\GitHub_LMDB2\LMDBWindows\x64\Release\MySharedStuff64.exp
   Generating code
-  All 456 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  0 of 456 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   MySharedStuff.vcxproj -> D:\Dev\GitHub_LMDB2\LMDBWindows\x64\Release\MySharedStuff.dll

@@ -143,3 +143,21 @@ bool CLMDBWrapper::Get(LPSTR lpszKey, LPSTR * lpszValue)
 	return true;
 }
 
+bool CLMDBWrapper::Get(std::string key, std::string & value)
+{
+	LPSTR lpszValue;
+	if (Get((LPSTR)key.c_str(), &lpszValue) == true)
+	{
+		std::string v = std::string(lpszValue);
+		free(lpszValue);
+		value = v;
+		return true;
+	}
+	else
+		return false;
+}
+
+bool CLMDBWrapper::Set(std::string key, std::string value)
+{
+	return Set((LPSTR)key.c_str(), (LPSTR)value.c_str());
+}
