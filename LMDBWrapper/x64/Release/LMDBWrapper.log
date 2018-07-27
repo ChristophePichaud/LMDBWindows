@@ -35,28 +35,28 @@ d:\dev\github_lmdb2\include\constants.h(39): warning C4251: 'Constants::ModeWork
   c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.14.26428\include\xstring(4348): note: see declaration of 'std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>'
 d:\dev\github_lmdb2\include\base64helper.h(11): warning C4251: 'Base64Helper::base64_chars': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Base64Helper'
   c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.14.26428\include\xstring(4347): note: see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
-d:\dev\github_lmdb2\lmdbwrapper\cwrapper.cpp(180): warning C4307: '*': integral constant overflow
-d:\dev\github_lmdb2\lmdbwrapper\cwrapper.cpp(191): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+d:\dev\github_lmdb2\lmdbwrapper\cwrapper.cpp(48): warning C4307: '*': integral constant overflow
+d:\dev\github_lmdb2\lmdbwrapper\cwrapper.cpp(59): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: see declaration of 'strcpy'
-d:\dev\github_lmdb2\lmdbwrapper\cwrapper.cpp(192): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+d:\dev\github_lmdb2\lmdbwrapper\cwrapper.cpp(60): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: see declaration of 'strcpy'
-d:\dev\github_lmdb2\lmdbwrapper\cwrapper.cpp(220): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+d:\dev\github_lmdb2\lmdbwrapper\cwrapper.cpp(88): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: see declaration of 'strcpy'
-d:\dev\github_lmdb2\lmdbwrapper\cwrapper.cpp(251): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+d:\dev\github_lmdb2\lmdbwrapper\cwrapper.cpp(119): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: see declaration of 'strcpy'
-d:\dev\github_lmdb2\lmdbwrapper\cwrapper.cpp(276): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+d:\dev\github_lmdb2\lmdbwrapper\cwrapper.cpp(144): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: see declaration of 'strcpy'
-d:\dev\github_lmdb2\lmdbwrapper\cwrapper.cpp(293): warning C4307: '*': integral constant overflow
-d:\dev\github_lmdb2\lmdbwrapper\cwrapper.cpp(304): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+d:\dev\github_lmdb2\lmdbwrapper\cwrapper.cpp(161): warning C4307: '*': integral constant overflow
+d:\dev\github_lmdb2\lmdbwrapper\cwrapper.cpp(172): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(1772): note: see declaration of 'sprintf'
-d:\dev\github_lmdb2\lmdbwrapper\cwrapper.cpp(305): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+d:\dev\github_lmdb2\lmdbwrapper\cwrapper.cpp(173): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(1772): note: see declaration of 'sprintf'
-d:\dev\github_lmdb2\lmdbwrapper\cwrapper.cpp(316): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 2 has type 'void *'
-d:\dev\github_lmdb2\lmdbwrapper\cwrapper.cpp(316): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 3 has type 'void *'
-d:\dev\github_lmdb2\lmdbwrapper\cwrapper.cpp(328): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+d:\dev\github_lmdb2\lmdbwrapper\cwrapper.cpp(184): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 2 has type 'void *'
+d:\dev\github_lmdb2\lmdbwrapper\cwrapper.cpp(184): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 3 has type 'void *'
+d:\dev\github_lmdb2\lmdbwrapper\cwrapper.cpp(196): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(1772): note: see declaration of 'sprintf'
-d:\dev\github_lmdb2\lmdbwrapper\cwrapper.cpp(340): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 2 has type 'void *'
-d:\dev\github_lmdb2\lmdbwrapper\cwrapper.cpp(340): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 3 has type 'void *'
+d:\dev\github_lmdb2\lmdbwrapper\cwrapper.cpp(208): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 2 has type 'void *'
+d:\dev\github_lmdb2\lmdbwrapper\cwrapper.cpp(208): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 3 has type 'void *'
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(1205,5): warning MSB8012: TargetPath(D:\Dev\GitHub_LMDB2\LMDBWindows\x64\Release\LMDBWrapper.dll) does not match the Linker's OutputFile property value (D:\Dev\GitHub_LMDB2\LMDBWindows\x64\Release\LMDBWrapper64.dll). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(1207,5): warning MSB8012: TargetName(LMDBWrapper) does not match the Linker's OutputFile property value (LMDBWrapper64). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
 CWrapper.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:ICF' specification
