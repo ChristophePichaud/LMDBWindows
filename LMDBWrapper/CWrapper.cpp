@@ -56,16 +56,14 @@ bool CLMDBWrapper::Set(LPSTR lpszKey, LPSTR lpszValue)
 	int err = mdb_dbi_open(_txn, NULL, 0, &_dbi);
 	std::wcout << _T("mdb_dbi_open: ") << err << std::endl;
 
-	strcpy(szKey, lpszKey);
-	strcpy(szValue, lpszValue);
-	std::cout << "Set key: " << szKey << std::endl;
+	strcpy(_szKey, lpszKey);
+	strcpy(_szValue, lpszValue);
+	std::cout << "Set key: " << _szKey << std::endl;
 
-	//MDB_val key, data;
-
-	_key.mv_size = sizeof(szKey);
-	_key.mv_data = szKey;
-	_data.mv_size = sizeof(szValue);
-	_data.mv_data = szValue;
+	_key.mv_size = sizeof(_szKey);
+	_key.mv_data = _szKey;
+	_data.mv_size = sizeof(_szValue);
+	_data.mv_data = _szValue;
 
 	err = mdb_put(_txn, _dbi, &_key, &_data, 0); // MDB_NOOVERWRITE);
 	//printf("Add err=%d Key:%s Data:%s\n", err, key.mv_data, data.mv_data);
@@ -85,15 +83,13 @@ bool CLMDBWrapper::Set(LPSTR lpszKey, LPSTR lpszValueb64, DWORD dwLen)
 	int err = mdb_dbi_open(_txn, NULL, 0, &_dbi);
 	std::wcout << _T("mdb_dbi_open: ") << err << std::endl;
 
-	strcpy(szKey, lpszKey);
-	std::cout << "Set key: " << szKey << std::endl;
+	strcpy(_szKey, lpszKey);
+	std::cout << "Set key: " << _szKey << std::endl;
 
 	std::string buffer = std::string(lpszValueb64);
 
-	//MDB_val key, data;
-
-	_key.mv_size = sizeof(szKey);
-	_key.mv_data = szKey;
+	_key.mv_size = sizeof(_szKey);
+	_key.mv_data = _szKey;
 	_data.mv_size = buffer.length();
 	_data.mv_data = (LPSTR)buffer.c_str();
 
@@ -116,13 +112,11 @@ bool CLMDBWrapper::Get(LPSTR lpszKey, LPSTR * lpszValue)
 	int err = mdb_dbi_open(_txn, NULL, 0, &_dbi);
 	std::wcout << _T("mdb_dbi_open: ") << err << std::endl;
 
-	strcpy(szKey, lpszKey);
-	std::cout << "Get key: " << szKey << std::endl;
+	strcpy(_szKey, lpszKey);
+	std::cout << "Get key: " << _szKey << std::endl;
 
-	//MDB_val key, data;
-
-	_key.mv_size = sizeof(szKey);
-	_key.mv_data = szKey;
+	_key.mv_size = sizeof(_szKey);
+	_key.mv_data = _szKey;
 	//data.mv_size = sizeof(szValue);
 	//data.mv_data = NULL; // szValue;
 
@@ -149,68 +143,3 @@ bool CLMDBWrapper::Get(LPSTR lpszKey, LPSTR * lpszValue)
 	return true;
 }
 
-bool CLMDBWrapper::GetSet()
-{
-	{
-		char sz[255];
-		sprintf_s(sz, "%s\\%s", Constants::LMDBRootPath.c_str(), "Database");
-		::CreateDirectoryA(sz, NULL);
-
-		mdb_env_create(&_env);
-		mdb_env_set_maxreaders(_env, 1);
-		mdb_env_set_mapsize(_env, 10485760 * 1000);
-		mdb_env_open(_env, sz, MDB_CREATE/*|MDB_NOSYNC*/, 0664);
-	}
-
-	MDB_val key, data;
-
-	{
-		//char szKey[255];
-		//char szValue[255];
-		//MDB_val key, data;
-
-		sprintf(szKey, "key_%d", 10);
-		sprintf(szValue, "value_%d", 10);
-
-		key.mv_size = sizeof(szKey);
-		key.mv_data = szKey;
-		data.mv_size = sizeof(szValue);
-		data.mv_data = szValue;
-
-		mdb_txn_begin(_env, NULL, 0, &_txn);
-		mdb_dbi_open(_txn, NULL, 0, &_dbi);
-
-		int err = mdb_put(_txn, _dbi, &key, &data, MDB_NOOVERWRITE);
-		printf("Add err=%d Key:%s Data:%s\n", err, key.mv_data, data.mv_data);
-
-		mdb_txn_commit(_txn);
-		mdb_dbi_close(_env, _dbi);
-
-	}
-
-	{
-		//char szKey[255];
-		//char szValue[255];
-		//MDB_val key, data;
-
-		sprintf(szKey, "key_%d", 10);
-		memset(szValue, 0, 255);
-
-		key.mv_size = sizeof(szKey);
-		key.mv_data = szKey;
-		data.mv_size = 0; // sizeof(szValue);
-		data.mv_data = NULL; // szValue;
-
-		mdb_txn_begin(_env, NULL, 0, &_txn);
-		mdb_dbi_open(_txn, NULL, 0, &_dbi);
-
-		int err = mdb_get(_txn, _dbi, &key, &data);
-		printf("Get err=%d Key:%s Data:%s\n", err, key.mv_data, data.mv_data);
-
-		mdb_txn_commit(_txn);
-		mdb_dbi_close(_env, _dbi);
-	}
-
-	mdb_env_close(_env);
-	return true;
-}

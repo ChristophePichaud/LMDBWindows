@@ -25,7 +25,6 @@ public:
 
 	bool Init(LPSTR lpszDatabase);
 	bool Uninit();
-	bool GetSet();
 	bool Set(LPSTR lpszKey, LPSTR lpszValue);
 	bool Set(LPSTR lpszKey, LPSTR lpszValue, DWORD dwLen);
 	bool Get(LPSTR lpszKey, LPSTR * lpszValue);
@@ -36,9 +35,9 @@ private:
 	MDB_env *_env;
 	MDB_dbi _dbi;
 	MDB_txn *_txn;
-	char szKey[255];
-	char szValue[255];
 	MDB_val _key, _data;
+	char _szKey[255];
+	char _szValue[255];
 };
 
 extern LMDBWRAPPER_API int nLMDBWrapper;
