@@ -30,6 +30,8 @@ public:
 	bool Get(LPSTR lpszKey, LPSTR * lpszValue);
 	bool Get(std::string key, std::string & value);
 	bool Set(std::string key, std::string value);
+	bool Get(std::wstring key, std::wstring & value);
+	bool Set(std::wstring key, std::wstring value);
 
 private:
 	bool m_Init = false;

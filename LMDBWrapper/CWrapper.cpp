@@ -161,3 +161,21 @@ bool CLMDBWrapper::Set(std::string key, std::string value)
 {
 	return Set((LPSTR)key.c_str(), (LPSTR)value.c_str());
 }
+
+bool CLMDBWrapper::Get(std::wstring key, std::wstring & value)
+{
+	std::string keya(key.begin(), key.end());
+	std::string valuea;
+	bool ret = Get(keya, valuea);
+	std::wstring valuew(valuea.begin(), valuea.end());
+	value = valuew;
+	return ret;
+}
+
+bool CLMDBWrapper::Set(std::wstring key, std::wstring value)
+{
+	std::string keya(key.begin(), key.end());
+	std::string valuea(value.begin(), value.end());
+
+	return Set(keya, valuea);
+}

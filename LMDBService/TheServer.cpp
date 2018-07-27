@@ -196,26 +196,13 @@ void TheServer::RequestVerbGetData(http_request message)
 	std::string dbName(dbNameW.begin(), dbNameW.end());
 
 	std::shared_ptr<CLMDBWrapper> lmdb = GetLMDBWrapper(dbNameW);
+	std::wstring value;
 
-	LPSTR lpszValue;
-	std::string akey(key.begin(), key.end());
-
-	if (lmdb->Get((LPSTR)akey.c_str(), &lpszValue) == true)
+	if (lmdb->Get(key, value) == true)
 	{
 		Data data;
 		data.key = key;
-
-		int len = strlen(lpszValue);
-		if (len == 0)
-			data.value = _T("");
-		else
-		{
-			std::string value = std::string(lpszValue);
-			std::wstring wvalue(value.begin(), value.end());
-			data.value = wvalue;
-		}
-
-		free(lpszValue);
+		data.value = value;
 
 		TCHAR sz[10240];
 		_stprintf_s(sz, _T("Get Key:%s Value:%s"), data.key.c_str(), data.value.c_str());
@@ -241,21 +228,13 @@ void TheServer::RequestVerbGetData64(http_request message)
 	std::string dbName(dbNameW.begin(), dbNameW.end());
 
 	std::shared_ptr<CLMDBWrapper> lmdb = GetLMDBWrapper(dbNameW);
+	std::wstring value;
 
-	std::string akey(key.begin(), key.end());
-	LPSTR lpszValue;
-
-	if (lmdb->Get((LPSTR)akey.c_str(), &lpszValue) == true)
+	if (lmdb->Get(key, value) == true)
 	{
 		Data data;
 		data.key = key;
-
-		std::string valueb64 = std::string(lpszValue);
-		std::string value = Base64Helper::base64_decode(valueb64.c_str());
-		std::wstring wvalue(value.begin(), value.end());
-		data.value = wvalue;
-
-		free(lpszValue);
+		data.value = value;
 
 		TCHAR sz[255];
 		_stprintf_s(sz, _T("Get Key:%s Value:..."), data.key.c_str());
@@ -285,9 +264,7 @@ void TheServer::RequestVerbSetData(http_request message)
 
 	std::shared_ptr<CLMDBWrapper> lmdb = GetLMDBWrapper(dbNameW);
 
-	std::string akey(key.begin(), key.end());
-	std::string avalue(value.begin(), value.end());
-	lmdb->Set((LPSTR)akey.c_str(), (LPSTR)avalue.c_str());
+	lmdb->Set(key, value);
 
 	TCHAR sz[10240];
 	_stprintf_s(sz, _T("Set Key:%s Value:%s"), key.c_str(), value.c_str());
@@ -321,15 +298,12 @@ void TheServer::RequestVerbSetData64(http_request message)
 	_stprintf_s(sz, _T("Data key:%s value:..."), data.key.c_str());
 	g_Logger.WriteLog(sz);
 
-	std::string akey(key.begin(), key.end());
 	std::string value(data.value.begin(), data.value.end());
 
 	std::string valueb64 = Base64Helper::base64_encode((const unsigned char *)value.c_str(), value.length());
+	std::wstring valuew(valueb64.begin(), valueb64.end());
 
-	LPSTR lpszKey = (LPSTR)akey.c_str();
-	LPSTR lpszValue = (LPSTR)valueb64.c_str();
-	DWORD dwLen = strlen(lpszValue);
-	lmdb->Set(lpszKey, lpszValue, dwLen);
+	lmdb->Set(key, valuew);
 
 	message.reply(status_codes::OK);
 }
