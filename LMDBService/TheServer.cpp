@@ -99,7 +99,7 @@ void TheServer::RequestUsage(http_request message)
 {
 	UsageData data;
 	data.company = _T("NEOS-SDI France");
-	data.version = _T("July 2018 BETA 0.1");
+	data.version = _T("July 2018 BETA 0.2");
 	data.description = _T("Built by Christophe Pichaud");
 	//std::wstring response = data.AsJSON().serialize();
 	message.reply(status_codes::OK, data.AsJSON());
@@ -114,7 +114,7 @@ void TheServer::handle_post(http_request message)
 		PrintRequest(message);
 
 		std::wstring request = ServerHelper::FindParameter(message, _T("request"));
-		g_Logger.WriteLog(request.c_str());
+		g_Logger.WriteLog(request);
 
 		if (request == Constants::VerbSetDataB64)
 		{
@@ -147,7 +147,7 @@ void TheServer::handle_put(http_request message)
 
 void TheServer::RequestVerbPing(http_request message)
 {
-	g_Logger.WriteLog(Constants::VerbPing.c_str());
+	g_Logger.WriteLog(Constants::VerbPing);
 
 	PingData data;
 	data.ip = _server;
@@ -155,7 +155,7 @@ void TheServer::RequestVerbPing(http_request message)
 	data.status = _T("OK");
 
 	std::wstring response = data.AsJSON().serialize();
-	g_Logger.WriteLog(response.c_str());
+	g_Logger.WriteLog(response);
 
 	message.reply(status_codes::OK, data.AsJSON());
 }
@@ -167,8 +167,7 @@ std::shared_ptr<CLMDBWrapper> TheServer::GetLMDBWrapper(std::wstring dbName)
 	if (it == _mapWrapper.end())
 	{
 		 wr = std::make_shared<CLMDBWrapper>();
-		 std::string name(dbName.begin(), dbName.end());
-		 wr->Init((LPSTR)name.c_str());
+		 wr->Init(dbName);
 
 		 _mapWrapper[dbName] = wr;
 
@@ -189,7 +188,7 @@ std::shared_ptr<CLMDBWrapper> TheServer::GetLMDBWrapper(std::wstring dbName)
 
 void TheServer::RequestVerbGetData(http_request message)
 {
-	g_Logger.WriteLog(Constants::VerbGetData.c_str());
+	g_Logger.WriteLog(Constants::VerbGetData);
 
 	std::wstring key = ServerHelper::FindParameter(message, _T("key"));
 	std::wstring dbNameW = ServerHelper::FindParameter(message, _T("name"));
@@ -204,12 +203,13 @@ void TheServer::RequestVerbGetData(http_request message)
 		data.key = key;
 		data.value = value;
 
-		TCHAR sz[10240];
-		_stprintf_s(sz, _T("Get Key:%s Value:%s"), data.key.c_str(), data.value.c_str());
-		g_Logger.WriteLog(sz);
+		std::wostringstream buf;
+		buf << _T("Get key:") << key << _T(" value:") << value;
+		g_Logger.WriteLog(buf.str());
+
 
 		std::wstring response = data.AsJSON().serialize();
-		g_Logger.WriteLog(response.c_str());
+		g_Logger.WriteLog(response);
 
 		message.reply(status_codes::OK, data.AsJSON());
 	}
@@ -221,7 +221,7 @@ void TheServer::RequestVerbGetData(http_request message)
 
 void TheServer::RequestVerbGetData64(http_request message)
 {
-	g_Logger.WriteLog(Constants::VerbGetDataB64.c_str());
+	g_Logger.WriteLog(Constants::VerbGetDataB64);
 
 	std::wstring key = ServerHelper::FindParameter(message, _T("key"));
 	std::wstring dbNameW = ServerHelper::FindParameter(message, _T("name"));
@@ -236,14 +236,12 @@ void TheServer::RequestVerbGetData64(http_request message)
 		data.key = key;
 		data.value = value;
 
-		TCHAR sz[255];
-		_stprintf_s(sz, _T("Get Key:%s Value:..."), data.key.c_str());
-		g_Logger.WriteLog(sz);
-		_stprintf_s(sz, _T("Get Key:%s Value:%s"), data.key.c_str(), data.value.c_str());
-		g_Logger.WriteLog(sz);
+		std::wostringstream buf;
+		buf << _T("GetB64 key:") << key << _T(" value:") << value;
+		g_Logger.WriteLog(buf.str());
 
 		std::wstring response = data.AsJSON().serialize();
-		g_Logger.WriteLog(response.c_str());
+		g_Logger.WriteLog(response);
 
 		message.reply(status_codes::OK, data.AsJSON());
 	}
@@ -255,7 +253,7 @@ void TheServer::RequestVerbGetData64(http_request message)
 
 void TheServer::RequestVerbSetData(http_request message)
 {
-	g_Logger.WriteLog(Constants::VerbSetData.c_str());
+	g_Logger.WriteLog(Constants::VerbSetData);
 
 	std::wstring key = ServerHelper::FindParameter(message, _T("key"));
 	std::wstring value = ServerHelper::FindParameter(message, _T("value"));
@@ -266,23 +264,23 @@ void TheServer::RequestVerbSetData(http_request message)
 
 	lmdb->Set(key, value);
 
-	TCHAR sz[10240];
-	_stprintf_s(sz, _T("Set Key:%s Value:%s"), key.c_str(), value.c_str());
-	g_Logger.WriteLog(sz);
+	std::wostringstream buf;
+	buf << _T("Set key:") << key << _T(" value:") << value;
+	g_Logger.WriteLog(buf.str());
 
 	Data data;
 	data.key = key;
 	data.value = value;
 
 	std::wstring response = data.AsJSON().serialize();
-	//g_Logger.WriteLog(response.c_str());
+	g_Logger.WriteLog(response);
 
 	message.reply(status_codes::OK, data.AsJSON());
 }
 
 void TheServer::RequestVerbSetData64(http_request message)
 {
-	g_Logger.WriteLog(Constants::VerbSetDataB64.c_str());
+	g_Logger.WriteLog(Constants::VerbSetDataB64);
 
 	std::wstring key = ServerHelper::FindParameter(message, _T("key"));
 	std::wstring dbNameW = ServerHelper::FindParameter(message, _T("name"));
@@ -294,39 +292,37 @@ void TheServer::RequestVerbSetData64(http_request message)
 	web::json::value jsonV = message.extract_json().get();
 
 	Data data = Data::FromJSON(jsonV.as_object());
-	TCHAR sz[255];
-	_stprintf_s(sz, _T("Data key:%s value:..."), data.key.c_str());
-	g_Logger.WriteLog(sz);
 
 	std::string value(data.value.begin(), data.value.end());
-
 	std::string valueb64 = Base64Helper::base64_encode((const unsigned char *)value.c_str(), value.length());
 	std::wstring valuew(valueb64.begin(), valueb64.end());
 
 	lmdb->Set(key, valuew);
+
+	std::wostringstream buf;
+	buf << _T("Set key:") << key << _T(" value:") << valuew;
+	g_Logger.WriteLog(buf.str());
 
 	message.reply(status_codes::OK);
 }
 
 void TheServer::PrintRequest(http_request message)
 {
-	//return;
-
-	TCHAR sz[10240];
-	g_Logger.WriteLog(message.to_string().c_str());
-	g_Logger.WriteLog(message.relative_uri().to_string().c_str());
+	g_Logger.WriteLog(message.to_string());
+	g_Logger.WriteLog(message.relative_uri().to_string());
 
 	auto paths = uri::split_path(uri::decode(message.relative_uri().path()));
 	for (auto it1 = paths.begin(); it1 != paths.end(); it1++)
 	{
 		std::wstring path = *it1;
-		g_Logger.WriteLog(path.c_str());
+		g_Logger.WriteLog(path);
 	}
 
 	auto query = uri::split_query(uri::decode(message.relative_uri().query()));
 	for (auto it2 = query.begin(); it2 != query.end(); it2++)
 	{
-		_stprintf_s(sz, _T("Query %s %s"), it2->first.c_str(), it2->second.c_str());
-		g_Logger.WriteLog(sz);
+		std::wostringstream buf;
+		buf << _T("Query ") << it2->first << _T(" ") << it2->second;
+		g_Logger.WriteLog(buf.str());
 	}
 }

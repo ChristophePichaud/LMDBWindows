@@ -50,6 +50,13 @@ bool CLMDBWrapper::Init(LPSTR lpszDatabase)
 	return true;
 }
 
+bool CLMDBWrapper::Init(std::wstring database)
+{
+	std::string db(database.begin(), database.end());
+	return Init((LPSTR)db.c_str());
+}
+
+
 bool CLMDBWrapper::Set(LPSTR lpszKey, LPSTR lpszValue)
 {
 	mdb_txn_begin(_env, NULL, 0, &_txn);

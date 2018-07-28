@@ -14,7 +14,7 @@ CLogger::~CLogger()
 	::CloseHandle(_hFile);
 }
 
-void CLogger::Init(LPTSTR lpszName)
+bool CLogger::Init(LPTSTR lpszName)
 {																									
 	USES_CONVERSION;
 
@@ -35,10 +35,18 @@ void CLogger::Init(LPTSTR lpszName)
 		NULL, OPEN_ALWAYS,
 		FILE_ATTRIBUTE_NORMAL, NULL);
 
+	if (_hFile == INVALID_HANDLE_VALUE)
+	{
+		_tprintf(_T("Init failed - INVALID_HANDLE_VALUE\n"));
+		_cs.Leave();
+		return false;
+	}
+
 	LONG l = 0;
 	::SetFilePointer(_hFile, 0, &l, FILE_END);
 
 	_cs.Leave();
+	return true;
 }
 
 void CLogger::WriteLog(LPCTSTR lpszMessage)
@@ -83,4 +91,9 @@ void CLogger::WriteLog(LPCTSTR lpszMessage)
 	::CloseHandle(hFile);
 	*/
 	_cs.Leave();
+}
+
+void CLogger::WriteLog(std::wstring message)
+{
+	WriteLog(message.c_str());
 }

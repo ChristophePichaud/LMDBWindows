@@ -8,8 +8,9 @@ public:
 	virtual ~CLogger();
 
 public:
-	void Init(LPTSTR lpszName);
+	bool Init(LPTSTR lpszName);
 	void WriteLog(LPCTSTR message);
+	void WriteLog(std::wstring message);
 
 private:
 	HANDLE _hFile;

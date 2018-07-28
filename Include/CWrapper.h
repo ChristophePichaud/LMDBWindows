@@ -24,6 +24,7 @@ public:
 	~CLMDBWrapper() { }
 
 	bool Init(LPSTR lpszDatabase);
+	bool Init(std::wstring database);
 	bool Uninit();
 	bool Set(LPSTR lpszKey, LPSTR lpszValue);
 	bool Set(LPSTR lpszKey, LPSTR lpszValue, DWORD dwLen);
