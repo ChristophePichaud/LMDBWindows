@@ -177,6 +177,11 @@ void CServiceModule::Run()
 	if (m_bService)
 		SetServiceStatus(SERVICE_RUNNING);
 
+	g_Logger.Init((LPTSTR)_T("LMDB.txt"));
+
+	AutomateThread(NULL);
+
+	/*
 	m_hThread = ::CreateThread(NULL, 0, AutomateThread, NULL, CREATE_SUSPENDED, &m_dwThreadId);
 	if (m_hThread == NULL)
 	{
@@ -186,52 +191,45 @@ void CServiceModule::Run()
 		return;
 	}
 	::ResumeThread(m_hThread);
-
-	MSG msg;
-	while (GetMessage(&msg, 0, 0, 0))
-		DispatchMessage(&msg);
+	*/
 
 quit_now:
+	g_Logger.WriteLog(_T("Quit now..."));
 	return;
 }
 
 DWORD AutomateThread(LPVOID pParam)
 {
-	CString strLog;
 	try
 	{
-		CoInitialize(NULL);
-
-		std::wcout << _T("Running in console mode... Entering while()...") << std::endl;
+		g_Logger.WriteLog(_T("Running in console mode... Entering while()..."));
 		std::wstring port = Constants::MasterNodePort;
+		g_Logger.WriteLog(port);
 		std::wstring ip = ServerHelper::GetIP();
+		g_Logger.WriteLog(ip);
 		std::wstring url = ServerHelper::BuildURL(ip, port);
+		g_Logger.WriteLog(url);
 		http::uri uri = http::uri(url);
 		std::wstring address = uri.to_string();
 		std::wstring name = _T("Master");
-
-		TCHAR sz[255];
-		_stprintf_s(sz, _T("Node_%s_%s.log"), port.c_str(), name.c_str());
-		g_Logger.Init(sz);
-		g_Logger.WriteLog(_T("Init Node..."));
 
 		//
 		// Create the server instance
 		//
 
+		TCHAR sz[255];
 		_stprintf_s(sz, _T("IP : %s"), ip.c_str());
 		g_Logger.WriteLog(sz);
 
+		g_Logger.WriteLog(_T("Creating server ip/port..."));
 		TheServer client(address);
+		g_Logger.WriteLog(_T("Creating server ip/port ok"));
 		client._server = ip;
 		client._port = port;
 		client._name = name;
 		client.Init();
-		_stprintf_s(sz, _T("Worker node %s"), address.c_str());
-		g_Logger.WriteLog(sz);
-		//g_Logger.WriteLog(_T("Press ENTER to exit."));
-		//std::string line;
-		//std::getline(std::cin, line);
+		
+		g_Logger.WriteLog(_T("Waiting..."));
 		while (TRUE)
 		{
 			if (_Module.m_bStop)
@@ -244,24 +242,25 @@ DWORD AutomateThread(LPVOID pParam)
 
 		} // Main loop
 
+	
 	stop_service:
 		client.Close();
 
-		strLog.Format(_T("Arrêt du service"));
+		g_Logger.WriteLog(_T("Arrêt du service"));
 		//_Module.LogEvent(strLog);
-		_Module.SetServiceStatus(SERVICE_STOP_PENDING);
-		PostThreadMessage(_Module.m_dwThreadId, WM_QUIT, 0, 0);
+		
+		if (_Module.m_bService)
+			_Module.SetServiceStatus(SERVICE_STOP_PENDING);
 	}
 	catch (...)
 	{
-		strLog.Format(_T("EXCEPTION: Arrêt du service"));
+		g_Logger.WriteLog(_T("EXCEPTION: Arrêt du service"));
 		//_Module.LogEvent(strLog);
 		//_Trace.LogDebug("AutomateThread", strLog);
-		_Module.SetServiceStatus(SERVICE_STOP_PENDING);
-		PostThreadMessage(_Module.m_dwThreadId, WM_QUIT, 0, 0);
+		if (_Module.m_bService)
+			_Module.SetServiceStatus(SERVICE_STOP_PENDING);
 	}	
 
-	CoUninitialize();
 	return 0;
 }
 

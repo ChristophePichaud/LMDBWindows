@@ -1,0 +1,15 @@
+[
+  {
+    "directory": "D:/Dev/GitHub_LMDB2/LMDBWindows",
+    "command": "clang-tool -fms-extensions -fms-compatibility -fms-compatibility-version=19  -isystem \"C:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/VC/Tools/MSVC/14.14.26428/include\"  -isystem \"C:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/VC/Tools/MSVC/14.14.26428/atlmfc/include\"  -isystem \"C:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/VC/Auxiliary/VS/include\"  -isystem \"C:/Program Files (x86)/Windows Kits/10/Include/10.0.14393.0/ucrt\"  -isystem \"C:/Program Files (x86)/Windows Kits/10/Include/10.0.14393.0/um\"  -isystem \"C:/Program Files (x86)/Windows Kits/10/Include/10.0.14393.0/shared\"  -isystem \"C:/Program Files (x86)/Windows Kits/10/Include/10.0.14393.0/winrt\"  -isystem \"C:/Program Files (x86)/Windows Kits/NETFXSDK/4.6.1/Include/um\"  -isystem \"D:/BCGSoft/BCGControlBarPro/BCGCBPro\"  -D _DEBUG  -D _MT  -D _DLL  -D WIN32  -D _LIB  -D _UNICODE  -D UNICODE -std=c11  \"D:/Dev/GitHub_LMDB2/libraries/liblmdb/mdb.c\"",
+    "file": "D:/Dev/GitHub_LMDB2/libraries/liblmdb/mdb.c"
+  },
+
+  {
+    "directory": "D:/Dev/GitHub_LMDB2/LMDBWindows",
+    "command": "clang-tool -fms-extensions -fms-compatibility -fms-compatibility-version=19  -isystem \"C:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/VC/Tools/MSVC/14.14.26428/include\"  -isystem \"C:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/VC/Tools/MSVC/14.14.26428/atlmfc/include\"  -isystem \"C:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/VC/Auxiliary/VS/include\"  -isystem \"C:/Program Files (x86)/Windows Kits/10/Include/10.0.14393.0/ucrt\"  -isystem \"C:/Program Files (x86)/Windows Kits/10/Include/10.0.14393.0/um\"  -isystem \"C:/Program Files (x86)/Windows Kits/10/Include/10.0.14393.0/shared\"  -isystem \"C:/Program Files (x86)/Windows Kits/10/Include/10.0.14393.0/winrt\"  -isystem \"C:/Program Files (x86)/Windows Kits/NETFXSDK/4.6.1/Include/um\"  -isystem \"D:/BCGSoft/BCGControlBarPro/BCGCBPro\"  -D _DEBUG  -D _MT  -D _DLL  -D WIN32  -D _LIB  -D _UNICODE  -D UNICODE -std=c11  \"D:/Dev/GitHub_LMDB2/libraries/liblmdb/midl.c\"",
+    "file": "D:/Dev/GitHub_LMDB2/libraries/liblmdb/midl.c"
+  }
+
+
+]

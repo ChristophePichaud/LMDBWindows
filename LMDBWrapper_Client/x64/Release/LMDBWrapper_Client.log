@@ -1,10 +1,9 @@
-﻿  LMDBWrapper_Client.cpp
+﻿  stdafx.cpp
+  LMDBWrapper_Client.cpp
 d:\dev\github_lmdb2\lmdbwrapper_client\lmdbwrapper_client.cpp(116): warning C4267: 'initializing': conversion from 'size_t' to 'DWORD', possible loss of data
 d:\dev\github_lmdb2\lmdbwrapper_client\lmdbwrapper_client.cpp(12): warning C4101: 'values': unreferenced local variable
 d:\dev\github_lmdb2\lmdbwrapper_client\lmdbwrapper_client.cpp(10): warning C4101: 'rc': unreferenced local variable
   Generating code
-  1 of 176 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+  All 176 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   LMDBWrapper_Client.vcxproj -> D:\Dev\GitHub_LMDB2\LMDBWindows\x64\Release\LMDBWrapper_Client.exe

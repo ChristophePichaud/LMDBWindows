@@ -192,7 +192,6 @@ void TheServer::RequestVerbGetData(http_request message)
 
 	std::wstring key = ServerHelper::FindParameter(message, _T("key"));
 	std::wstring dbNameW = ServerHelper::FindParameter(message, _T("name"));
-	std::string dbName(dbNameW.begin(), dbNameW.end());
 
 	std::shared_ptr<CLMDBWrapper> lmdb = GetLMDBWrapper(dbNameW);
 	std::wstring value;
@@ -225,7 +224,6 @@ void TheServer::RequestVerbGetData64(http_request message)
 
 	std::wstring key = ServerHelper::FindParameter(message, _T("key"));
 	std::wstring dbNameW = ServerHelper::FindParameter(message, _T("name"));
-	std::string dbName(dbNameW.begin(), dbNameW.end());
 
 	std::shared_ptr<CLMDBWrapper> lmdb = GetLMDBWrapper(dbNameW);
 	std::wstring value;
@@ -258,7 +256,6 @@ void TheServer::RequestVerbSetData(http_request message)
 	std::wstring key = ServerHelper::FindParameter(message, _T("key"));
 	std::wstring value = ServerHelper::FindParameter(message, _T("value"));
 	std::wstring dbNameW = ServerHelper::FindParameter(message, _T("name"));
-	std::string dbName(dbNameW.begin(), dbNameW.end());
 
 	std::shared_ptr<CLMDBWrapper> lmdb = GetLMDBWrapper(dbNameW);
 
@@ -284,7 +281,6 @@ void TheServer::RequestVerbSetData64(http_request message)
 
 	std::wstring key = ServerHelper::FindParameter(message, _T("key"));
 	std::wstring dbNameW = ServerHelper::FindParameter(message, _T("name"));
-	std::string dbName(dbNameW.begin(), dbNameW.end());
 
 	std::shared_ptr<CLMDBWrapper> lmdb = GetLMDBWrapper(dbNameW);
 
