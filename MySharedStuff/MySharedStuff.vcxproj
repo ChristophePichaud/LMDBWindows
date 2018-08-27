@@ -156,6 +156,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Include\Base64Helper.h" />
+    <ClInclude Include="..\Include\BasicLogger.h" />
     <ClInclude Include="..\Include\Constants.h" />
     <ClInclude Include="..\Include\CSWMRGuard.h" />
     <ClInclude Include="..\Include\Logger.h" />
@@ -166,6 +167,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Base64Helper.cpp" />
+    <ClCompile Include="BasicLogger.cpp" />
     <ClCompile Include="Constants.cpp" />
     <ClCompile Include="CSWMRGuard.cpp" />
     <ClCompile Include="dllmain.cpp" />

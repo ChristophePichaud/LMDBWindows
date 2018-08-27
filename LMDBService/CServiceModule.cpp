@@ -205,6 +205,8 @@ DWORD AutomateThread(LPVOID pParam)
 		g_Logger.WriteLog(_T("Running in console mode... Entering while()..."));
 		std::wstring port = Constants::MasterNodePort;
 		g_Logger.WriteLog(port);
+		std::wstring host = ServerHelper::GetHostName();
+		g_Logger.WriteLog(host);
 		std::wstring ip = ServerHelper::GetIP();
 		g_Logger.WriteLog(ip);
 		std::wstring url = ServerHelper::BuildURL(ip, port);
@@ -212,6 +214,14 @@ DWORD AutomateThread(LPVOID pParam)
 		http::uri uri = http::uri(url);
 		std::wstring address = uri.to_string();
 		std::wstring name = _T("Master");
+
+		g_Logger.WriteLog(_T("Enum IP addresses..."));
+		std::vector<std::wstring> v = ServerHelper::GetIPs();
+		for (std::wstring ipE : v)
+		{
+			g_Logger.WriteLog(ipE);
+		}
+		g_Logger.WriteLog(_T("Enum IP addresses ok"));
 
 		//
 		// Create the server instance
@@ -238,7 +248,10 @@ DWORD AutomateThread(LPVOID pParam)
 				goto stop_service;
 				break;
 			}
-			Sleep(200);
+			
+			//Sleep(200);
+			Sleep(5000);
+			g_Logger.WriteLog(_T("MainThread Sleep..."));
 
 		} // Main loop
 

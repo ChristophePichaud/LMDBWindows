@@ -78,7 +78,9 @@
 extern CSWMRGuard g_Guard;
 
 #include "Logger.h"
-extern CLogger g_Logger;
+#include "BasicLogger.h"
+//extern CLogger g_Logger;
+extern BasicLogger g_Logger;
 
 using namespace std;
 using namespace web;

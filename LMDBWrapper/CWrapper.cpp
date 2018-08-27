@@ -63,19 +63,19 @@ bool CLMDBWrapper::Set(LPSTR lpszKey, LPSTR lpszValue)
 	int err = mdb_dbi_open(_txn, NULL, 0, &_dbi);
 	std::wcout << _T("mdb_dbi_open: ") << err << std::endl;
 
-	strcpy(_szKey, lpszKey);
-	strcpy(_szValue, lpszValue);
-	std::cout << "Set key: " << _szKey << std::endl;
+	//strcpy(_szKey, lpszKey);
+	//strcpy(_szValue, lpszValue);
+	std::cout << "Set key: " << lpszKey << std::endl;
 
-	_key.mv_size = sizeof(_szKey);
-	_key.mv_data = _szKey;
-	_data.mv_size = sizeof(_szValue);
-	_data.mv_data = _szValue;
+	_key.mv_size = strlen(lpszKey);
+	_key.mv_data = lpszKey;
+	_data.mv_size = strlen(lpszValue);
+	_data.mv_data = lpszValue;
 
 	err = mdb_put(_txn, _dbi, &_key, &_data, 0); // MDB_NOOVERWRITE);
 	//printf("Add err=%d Key:%s Data:%s\n", err, key.mv_data, data.mv_data);
 	std::wcout << _T("mdb_put: ") << err << std::endl;
-	std::cout << "set data: " << (LPSTR)_data.mv_data << std::endl;
+	//std::cout << "set data: " << (LPSTR)_data.mv_data << std::endl;
 
 	mdb_txn_commit(_txn);
 	mdb_env_sync(_env, TRUE);

@@ -5,7 +5,8 @@
 #include "..\Include\Constants.h"
 
 CSWMRGuard g_Guard;
-CLogger g_Logger;
+//CLogger g_Logger;
+BasicLogger g_Logger;
 
 int wmain(int argc, wchar_t *argv[])
 {

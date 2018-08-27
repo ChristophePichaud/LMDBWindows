@@ -236,10 +236,10 @@ void TheServer::RequestVerbGetData64(http_request message)
 
 		std::wostringstream buf;
 		buf << _T("GetB64 key:") << key << _T(" value:") << value;
-		g_Logger.WriteLog(buf.str());
+		//g_Logger.WriteLog(buf.str());
 
 		std::wstring response = data.AsJSON().serialize();
-		g_Logger.WriteLog(response);
+		//g_Logger.WriteLog(response);
 
 		message.reply(status_codes::OK, data.AsJSON());
 	}
@@ -293,17 +293,19 @@ void TheServer::RequestVerbSetData64(http_request message)
 	std::string valueb64 = Base64Helper::base64_encode((const unsigned char *)value.c_str(), value.length());
 	std::wstring valuew(valueb64.begin(), valueb64.end());
 
-	lmdb->Set(key, valuew);
+	lmdb->Set(data.key, valuew);
 
 	std::wostringstream buf;
-	buf << _T("Set key:") << key << _T(" value:") << valuew;
-	g_Logger.WriteLog(buf.str());
+	//buf << _T("Set key:") << key << _T(" value:") << valuew;
+	//g_Logger.WriteLog(buf.str());
 
 	message.reply(status_codes::OK);
 }
 
 void TheServer::PrintRequest(http_request message)
 {
+	return;
+
 	g_Logger.WriteLog(message.to_string());
 	g_Logger.WriteLog(message.relative_uri().to_string());
 
