@@ -142,6 +142,7 @@ bool CLMDBWrapper::Get(LPSTR lpszKey, LPSTR * lpszValue)
 	else
 	{
 		*lpszValue = (char*)malloc(_data.mv_size + 1);
+		memset(*lpszValue, 0, _data.mv_size + 1);
 		strcpy(*lpszValue, (char *)_data.mv_data);
 		std::cout << "get data: " << *lpszValue << std::endl;
 		return true;
@@ -155,7 +156,7 @@ bool CLMDBWrapper::Get(std::string key, std::string & value)
 	LPSTR lpszValue;
 	if (Get((LPSTR)key.c_str(), &lpszValue) == true)
 	{
-		std::string v = std::string(lpszValue);
+		std::string v = lpszValue;
 		free(lpszValue);
 		value = v;
 		return true;

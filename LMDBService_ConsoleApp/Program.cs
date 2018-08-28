@@ -66,6 +66,17 @@ namespace LMDBService_ConsoleApp
 
                     WGet(url);
                 }
+
+                verb = "get-data";
+
+                for (int i = 0; i < count; i++)
+                {
+                    string key = String.Format("Key_v{0}", i);
+                    string url = String.Format("{0}/MyServer/LMDB/?request={1}&key={2}&name={3}", base_url, verb, key, cache);
+                    Logger.LogInfo(url);
+
+                    WGet(url);
+                }
             }
 
             if (arg == "-files")
