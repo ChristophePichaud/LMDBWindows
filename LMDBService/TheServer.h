@@ -25,7 +25,7 @@ private:
 	static void handle_post(http_request message);
 	static void handle_del(http_request message);
 	static void handle_put(http_request message);
-	static std::shared_ptr<CLMDBWrapper> GetLMDBWrapper(std::wstring dbName);
+	static std::shared_ptr<CLMDBWrapperEx> GetLMDBWrapper(std::wstring dbName);
 
 
 private:
@@ -37,7 +37,7 @@ public:
 	static std::wstring _name;
 
 public:
-	static std::map<std::wstring, std::shared_ptr<CLMDBWrapper>> _mapWrapper;
+	static std::map<std::wstring, std::shared_ptr<CLMDBWrapperEx>> _mapWrapper;
 	std::unique_ptr<TheServer> _http;
 	std::wstring _url;
 };

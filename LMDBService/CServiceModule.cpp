@@ -178,6 +178,7 @@ void CServiceModule::Run()
 		SetServiceStatus(SERVICE_RUNNING);
 
 	g_Logger.Init((LPTSTR)_T("LMDB.txt"));
+	InitLogger();
 
 	AutomateThread(NULL);
 

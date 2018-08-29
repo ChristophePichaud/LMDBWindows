@@ -17,5 +17,10 @@ private:
 	TCHAR _szName[255];
 	TCHAR _szPath[255];
 	static CCriticalSection _cs;
+
+public:
+	static BasicLogger InternalLogger;
 };
 
+
+void MYSHAREDSTUFF_API InitLogger();

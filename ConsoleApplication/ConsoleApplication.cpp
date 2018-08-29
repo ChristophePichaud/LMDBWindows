@@ -8,11 +8,117 @@
 #define CHECK(test, msg) ((test) ? (void)0 : ((void)fprintf(stderr, \
 	"%s:%d: %s: %s\n", __FILE__, __LINE__, msg, mdb_strerror(rc)), abort()))
 
+class CGetSet
+{
+public:
+	CGetSet() {}
+	~CGetSet() 
+	{
+	}
+
+private:
+	MDB_env * env;
+	MDB_dbi dbi;
+	char szKey[255];
+	char szValue[255];
+	MDB_val key, data;
+	MDB_txn *txn;
+
+public:
+
+	void Init(std::wstring db)
+	{
+		std::string wdb(db.begin(), db.end());
+		Init(wdb);
+	}
+
+	void Init(std::string db)
+	{
+		mdb_env_create(&env);
+		mdb_env_set_maxreaders(env, 1);
+		mdb_env_set_mapsize(env, 10485760 * 1000);
+		mdb_env_open(env, db.c_str(), MDB_CREATE/*|MDB_NOSYNC*/, 0664);
+	}
+
+	void Set(std::wstring k, std::wstring v)
+	{
+		std::string key(k.begin(), k.end());
+		std::string value(v.begin(), v.end());
+		Set(key, value);
+	}
+
+	void Set(std::string k, std::string v)
+	{
+		mdb_txn_begin(env, NULL, 0, &txn);
+		mdb_dbi_open(txn, NULL, 0, &dbi);
+
+		key.mv_size = k.length();
+		key.mv_data = (void *)k.c_str();
+		data.mv_size = v.length();
+		data.mv_data = (void *)v.c_str();
+		int err = mdb_put(txn, dbi, &key, &data, 0); // MDB_NOOVERWRITE);
+		printf("Set err:%d Key:%s Data:%s\n", err, key.mv_data, data.mv_data);
+
+		mdb_txn_commit(txn);
+		mdb_dbi_close(env, dbi);
+	}
+
+	void Get(std::wstring k, std::wstring & v)
+	{
+		std::string key(k.begin(), k.end());
+		std::string value;
+		Get(key, value);
+
+		std::wstring wvalue(value.begin(), value.end());
+		v = wvalue;
+	}
+
+	void Get(std::string k, std::string & value)
+	{
+		mdb_txn_begin(env, NULL, 0, &txn);
+		mdb_dbi_open(txn, NULL, 0, &dbi);
+
+		sprintf(szKey, "key_%d", 10);
+		memset(szValue, 0, 255);
+
+		key.mv_size = k.length();
+		key.mv_data = (void *)k.c_str();
+
+		int err = mdb_get(txn, dbi, &key, &data);
+		printf("Get err:%d Key:%s Data:%s\n", err, key.mv_data, data.mv_data);
+		value = (char *)(data.mv_data);
+
+		mdb_txn_commit(txn);
+		mdb_dbi_close(env, dbi);
+	}
+};
+
+
 int main(int argc, char * argv[])
+{
+	std::string db = "c:\\temp";
+	std::string key = "key_v000";
+	std::string value = "value_v000";
+
+	CGetSet gs;
+	gs.Init(db);
+	gs.Set(key, value);
+	std::string value1;
+	gs.Get(key, value1);
+
+	CGetSet gs2;
+	gs2.Init(db);
+	std::string value2;
+	gs.Get(key, value2);
+}
+
+int main3(int argc, char * argv[])
 {
 	int i = 0, j = 0, rc;
 	MDB_env *env;
 	MDB_dbi dbi;
+	char szKey[255];
+	char szValue[255];
 	MDB_val key, data;
 	MDB_txn *txn;
 	MDB_stat mst;
@@ -45,8 +151,6 @@ int main(int argc, char * argv[])
 	mdb_txn_begin(env, NULL, 0, &txn);
 	mdb_dbi_open(txn, NULL, 0, &dbi);
 
-	char szKey[255];
-	char szValue[255];
 	sprintf(szKey, "key_%d", 10);
 	sprintf(szValue, "value_%d", 10);
 
@@ -54,8 +158,8 @@ int main(int argc, char * argv[])
 	key.mv_data = szKey;
 	data.mv_size = sizeof(szValue);
 	data.mv_data = szValue;
-	printf("Add Key:%s Data:%s\n", key.mv_data, data.mv_data);
-	int err = mdb_put(txn, dbi, &key, &data, MDB_NOOVERWRITE);
+	int err = mdb_put(txn, dbi, &key, &data, 0); // MDB_NOOVERWRITE);
+	printf("Set err:%d Key:%s Data:%s\n", err, key.mv_data, data.mv_data);
 
 	mdb_txn_commit(txn);
 	mdb_dbi_close(env, dbi);
@@ -72,7 +176,7 @@ int main(int argc, char * argv[])
 	//data.mv_data = szValue;
 
 	err = mdb_get(txn, dbi, &key, &data);
-	printf("Get Key:%s Data:%s\n", key.mv_data, data.mv_data);
+	printf("Get err:%d Key:%s Data:%s\n", err, key.mv_data, data.mv_data);
 	
 	mdb_txn_commit(txn);
 	mdb_dbi_close(env, dbi);

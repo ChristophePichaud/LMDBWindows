@@ -61,21 +61,22 @@ bool CLMDBWrapper::Set(LPSTR lpszKey, LPSTR lpszValue)
 {
 	mdb_txn_begin(_env, NULL, 0, &_txn);
 	int err = mdb_dbi_open(_txn, NULL, 0, &_dbi);
-	std::wcout << _T("mdb_dbi_open: ") << err << std::endl;
-
-	//strcpy(_szKey, lpszKey);
-	//strcpy(_szValue, lpszValue);
-	std::cout << "Set key: " << lpszKey << std::endl;
+	//std::wcout << _T("mdb_dbi_open: ") << err << std::endl;
 
 	_key.mv_size = strlen(lpszKey);
 	_key.mv_data = lpszKey;
 	_data.mv_size = strlen(lpszValue);
 	_data.mv_data = lpszValue;
 
-	err = mdb_put(_txn, _dbi, &_key, &_data, 0); // MDB_NOOVERWRITE);
-	//printf("Add err=%d Key:%s Data:%s\n", err, key.mv_data, data.mv_data);
-	std::wcout << _T("mdb_put: ") << err << std::endl;
-	//std::cout << "set data: " << (LPSTR)_data.mv_data << std::endl;
+	err = mdb_put(_txn, _dbi, &_key, &_data, MDB_NOOVERWRITE);
+	
+	std::wostringstream buf;
+	buf << _T("mdb_put:") << err;
+	BasicLogger::InternalLogger.WriteLog(buf.str());
+		
+	std::wostringstream buf2;
+	buf2 << _T("set: key:") << lpszKey << _T(" value:") << lpszValue;
+	BasicLogger::InternalLogger.WriteLog(buf2.str());
 
 	mdb_txn_commit(_txn);
 	mdb_env_sync(_env, TRUE);
@@ -88,11 +89,8 @@ bool CLMDBWrapper::Set(LPSTR lpszKey, LPSTR lpszValueb64, DWORD dwLen)
 {
 	mdb_txn_begin(_env, NULL, 0, &_txn);
 	int err = mdb_dbi_open(_txn, NULL, 0, &_dbi);
-	std::wcout << _T("mdb_dbi_open: ") << err << std::endl;
 
 	strcpy(_szKey, lpszKey);
-	std::cout << "Set key: " << _szKey << std::endl;
-
 	std::string buffer = std::string(lpszValueb64);
 
 	_key.mv_size = sizeof(_szKey);
@@ -101,12 +99,16 @@ bool CLMDBWrapper::Set(LPSTR lpszKey, LPSTR lpszValueb64, DWORD dwLen)
 	_data.mv_data = (LPSTR)buffer.c_str();
 
 	err = mdb_put(_txn, _dbi, &_key, &_data, MDB_NOOVERWRITE);
-	//printf("Add err=%d Key:%s Data:%s\n", err, key.mv_data, data.mv_data);
-	std::wcout << _T("mdb_put: ") << err << std::endl;
-	std::cout << "set data: " << (LPSTR)_data.mv_data << std::endl;
 
-	int err2 = mdb_txn_commit(_txn);
-	std::wcout << _T("mdb_txn_commit: ") << err2 << std::endl;
+	std::wostringstream buf;
+	buf << _T("mdb_put:") << err;
+	BasicLogger::InternalLogger.WriteLog(buf.str());
+
+	std::wostringstream buf2;
+	buf2 << _T("set: key:") << lpszKey << _T(" value:") << lpszValueb64;
+	BasicLogger::InternalLogger.WriteLog(buf2.str());
+
+	mdb_txn_commit(_txn);
 	mdb_env_sync(_env, TRUE);
 	mdb_dbi_close(_env, _dbi);
 
@@ -115,24 +117,67 @@ bool CLMDBWrapper::Set(LPSTR lpszKey, LPSTR lpszValueb64, DWORD dwLen)
 
 bool CLMDBWrapper::Get(LPSTR lpszKey, LPSTR * lpszValue)
 {
+	/*
 	mdb_txn_begin(_env, NULL, 0, &_txn);
 	int err = mdb_dbi_open(_txn, NULL, 0, &_dbi);
-	std::wcout << _T("mdb_dbi_open: ") << err << std::endl;
 
 	strcpy(_szKey, lpszKey);
-	std::cout << "Get key: " << _szKey << std::endl;
-
 	_key.mv_size = sizeof(_szKey);
 	_key.mv_data = _szKey;
-	//data.mv_size = sizeof(szValue);
-	//data.mv_data = NULL; // szValue;
+	_data.mv_size = 0;
+	//_data.mv_data = NULL;
 
 	err = mdb_get(_txn, _dbi, &_key, &_data);
-	//printf("Get err=%d Key:%s Data:%s\n", err, key.mv_data, data.mv_data);
-	std::wcout << _T("mdb_get: ") << err << std::endl;
+
+	std::wostringstream buf;
+	buf << _T("mdb_get:") << err;
+	BasicLogger::InternalLogger.WriteLog(buf.str());
 
 	mdb_txn_commit(_txn);
 	mdb_dbi_close(_env, _dbi);
+
+	if (err == MDB_NOTFOUND)
+	{
+		lpszValue = NULL;
+
+		std::wostringstream buf2;
+		buf2 << _T("mdb_get data not found...");
+		BasicLogger::InternalLogger.WriteLog(buf2.str());
+		return false;
+	}
+	else
+	{
+		*lpszValue = (char*)malloc(_data.mv_size + 1);
+		memset(*lpszValue, 0, _data.mv_size + 1);
+		strcpy(*lpszValue, (char *)_data.mv_data);
+
+		std::wostringstream buf2;
+		buf2 << _T("get: ") << *lpszValue;
+		BasicLogger::InternalLogger.WriteLog(buf2.str());
+		return true;
+	}
+
+	return true;
+	*/
+
+	char szKey[255];
+	//char szValue[255];
+
+	strcpy(szKey, lpszKey);
+	//strcpy(szValue, "");
+
+	MDB_val VKey;
+	MDB_val VData;
+
+	VKey.mv_size = sizeof(szKey);
+	VKey.mv_data = szKey;
+	VData.mv_size = 0; // sizeof(szValue);
+
+	mdb_txn_begin(_env, NULL, 0, &_txn);
+	mdb_dbi_open(_txn, NULL, 0, &_dbi);
+	int err = mdb_get(_txn, _dbi, &VKey, &VData);
+	//printf("Get Key:%s Data:%s\n", VKey.mv_data, VData.mv_data);
+	mdb_txn_commit(_txn);
 
 	if (err == MDB_NOTFOUND)
 	{
@@ -141,10 +186,8 @@ bool CLMDBWrapper::Get(LPSTR lpszKey, LPSTR * lpszValue)
 	}
 	else
 	{
-		*lpszValue = (char*)malloc(_data.mv_size + 1);
-		memset(*lpszValue, 0, _data.mv_size + 1);
-		strcpy(*lpszValue, (char *)_data.mv_data);
-		std::cout << "get data: " << *lpszValue << std::endl;
+		*lpszValue = (char*)malloc(VData.mv_size + 1);
+		strcpy(*lpszValue, (char *)VData.mv_data);
 		return true;
 	}
 
@@ -186,4 +229,9 @@ bool CLMDBWrapper::Set(std::wstring key, std::wstring value)
 	std::string valuea(value.begin(), value.end());
 
 	return Set(keya, valuea);
+}
+
+void CLMDBWrapper::Init()
+{
+	InitLogger();
 }

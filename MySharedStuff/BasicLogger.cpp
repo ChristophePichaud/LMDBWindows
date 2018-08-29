@@ -3,6 +3,7 @@
 #include "..\Include\BasicLogger.h"
 
 CCriticalSection BasicLogger::_cs;
+BasicLogger BasicLogger::InternalLogger;
 
 BasicLogger::BasicLogger()
 {
@@ -80,4 +81,11 @@ void BasicLogger::WriteLog(LPCTSTR lpszMessage)
 void BasicLogger::WriteLog(std::wstring message)
 {
 	WriteLog(message.c_str());
+}
+
+void InitLogger()
+{
+	TCHAR sz[255];
+	_tcscpy(sz, _T("Internal.txt"));
+	BasicLogger::InternalLogger.Init(sz);
 }

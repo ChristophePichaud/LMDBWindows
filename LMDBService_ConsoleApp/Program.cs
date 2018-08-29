@@ -59,14 +59,26 @@ namespace LMDBService_ConsoleApp
 
                 for (int i = 0; i < count; i++)
                 {
+                    verb = "set-data";
+
                     string key = String.Format("Key_v{0}", i);
                     string value = String.Format("Value_v{0}", i);
                     string url = String.Format("{0}/MyServer/LMDB/?request={1}&key={2}&value={3}&name={4}", base_url, verb, key, value, cache);
                     Logger.LogInfo(url);
 
                     WGet(url);
+
+
+                    verb = "get-data";
+
+                    key = String.Format("Key_v{0}", i);
+                    url = String.Format("{0}/MyServer/LMDB/?request={1}&key={2}&name={3}", base_url, verb, key, cache);
+                    Logger.LogInfo(url);
+
+                    WGet(url);
                 }
 
+                /*
                 verb = "get-data";
 
                 for (int i = 0; i < count; i++)
@@ -77,6 +89,7 @@ namespace LMDBService_ConsoleApp
 
                     WGet(url);
                 }
+                */
             }
 
             if (arg == "-files")

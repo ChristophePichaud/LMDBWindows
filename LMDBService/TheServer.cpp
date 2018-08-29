@@ -9,7 +9,7 @@
 std::wstring TheServer::_server;
 std::wstring  TheServer::_port;
 std::wstring TheServer::_name;
-std::map<std::wstring, std::shared_ptr<CLMDBWrapper>> TheServer::_mapWrapper;
+std::map<std::wstring, std::shared_ptr<CLMDBWrapperEx>> TheServer::_mapWrapper;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -160,20 +160,20 @@ void TheServer::RequestVerbPing(http_request message)
 	message.reply(status_codes::OK, data.AsJSON());
 }
 
-std::shared_ptr<CLMDBWrapper> TheServer::GetLMDBWrapper(std::wstring dbName)
-{	
-	std::shared_ptr<CLMDBWrapper> wr;
+std::shared_ptr<CLMDBWrapperEx> TheServer::GetLMDBWrapper(std::wstring dbName)
+{
+	std::shared_ptr<CLMDBWrapperEx> wr;
 	auto it = _mapWrapper.find(dbName);
 	if (it == _mapWrapper.end())
 	{
-		 wr = std::make_shared<CLMDBWrapper>();
-		 wr->Init(dbName);
+		wr = std::make_shared<CLMDBWrapperEx>();
+		wr->Init(dbName);
 
-		 _mapWrapper[dbName] = wr;
+		_mapWrapper[dbName] = wr;
 
-		 TCHAR sz[255];
-		 _stprintf_s(sz, _T("LMDB Init DB %s"), dbName.c_str());
-		 g_Logger.WriteLog(sz);
+		TCHAR sz[255];
+		_stprintf_s(sz, _T("LMDB Init DB %s"), dbName.c_str());
+		g_Logger.WriteLog(sz);
 	}
 	else
 	{
@@ -193,7 +193,7 @@ void TheServer::RequestVerbGetData(http_request message)
 	std::wstring key = ServerHelper::FindParameter(message, _T("key"));
 	std::wstring dbNameW = ServerHelper::FindParameter(message, _T("name"));
 
-	std::shared_ptr<CLMDBWrapper> lmdb = GetLMDBWrapper(dbNameW);
+	std::shared_ptr<CLMDBWrapperEx> lmdb = GetLMDBWrapper(dbNameW);
 	std::wstring value;
 
 	if (lmdb->Get(key, value) == true)
@@ -205,7 +205,6 @@ void TheServer::RequestVerbGetData(http_request message)
 		std::wostringstream buf;
 		buf << _T("Get key:") << key << _T(" value:") << value;
 		g_Logger.WriteLog(buf.str());
-
 
 		std::wstring response = data.AsJSON().serialize();
 		g_Logger.WriteLog(response);
@@ -225,7 +224,7 @@ void TheServer::RequestVerbGetData64(http_request message)
 	std::wstring key = ServerHelper::FindParameter(message, _T("key"));
 	std::wstring dbNameW = ServerHelper::FindParameter(message, _T("name"));
 
-	std::shared_ptr<CLMDBWrapper> lmdb = GetLMDBWrapper(dbNameW);
+	std::shared_ptr<CLMDBWrapperEx> lmdb = GetLMDBWrapper(dbNameW);
 	std::wstring value;
 
 	if (lmdb->Get(key, value) == true)
@@ -257,7 +256,7 @@ void TheServer::RequestVerbSetData(http_request message)
 	std::wstring value = ServerHelper::FindParameter(message, _T("value"));
 	std::wstring dbNameW = ServerHelper::FindParameter(message, _T("name"));
 
-	std::shared_ptr<CLMDBWrapper> lmdb = GetLMDBWrapper(dbNameW);
+	std::shared_ptr<CLMDBWrapperEx> lmdb = GetLMDBWrapper(dbNameW);
 
 	lmdb->Set(key, value);
 
@@ -282,7 +281,7 @@ void TheServer::RequestVerbSetData64(http_request message)
 	std::wstring key = ServerHelper::FindParameter(message, _T("key"));
 	std::wstring dbNameW = ServerHelper::FindParameter(message, _T("name"));
 
-	std::shared_ptr<CLMDBWrapper> lmdb = GetLMDBWrapper(dbNameW);
+	std::shared_ptr<CLMDBWrapperEx> lmdb = GetLMDBWrapper(dbNameW);
 
 	std::wstring json;
 	web::json::value jsonV = message.extract_json().get();
