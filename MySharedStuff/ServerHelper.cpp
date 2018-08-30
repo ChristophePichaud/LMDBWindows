@@ -4,6 +4,7 @@
 std::wstring ServerHelper::GetIP()
 {
 	//return L"127.0.0.1";
+	//return L"0.0.0.0";
 
 	// Init WinSock
 	WSADATA wsa_Data;

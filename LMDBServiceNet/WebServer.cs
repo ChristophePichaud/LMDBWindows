@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace LMDBServiceNet
 {
@@ -36,20 +37,150 @@ namespace LMDBServiceNet
         {
             try
             {
-                string verb = Path.GetFileName(context.Request.RawUrl);
+                string request = Path.GetFileName(context.Request.RawUrl);
+                string str = String.Format("you asked for: {0}", request);
+                Console.WriteLine(str);
 
-                byte[] msg;
-                string str = String.Format("you asked for: {0}", verb);
-                var enc = Encoding.UTF8;
+                Dictionary<string, string> parameters = ExtractParameters(context);
 
-                context.Response.StatusCode = (int)HttpStatusCode.OK;
-                msg = enc.GetBytes(str);
+                if (parameters.Count == 0)
+                {
+                    await WriteResponse(context, String.Empty, HttpStatusCode.OK);
+                    return;
+                }
 
-                context.Response.ContentLength64 = msg.Length;
-                using (Stream s = context.Response.OutputStream)
-                    await s.WriteAsync(msg, 0, msg.Length);
+                string verb;
+                if ( parameters.TryGetValue("request", out verb) == false )
+                {
+                    await WriteResponse(context, String.Empty, HttpStatusCode.OK);
+                    return;
+                }
+
+                if (context.Request.HttpMethod == "GET")
+                {
+                    if (verb == Constants.VerbPing)
+                    {
+                        await RequestVerbPing(context);
+                        return;
+                    }
+                    else if (verb == Constants.VerbUsage)
+                    {
+                        await RequestUsage(context);
+                        return;
+                    }
+                    else if (verb == Constants.VerbGetData)
+                    {
+                        RequestVerbGetData(context, parameters);
+                        return;
+                    }
+                    else if (verb == Constants.VerbSetData)
+                    {
+                        RequestVerbSetData(context, parameters);
+                        return;
+                    }
+                }
+
+                await WriteResponse(context, String.Empty, HttpStatusCode.OK);
             }
             catch (Exception ex) { Console.WriteLine("Request error: " + ex); }
+        }
+
+        private Dictionary<string, string> ExtractParameters(HttpListenerContext context)
+        {
+            string request = Path.GetFileName(context.Request.RawUrl);
+            string str = String.Format("Request: {0}", request);
+            Console.WriteLine(str);
+
+            //http://192.168.175.241:7001/MyServer/LMDB/?request=set-data&key=toto0&value=toto1&name=cache2
+
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+
+            if (String.IsNullOrEmpty(request))
+                return parameters;
+
+            var strings = request.Split('&');
+
+            if (strings == null)
+                return parameters;
+
+            if (strings.Length >= 1)
+            {
+                strings[0] = strings[0].Remove(0, 1);
+            }
+            else
+            {
+                return parameters;
+            }
+
+            foreach (string s in strings)
+            {
+                //Console.WriteLine(s);
+                var data = s.Split('=');
+                if( data.Length == 2)
+                {
+                    string values = String.Format("{0}:{1}", data[0], data[1]);
+                    //Console.WriteLine(values);
+
+                    parameters.Add(data[0], data[1]);
+
+                }
+            }
+
+            return parameters;
+
+        }
+
+        private async Task WriteResponse(HttpListenerContext context, string message, HttpStatusCode code)
+        {
+            Console.WriteLine(message);
+
+            var enc = Encoding.UTF8;
+            byte[] msg = enc.GetBytes(message);
+
+            context.Response.StatusCode = (int)code;
+
+            context.Response.ContentLength64 = msg.Length;
+            using (Stream s = context.Response.OutputStream)
+                await s.WriteAsync(msg, 0, msg.Length);
+        }
+
+        private async Task RequestUsage(HttpListenerContext context)
+        {
+
+            DataUsage usage = new DataUsage();
+            usage.company = "NEOS-SDI";
+            usage.developer = "Christophe Pichaud";
+            usage.version = "August 2008 BETA 0.3 .NET C#";
+
+            string str = JsonConvert.SerializeObject(usage);
+
+            await WriteResponse(context, str, HttpStatusCode.OK);
+        }
+
+        private async Task RequestVerbPing(HttpListenerContext context)
+        {
+            DataPing ping = new DataPing();
+            ping.ip = "localhost";
+            ping.port = Constants.MasterNodePort;
+            ping.server = Environment.MachineName;
+
+            string str = JsonConvert.SerializeObject(ping);
+
+            await WriteResponse(context, str, HttpStatusCode.OK);
+        }
+
+        private async Task RequestVerbSetData(HttpListenerContext context, Dictionary<string, string> parameters)
+        {
+            Data data = new Data();
+            string str = JsonConvert.SerializeObject(data);
+            await WriteResponse(context, str, HttpStatusCode.OK);
+        }
+
+        private async Task RequestVerbGetData(HttpListenerContext context, Dictionary<string, string> parameters)
+        {
+            Data data = new Data();
+            string str = JsonConvert.SerializeObject(data);
+            await WriteResponse(context, str, HttpStatusCode.OK);
         }
     }
 }
