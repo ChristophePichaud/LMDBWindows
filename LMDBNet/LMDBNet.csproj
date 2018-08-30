@@ -53,6 +53,7 @@
     <Compile Include="LMDBEnvironment.cs" />
     <Compile Include="LMDBException.cs" />
     <Compile Include="LMDBTransaction.cs" />
+    <Compile Include="LMDBWrapper\LMDBWrapper.cs" />
     <Compile Include="TransactionState.cs" />
     <Compile Include="Lmdb.cs" />
     <Compile Include="LmdbMethods.cs" />

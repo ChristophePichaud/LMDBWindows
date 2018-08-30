@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using LMDBNet;
 using Newtonsoft.Json;
 
 namespace LMDBServiceNet
@@ -13,11 +14,15 @@ namespace LMDBServiceNet
     class WebServer
     {
         HttpListener _listener;
+        LMDBWrapper _wrapper;
 
         public WebServer(string uriPrefix)
         {
             _listener = new HttpListener();
             _listener.Prefixes.Add(uriPrefix);
+
+            _wrapper = new LMDBWrapper();
+            _wrapper.Init("cache_db");
         }
         public async void Start()
         {
@@ -39,7 +44,7 @@ namespace LMDBServiceNet
             {
                 string request = Path.GetFileName(context.Request.RawUrl);
                 string str = String.Format("you asked for: {0}", request);
-                Console.WriteLine(str);
+                //Console.WriteLine(str);
 
                 Dictionary<string, string> parameters = ExtractParameters(context);
 
@@ -70,12 +75,12 @@ namespace LMDBServiceNet
                     }
                     else if (verb == Constants.VerbGetData)
                     {
-                        RequestVerbGetData(context, parameters);
+                        await RequestVerbGetData(context, parameters);
                         return;
                     }
                     else if (verb == Constants.VerbSetData)
                     {
-                        RequestVerbSetData(context, parameters);
+                        await RequestVerbSetData(context, parameters);
                         return;
                     }
                 }
@@ -89,7 +94,7 @@ namespace LMDBServiceNet
         {
             string request = Path.GetFileName(context.Request.RawUrl);
             string str = String.Format("Request: {0}", request);
-            Console.WriteLine(str);
+            //Console.WriteLine(str);
 
             //http://192.168.175.241:7001/MyServer/LMDB/?request=set-data&key=toto0&value=toto1&name=cache2
 
@@ -171,14 +176,43 @@ namespace LMDBServiceNet
 
         private async Task RequestVerbSetData(HttpListenerContext context, Dictionary<string, string> parameters)
         {
+            string key;
+            string value;
+
+            if (parameters.TryGetValue("key", out key) == false ||
+                parameters.TryGetValue("value", out value) == false)
+            {
+                await WriteResponse(context, String.Empty, HttpStatusCode.OK);
+                return;
+            }
+
+            _wrapper.SetData(key, value);
+
             Data data = new Data();
+            data.Key = key;
+            data.Value = value;
+
             string str = JsonConvert.SerializeObject(data);
             await WriteResponse(context, str, HttpStatusCode.OK);
         }
 
         private async Task RequestVerbGetData(HttpListenerContext context, Dictionary<string, string> parameters)
         {
+            string key;
+            string value;
+
+            if (parameters.TryGetValue("key", out key) == false)
+            {
+                await WriteResponse(context, String.Empty, HttpStatusCode.OK);
+                return;
+            }
+
+            _wrapper.GetData(key, out value);
+
             Data data = new Data();
+            data.Key = key;
+            data.Value = value;
+
             string str = JsonConvert.SerializeObject(data);
             await WriteResponse(context, str, HttpStatusCode.OK);
         }

@@ -11,7 +11,9 @@ namespace LMDBServiceNet
         static void Main(string[] args)
         {
             // Listen on port 51111, serving files in d:\webroot:
-            var server = new WebServer("http://localhost:7001/");
+            string ip = HelperServer.GetIP();
+            string url = String.Format("http://{0}:7001/", ip);
+            var server = new WebServer(url); // "http://172.26.240.1:7001/"); // localhost:7001/");
             try
             {
                 server.Start();
