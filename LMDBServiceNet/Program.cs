@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,17 +13,39 @@ namespace LMDBServiceNet
     {
         static void Main(string[] args)
         {
-            // Listen on port 51111, serving files in d:\webroot:
-            string ip = HelperServer.GetIP();
-            string url = String.Format("http://{0}:7001/", ip);
-            var server = new WebServer(url); // "http://172.26.240.1:7001/"); // localhost:7001/");
-            try
+            Logger.LogInfo("Main...");
+            ServiceBase[] ServicesToRun;
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(WorkerThreadHandler);
+            //if (System.AppDomain.CurrentDomain.BaseDirectory != Directory.GetCurrentDirectory() + @"\")
+            //{
+                ServicesToRun = new ServiceBase[] { new MyService() };
+
+                Directory.SetCurrentDirectory(System.AppDomain.CurrentDomain.BaseDirectory);
+                Process.GetCurrentProcess().StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                ServiceBase.Run(ServicesToRun);
+            //}
+            //else
+            //{
+            //    ServiceLauncher.Run(args);
+            //}
+        }
+
+        static void WorkerThreadHandler(object sender, UnhandledExceptionEventArgs args)
+        {
+            Trace.WriteLine("Unhandledexception occured");
+            if (args != null && args.ExceptionObject != null)
             {
-                server.Start();
-                Console.WriteLine("Server running... press Enter to stop");
-                Console.ReadLine();
+                if (args.ExceptionObject.GetType().IsSubclassOf(typeof(Exception)))
+                {
+                    Exception ex = args.ExceptionObject as Exception;
+                    Trace.WriteLine("Message " + ex.Message);
+                    Trace.WriteLine("StackTrace " + ex.StackTrace);
+                }
+                else
+                {
+                    Trace.WriteLine(args.ExceptionObject.ToString());
+                }
             }
-            finally { server.Stop(); }
         }
     }
 }

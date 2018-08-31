@@ -17,7 +17,7 @@ namespace LMDBServiceNet
             foreach (IPAddress ipaddress in iphostentry.AddressList)
             {
                 ip = ipaddress.ToString();
-                Console.WriteLine(ip);
+                Logger.LogInfo(ip);
             }
             return ip;
         }

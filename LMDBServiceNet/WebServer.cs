@@ -137,7 +137,7 @@ namespace LMDBServiceNet
 
         private async Task WriteResponse(HttpListenerContext context, string message, HttpStatusCode code)
         {
-            Console.WriteLine(message);
+            Logger.LogInfo(message);
 
             var enc = Encoding.UTF8;
             byte[] msg = enc.GetBytes(message);
