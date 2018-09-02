@@ -31,7 +31,7 @@ namespace LMDBServiceNet
                 try
                 {
                     var context = await _listener.GetContextAsync();
-                    Task.Run(() => ProcessRequestAsync(context));
+                    await Task.Run(() => ProcessRequestAsync(context));
                 }
                 catch (HttpListenerException) { break; } // Listener stopped.
                 catch (InvalidOperationException) { break; } // Listener stopped.

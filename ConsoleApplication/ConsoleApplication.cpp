@@ -52,9 +52,9 @@ public:
 		mdb_txn_begin(env, NULL, 0, &txn);
 		mdb_dbi_open(txn, NULL, 0, &dbi);
 
-		key.mv_size = k.length();
+		key.mv_size = k.length()+1;
 		key.mv_data = (void *)k.c_str();
-		data.mv_size = v.length();
+		data.mv_size = v.length()+1;
 		data.mv_data = (void *)v.c_str();
 		int err = mdb_put(txn, dbi, &key, &data, 0); // MDB_NOOVERWRITE);
 		printf("Set err:%d Key:%s Data:%s\n", err, key.mv_data, data.mv_data);
@@ -78,10 +78,7 @@ public:
 		mdb_txn_begin(env, NULL, 0, &txn);
 		mdb_dbi_open(txn, NULL, 0, &dbi);
 
-		sprintf(szKey, "key_%d", 10);
-		memset(szValue, 0, 255);
-
-		key.mv_size = k.length();
+		key.mv_size = k.length()+1;
 		key.mv_data = (void *)k.c_str();
 
 		int err = mdb_get(txn, dbi, &key, &data);
@@ -93,6 +90,29 @@ public:
 	}
 };
 
+
+int main5(int argc, char * argv[])
+{
+	int i = 0;
+
+loop:
+	if (i == 2)
+		goto end;
+
+	goto thanks;
+
+you:
+	std::cout << "you !" << std::endl;
+	i++;
+	goto loop;
+
+thanks:
+	std::cout << "Thanks ";
+	goto you;
+
+end:
+	return 0;
+}
 
 int main(int argc, char * argv[])
 {
@@ -110,6 +130,8 @@ int main(int argc, char * argv[])
 	gs2.Init(db);
 	std::string value2;
 	gs.Get(key, value2);
+	
+	return 0;
 }
 
 int main3(int argc, char * argv[])
