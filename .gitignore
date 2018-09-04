@@ -143,3 +143,5 @@
 /LMDBServiceNet/obj/Debug
 /LMDBServiceNet/bin/Debug
 /LMDBServiceNet.7z
+/LMDBServiceNet/bin/Release
+/LMDBServiceNet/obj/Release

@@ -16,7 +16,7 @@ namespace LMDBServiceNet
             Logger.LogInfo("Main...");
             ServiceBase[] ServicesToRun;
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(WorkerThreadHandler);
-            if (System.AppDomain.CurrentDomain.BaseDirectory != Directory.GetCurrentDirectory() + @"\")
+            if (System.AppDomain.CurrentDomain.BaseDirectory != Directory.GetCurrentDirectory(  ) + @"\")
             {
                 ServicesToRun = new ServiceBase[] { new MyService() };
 

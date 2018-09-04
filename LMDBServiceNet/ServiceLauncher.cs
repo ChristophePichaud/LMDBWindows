@@ -19,7 +19,11 @@ namespace LMDBServiceNet
             {
                 Logger.LogInfo("Run...");
                 string ip = HelperServer.GetIP();
-                string url = String.Format("http://{0}:7001/", ip);
+                HelperServer.EnumNICInterfaces();
+                string ip2 = HelperServer.GetLocalIPAddress();
+                Logger.LogInfo("HelperServer.GetLocalIPAddress:" + ip2);
+
+                string url = String.Format("http://{0}:7001/", ip2);
                 Logger.LogInfo(url);
                 WebServer server = new WebServer(url);
                 server.Start();

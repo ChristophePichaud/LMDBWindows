@@ -9,7 +9,11 @@ namespace LMDBNet
 {
     internal static class LmdbMethods
     {
+#if DEBUG
         public const string dll = "LMDBWindowsDllD64";
+#else
+        public const string dll = "LMDBWindowsDll64";
+#endif
 
         [DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
         public static extern int mdb_env_create(out IntPtr env);

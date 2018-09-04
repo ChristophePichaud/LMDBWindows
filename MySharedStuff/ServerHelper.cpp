@@ -34,52 +34,6 @@ std::wstring ServerHelper::GetIP()
 	WSACleanup();
 	std::wstring ipw(ip.begin(), ip.end());
 	return ipw;
-
-	int iRetval;
-	DWORD dwRetval;
-	struct addrinfo *result = NULL;
-	struct addrinfo *ptr = NULL;
-	struct addrinfo hints;
-
-	struct sockaddr_in  *sockaddr_ipv4;
-	//    struct sockaddr_in6 *sockaddr_ipv6;
-	LPSOCKADDR sockaddr_ip;
-
-	char ipstringbuffer[46];
-	DWORD ipbufferlength = 46;
-	//std::string ip;
-
-	ZeroMemory(&hints, sizeof(hints));
-	hints.ai_family = AF_INET;
-	hints.ai_socktype = SOCK_STREAM;
-	hints.ai_protocol = IPPROTO_TCP;
-	dwRetval = getaddrinfo(szHostName, NULL, &hints, &result);
-	if (dwRetval != 0)
-		return L"";
-
-	for (ptr = result; ptr != NULL; ptr = ptr->ai_next) 
-	{
-		//printf("\tFlags: 0x%x\n", ptr->ai_flags);
-		//printf("\tFamily: ");
-		switch (ptr->ai_family) 
-		{
-		case AF_INET:
-			//printf("AF_INET (IPv4)\n");
-			sockaddr_ipv4 = (struct sockaddr_in *) ptr->ai_addr;
-			//printf("\tIPv4 address %s\n", inet_ntoa(sockaddr_ipv4->sin_addr));
-			ip = inet_ntoa(sockaddr_ipv4->sin_addr);
-			//	goto fin;
-			//break;
-		}
-	}
-
-fin:
-
-	freeaddrinfo(result);
-	WSACleanup();
-
-	std::wstring ipw2(ip.begin(), ip.end());
-	return ipw2;
 }
 
 std::vector<std::wstring> ServerHelper::GetIPs()
