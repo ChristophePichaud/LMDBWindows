@@ -246,8 +246,12 @@ void TheServer::RequestVerbGetData64(http_request message)
 		//g_Logger.WriteLog(response);
 		//std::wstring buffer(buffera.begin(), buffera.end());
 
-		message.headers().add(L"Content-disposition", std::wstring(L"online; filename=") + key);
-		message.headers().add(L"Content-Length", std::to_wstring(buffera.length()));
+		TCHAR sz[255];
+		_stprintf_s(sz, _T("attachment; filename=%c%s%c"), '"', key.c_str(), '"');
+		g_Logger.WriteLog(sz);
+
+		message.headers().add(L"Content-Disposition", sz);	
+		//message.headers().add(L"Content-Length", std::to_wstring(buffera.length()));
 		message.reply(status_codes::OK, buffera, "application/octet-stream");
 	}
 	else
