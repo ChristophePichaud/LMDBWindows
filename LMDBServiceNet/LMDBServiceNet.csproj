@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base64Helper.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="HelperServer.cs" />
     <Compile Include="JSON.cs" />

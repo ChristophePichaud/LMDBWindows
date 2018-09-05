@@ -61,6 +61,34 @@ namespace LMDBServiceNet
                     return;
                 }
 
+                if (context.Request.HttpMethod == "POST")
+                {
+                    //string content = context.Request.ContentType;
+                    Encoding encode = System.Text.Encoding.GetEncoding("utf-8");
+                    Stream s = context.Request.InputStream;
+                    StreamReader reader = new StreamReader(s, encode);
+                    string buffer = reader.ReadToEnd();
+                    //Logger.LogInfo(buffer);
+                    reader.Close();
+
+                    long len = context.Request.ContentLength64;
+                    str = String.Format("POST Data Length={0}", len);
+                    Logger.LogInfo(str);
+
+                    if (verb == Constants.VerbSetDataB64)
+                    {
+                        Data data = JsonConvert.DeserializeObject<Data>(buffer);
+                        string data20 = data.Value.Substring(0, data.Value.Length > 20 ? 20 : data.Value.Length);
+                        str = String.Format("Key:{0} Value:{1}...", data.Key, data20); // data.Value);
+                        Logger.LogInfo(str);
+
+                        string value = Base64Helper.Base64Decode(data.Value);
+                        //str = String.Format("Decoded64 Value:{0}", value);
+                        //Logger.LogInfo(str);
+                    }
+
+                }
+
                 if (context.Request.HttpMethod == "GET")
                 {
                     if (verb == Constants.VerbPing)
