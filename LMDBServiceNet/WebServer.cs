@@ -44,7 +44,7 @@ namespace LMDBServiceNet
             {
                 string request = Path.GetFileName(context.Request.RawUrl);
                 string str = String.Format("you asked for: {0}", request);
-                //Console.WriteLine(str);
+                Logger.LogInfo(str);
 
                 Dictionary<string, string> parameters = ExtractParameters(context);
 
@@ -63,30 +63,16 @@ namespace LMDBServiceNet
 
                 if (context.Request.HttpMethod == "POST")
                 {
-                    //string content = context.Request.ContentType;
-                    Encoding encode = System.Text.Encoding.GetEncoding("utf-8");
-                    Stream s = context.Request.InputStream;
-                    StreamReader reader = new StreamReader(s, encode);
-                    string buffer = reader.ReadToEnd();
-                    //Logger.LogInfo(buffer);
-                    reader.Close();
-
-                    long len = context.Request.ContentLength64;
-                    str = String.Format("POST Data Length={0}", len);
-                    Logger.LogInfo(str);
-
                     if (verb == Constants.VerbSetDataB64)
                     {
-                        Data data = JsonConvert.DeserializeObject<Data>(buffer);
-                        string data20 = data.Value.Substring(0, data.Value.Length > 20 ? 20 : data.Value.Length);
-                        str = String.Format("Key:{0} Value:{1}...", data.Key, data20); // data.Value);
-                        Logger.LogInfo(str);
-
-                        string value = Base64Helper.Base64Decode(data.Value);
-                        //str = String.Format("Decoded64 Value:{0}", value);
-                        //Logger.LogInfo(str);
+                        await RequestSetData64(context, parameters);
+                        return;
                     }
-
+                    else if (verb == Constants.VerbGetDataB64)
+                    {
+                        await RequestGetData64(context, parameters);
+                        return;
+                    }
                 }
 
                 if (context.Request.HttpMethod == "GET")
@@ -111,11 +97,77 @@ namespace LMDBServiceNet
                         await RequestVerbSetData(context, parameters);
                         return;
                     }
+                    else if (verb == Constants.VerbGetDataB64)
+                    {
+                        await RequestGetData64(context, parameters);
+                        return;
+                    }
                 }
 
                 await WriteResponse(context, String.Empty, HttpStatusCode.OK);
             }
             catch (Exception ex) { Console.WriteLine("Request error: " + ex); }
+        }
+
+        private async Task RequestGetData64(HttpListenerContext context, Dictionary<string, string> parameters)
+        {
+            string key;
+            string value;
+
+            if (parameters.TryGetValue("key", out key) == false)
+            {
+                await WriteResponse(context, String.Empty, HttpStatusCode.OK);
+                return;
+            }
+
+            _wrapper.GetData(key, out value);
+
+            Data data = new Data();
+            data.Key = key;
+            data.Value = Base64Helper.Base64Decode(value);
+
+            context.Response.AddHeader("Content-disposition", "attachment; filename=" + key);
+            context.Response.ContentType = "application/octet-stream";
+            context.Response.ContentLength64 = data.Value.Length;
+
+            Encoding encode = System.Text.Encoding.GetEncoding("utf-8");
+            Stream s = context.Response.OutputStream;
+            byte[] buffer = encode.GetBytes(data.Value);
+            s.Write(buffer, 0, data.Value.Length);
+            s.Close();
+
+            return;
+
+            //string str = JsonConvert.SerializeObject(data);
+            //await WriteResponse(context, key, HttpStatusCode.OK);
+        }
+
+        private async Task RequestSetData64(HttpListenerContext context, Dictionary<string, string> parameters)
+        {
+            //string content = context.Request.ContentType;
+            Encoding encode = System.Text.Encoding.GetEncoding("utf-8");
+            Stream s = context.Request.InputStream;
+            StreamReader reader = new StreamReader(s, encode);
+            string buffer = reader.ReadToEnd();
+            //Logger.LogInfo(buffer);
+            reader.Close();
+
+            long len = context.Request.ContentLength64;
+            string str = String.Format("POST Data Length={0}", len);
+            Logger.LogInfo(str);
+
+            Data data = JsonConvert.DeserializeObject<Data>(buffer);
+            string data20 = data.Value.Substring(0, data.Value.Length > 20 ? 20 : data.Value.Length);
+            str = String.Format("Key:{0} Value:{1}...", data.Key, data20); // data.Value);
+            Logger.LogInfo(str);
+
+            _wrapper.SetData(data.Key, data.Value);
+
+            //string value = Base64Helper.Base64Decode(data.Value);
+            //str = String.Format("Decoded64 Value:{0}", value);
+            //Logger.LogInfo(str);
+
+            await WriteResponse(context, String.Empty, HttpStatusCode.OK);
         }
 
         private Dictionary<string, string> ExtractParameters(HttpListenerContext context)

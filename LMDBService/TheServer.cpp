@@ -229,6 +229,8 @@ void TheServer::RequestVerbGetData64(http_request message)
 
 	if (lmdb->Get(key, value) == true)
 	{
+		std::string keya(key.begin(), key.end());
+
 		Data data;
 		data.key = key;
 		data.value = value;
@@ -237,10 +239,16 @@ void TheServer::RequestVerbGetData64(http_request message)
 		buf << _T("GetB64 key:") << key << _T(" value:") << value;
 		//g_Logger.WriteLog(buf.str());
 
-		std::wstring response = data.AsJSON().serialize();
-		//g_Logger.WriteLog(response);
+		std::string buffera64(data.value.begin(), data.value.end());
+		string buffera = Base64Helper::base64_decode(buffera64);
 
-		message.reply(status_codes::OK, data.AsJSON());
+		//std::wstring response = data.AsJSON().serialize();
+		//g_Logger.WriteLog(response);
+		//std::wstring buffer(buffera.begin(), buffera.end());
+
+		message.headers().add(L"Content-disposition", std::wstring(L"online; filename=") + key);
+		message.headers().add(L"Content-Length", std::to_wstring(buffera.length()));
+		message.reply(status_codes::OK, buffera, "application/octet-stream");
 	}
 	else
 	{
@@ -285,14 +293,16 @@ void TheServer::RequestVerbSetData64(http_request message)
 
 	std::wstring json;
 	web::json::value jsonV = message.extract_json().get();
+	g_Logger.WriteLog(jsonV.serialize());
 
 	Data data = Data::FromJSON(jsonV.as_object());
 
-	std::string value(data.value.begin(), data.value.end());
-	std::string valueb64 = Base64Helper::base64_encode((const unsigned char *)value.c_str(), value.length());
-	std::wstring valuew(valueb64.begin(), valueb64.end());
+	//std::string value(data.value.begin(), data.value.end());
+	//std::string valueb64 = Base64Helper::base64_encode((const unsigned char *)value.c_str(), value.length());
+	//std::wstring valuew(valueb64.begin(), valueb64.end());
+	//lmdb->Set(data.key, valuew);
 
-	lmdb->Set(data.key, valuew);
+	lmdb->Set(data.key, data.value);
 
 	std::wostringstream buf;
 	//buf << _T("Set key:") << key << _T(" value:") << valuew;

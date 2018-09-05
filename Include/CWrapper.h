@@ -127,6 +127,10 @@ public:
 		key.mv_data = (void *)k.c_str();
 
 		int err = mdb_get(txn, dbi, &key, &data);
+
+		if (err != 0)
+			return false;
+
 		printf("Get err:%d Key:%s Data:%s\n", err, key.mv_data, data.mv_data);
 		value = (char *)(data.mv_data);
 

@@ -30,9 +30,19 @@ namespace LMDBService_ConsoleApp
                     paramUrl = args[1];
                     path = args[2];
                 }
+                if (arg == "-file")
+                {
+                    paramUrl = args[1];
+                    path = args[2];
+                }
                 if (arg == "-post")
                 {
                     paramUrl = args[1];
+                }
+                if (arg == "-getfile")
+                {
+                    paramUrl = args[1];
+                    path = args[2];
                 }
             }
             else
@@ -40,6 +50,8 @@ namespace LMDBService_ConsoleApp
                 Logger.LogInfo("Usage : exe ");
                 Logger.LogInfo(" -count url count");
                 Logger.LogInfo(" -files url path");
+                Logger.LogInfo(" -files url file");
+                Logger.LogInfo(" -getfile url key");
                 return;
             }
 
@@ -118,12 +130,26 @@ namespace LMDBService_ConsoleApp
                 }
             }
 
+            if (arg == "-file")
+            {
+                string file2 = Path.GetFileName(path);
+                StoreFile(paramUrl, file2);
+            }
+
             if (arg == "-post")
             {
                 string cache = "cache_NET";
                 string base_url = String.Format("http://{0}:7001/MyServer/LMDB/?request=set-data-b64&name={1}", paramUrl, cache);
 
                 MakeWPost(base_url);
+            }
+
+            if (arg == "-getfile")
+            {
+                string cache = "cache_NET";
+                string base_url = String.Format("http://{0}:7001/MyServer/LMDB/?request=get-data-b64&key={1}&name={2}", paramUrl, path, cache);
+
+                MakeWPost2(base_url, path);
             }
         }
 
@@ -167,6 +193,23 @@ namespace LMDBService_ConsoleApp
             wr.Close();
         }
 
+        private static void MakeWPost2(string url, string key)
+        {
+            HttpWebRequest r = (HttpWebRequest)WebRequest.Create(url);
+            r.Method = "POST";
+            r.KeepAlive = false;
+            r.ContentLength = 0;
+            WebResponse wr = r.GetResponse();
+            //Logger.LogInfo(wr.ContentType);
+            Stream s = wr.GetResponseStream();
+            Encoding encode = System.Text.Encoding.GetEncoding("utf-8");
+            StreamReader reader = new StreamReader(s, encode);
+            string buffer = reader.ReadToEnd();
+            Logger.LogInfo(buffer);
+            reader.Close();
+            wr.Close();
+        }
+
         private static void StoreFile(string url, string path)
         {
             string cache = "cache_NET";
@@ -181,22 +224,25 @@ namespace LMDBService_ConsoleApp
 
             value = Base64Helper.Base64Encode(buffer2);
 
-            MakePostBuffer(base_url, value);
+            MakePostBuffer(base_url, path, value);
         }
 
-        private static void MakePostBuffer(string url, string valueb64)
+        private static void MakePostBuffer(string url, string path, string valueb64)
         {
             HttpWebRequest r = (HttpWebRequest)WebRequest.Create(url);
             string c = "\"";
             string a1 = "{";
             string a2 = "}";
 
-            string key = String.Format("key_{0}", DateTime.Now.Ticks);
+            //string key = String.Format("key_{0}", DateTime.Now.Ticks);
+            string key = path;
+            Logger.LogInfo("Key: "+ key);
+                
+            string logData = String.Format("{1}{0}key{0}:{0}{4}{0}, {0}value{0}:{0}{3}{0}{2}...", c, a1, a2, valueb64.Substring(0, 20), key); // url;
+            Logger.LogInfo(logData);
 
-            string postData = String.Format("{1}{0}key{0}:{0}{4}{0}, {0}value{0}:{0}{3}{0}{2}", c, a1, a2, valueb64, key); // url;
-            //Logger.LogInfo(postData);
-
-            var data = Encoding.ASCII.GetBytes(postData);
+            string postData = String.Format("{1}{0}key{0}:{0}{4}{0}, {0}value{0}:{0}{3}{0}{2}", c, a1, a2, valueb64 , key); // url;
+            var data = Encoding.UTF8.GetBytes(postData);
             r.Method = "POST";
             r.ContentType = "application/json;";
             r.ContentLength = data.Length;
