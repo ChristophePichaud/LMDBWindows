@@ -11,14 +11,18 @@ namespace LMDBNet
         public static void Put(this LMDBTransaction tx, LMDBDatabase db, string key, string value)
         {
             var enc = System.Text.Encoding.UTF8;
-            tx.Put(db, enc.GetBytes(key), enc.GetBytes(value));
+            byte[] bufferKey = enc.GetBytes(key);
+            byte[] bufferValue = enc.GetBytes(value);
+            tx.Put(db, bufferKey, bufferValue);
         }
 
         public static string Get(this LMDBTransaction tx, LMDBDatabase db, string key)
         {
             var enc = System.Text.Encoding.UTF8;
-            var result = tx.Get(db, enc.GetBytes(key));
-            return enc.GetString(result);
+            byte[] bufferKey = enc.GetBytes(key);
+            var result = tx.Get(db, bufferKey);
+            var ret = enc.GetString(result);
+            return ret;
         }
 
         public static void Delete(this LMDBTransaction tx, LMDBDatabase db, string key)

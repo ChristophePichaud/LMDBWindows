@@ -231,28 +231,32 @@ void TheServer::RequestVerbGetData64(http_request message)
 	{
 		std::string keya(key.begin(), key.end());
 
+		std::wostringstream buf;
+		buf << _T("GetB64 key:") << key << std::endl; // _T(" value:") << value;
+		g_Logger.WriteLog(buf.str());
+
+		std::string buffera64(value.begin(), value.end());
+		string buffera = Base64Helper::base64_decode(buffera64);
+
+#if OLD_VERSION_DOWNLOAD
+		TCHAR sz[255];
+		_stprintf_s(sz, _T("attachment; name=%c%s%c; filename=%c%s%c"), '"', key.c_str(), '"', '"', key.c_str(), '"');
+		g_Logger.WriteLog(sz);
+
+		message.headers().add(L"Content-Disposition", sz);
+		message.headers().add(L"Content-Length", std::to_string(buffera.length()).c_str());
+		message.reply(status_codes::OK, buffera, "application/octet-stream");
+#endif
+
 		Data data;
 		data.key = key;
 		data.value = value;
 
-		std::wostringstream buf;
-		buf << _T("GetB64 key:") << key << _T(" value:") << value;
-		//g_Logger.WriteLog(buf.str());
-
-		std::string buffera64(data.value.begin(), data.value.end());
-		string buffera = Base64Helper::base64_decode(buffera64);
-
-		//std::wstring response = data.AsJSON().serialize();
+		std::wstring response = data.AsJSON().serialize();
 		//g_Logger.WriteLog(response);
-		//std::wstring buffer(buffera.begin(), buffera.end());
 
-		TCHAR sz[255];
-		_stprintf_s(sz, _T("attachment; filename=%c%s%c"), '"', key.c_str(), '"');
-		g_Logger.WriteLog(sz);
+		message.reply(status_codes::OK, data.AsJSON());
 
-		message.headers().add(L"Content-Disposition", sz);	
-		//message.headers().add(L"Content-Length", std::to_wstring(buffera.length()));
-		message.reply(status_codes::OK, buffera, "application/octet-stream");
 	}
 	else
 	{

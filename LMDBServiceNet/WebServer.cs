@@ -156,7 +156,7 @@ namespace LMDBServiceNet
             string str = String.Format("POST Data Length={0}", len);
             Logger.LogInfo(str);
 
-            Data data = JsonConvert.DeserializeObject<Data>(buffer);
+                                                                                                                                                                                                            Data data = JsonConvert.DeserializeObject<Data>(buffer);
             string data20 = data.Value.Substring(0, data.Value.Length > 20 ? 20 : data.Value.Length);
             str = String.Format("Key:{0} Value:{1}...", data.Key, data20); // data.Value);
             Logger.LogInfo(str);

@@ -250,7 +250,7 @@ namespace LMDBService_ConsoleApp
 
             using (var stream = r.GetRequestStream())
             {
-                stream.Write(data, 0, data.Length);
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x        stream.Write(data, 0, data.Length);
             }
 
             string str = String.Format("Sending {0} bytes on {1}", data.Length, url);
