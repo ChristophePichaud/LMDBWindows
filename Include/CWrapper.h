@@ -89,6 +89,20 @@ public:
 		mdb_txn_commit(txn);
 	}
 
+	void BeginTransaction()
+	{
+		int err = 0;
+
+		err = mdb_txn_begin(env, NULL, 0, &txn);
+	}
+
+	void CommitTransaction()
+	{
+		int err = 0;
+
+		err = mdb_txn_commit(txn);
+	}
+
 	void Set(std::wstring k, std::wstring v)
 	{
 		std::string key(k.begin(), k.end());
@@ -100,16 +114,16 @@ public:
 	{
 		int err = 0;
 
-		err = mdb_txn_begin(env, NULL, 0, &txn);
+		//err = mdb_txn_begin(env, NULL, 0, &txn);
 
 		key.mv_size = k.length() + 1;
 		key.mv_data = (void *)k.c_str();
 		data.mv_size = v.length() + 1;
 		data.mv_data = (void *)v.c_str();
 		err = mdb_put(txn, dbi, &key, &data, 0); // MDB_NOOVERWRITE);
-		printf("Set err:%d Key:%s Data:%s\n", err, key.mv_data, data.mv_data);
+		//printf("Set err:%d Key:%s Data:%s\n", err, key.mv_data, data.mv_data);
 
-		err = mdb_txn_commit(txn);
+		//err = mdb_txn_commit(txn);
 	}
 
 	bool Get(std::wstring k, std::wstring & v)
@@ -130,16 +144,16 @@ public:
 		key.mv_size = k.length() + 1;
 		key.mv_data = (void *)k.c_str();
 
-		err = mdb_txn_begin(env, NULL, 0, &txn);
+		//err = mdb_txn_begin(env, NULL, 0, &txn);
 		err = mdb_get(txn, dbi, &key, &data);
 
 		if (err != 0)
 			return false;
 
-		printf("Get err:%d Key:%s Data:%s\n", err, key.mv_data, data.mv_data);
+		//printf("Get err:%d Key:%s Data:%s\n", err, key.mv_data, data.mv_data);
 		value = (char *)(data.mv_data);
 
-		err = mdb_txn_commit(txn);
+		//err = mdb_txn_commit(txn);
 		return err == 0 ? true : false;
 	}
 };
