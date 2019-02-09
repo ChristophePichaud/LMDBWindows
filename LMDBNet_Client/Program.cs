@@ -65,15 +65,18 @@ namespace LMDBNet_Client
             _env.Open();
 
             DateTime dtStart = DateTime.Now;
-            var tx = _env.BeginTransaction();
-            var db = tx.OpenDatabase("DB", new DatabaseConfiguration { Flags = DatabaseOpenFlags.Create });
             for (int i = 0; i < count; i++)
             {
                 string key = String.Format("key_{0}", i);
                 string value = String.Format("value_{0}", i);
 
-                tx.Put(db, key, value);
+                LMDBTransaction tx2 = _env.BeginTransaction(TransactionBeginFlags.NoSync);
+                LMDBDatabase db2 = tx2.OpenDatabase("DB", new DatabaseConfiguration { Flags = DatabaseOpenFlags.Create });
+                tx2.Put(db2, key, value);
+                tx2.Commit();
             }
+            var tx = _env.BeginTransaction();
+            var db = tx.OpenDatabase("DB", new DatabaseConfiguration { Flags = DatabaseOpenFlags.Create });
             tx.Put(db, "hello", "world");
             tx.Commit();
             db.Dispose();

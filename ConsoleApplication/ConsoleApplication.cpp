@@ -207,7 +207,7 @@ int main3(int argc, char * argv[])
 	return 0;
 }
 
-int main2(int argc, char * argv[])
+int main_11(int argc, char * argv[])
 {
 	int i = 0, j = 0, rc;
 	MDB_env *env;
@@ -243,11 +243,14 @@ int main2(int argc, char * argv[])
 
 	E(mdb_txn_begin(env, NULL, 0, &txn));
 	E(mdb_dbi_open(txn, NULL, 0, &dbi));
+	mdb_txn_commit(txn);
 
 	printf("Adding %d values\n", count);
 	DWORD dwStart = GetTickCount();
 	for (i = 0; i<count; i++)
 	{
+		E(mdb_txn_begin(env, NULL, 0, &txn));
+
 		char szKey[255];
 		char szValue[255];
 		sprintf(szKey, "key_%d", i);
@@ -257,16 +260,17 @@ int main2(int argc, char * argv[])
 		key.mv_data = szKey;
 		data.mv_size = sizeof(szValue);
 		data.mv_data = szValue;
-		printf("Add Key:%s Data:%s\n", key.mv_data, data.mv_data);
-		if (RES(MDB_KEYEXIST, mdb_put(txn, dbi, &key, &data, MDB_NOOVERWRITE))) 
-		{
-			j++;
-			data.mv_size = sizeof(sval);
-			data.mv_data = sval;
-		}
+		//printf("Add Key:%s Data:%s\n", key.mv_data, data.mv_data);
+		mdb_put(txn, dbi, &key, &data, 0);
+		//if (RES(MDB_KEYEXIST, mdb_put(txn, dbi, &key, &data, MDB_NOOVERWRITE)))
+		//{
+		//	j++;
+		//	data.mv_size = sizeof(sval);
+		//	data.mv_data = sval;
+		//}
+		mdb_txn_commit(txn);
 	}
 
-	mdb_txn_commit(txn);
 	mdb_dbi_close(env, dbi);
 
 	DWORD dwStop = GetTickCount();
@@ -290,7 +294,7 @@ int main2(int argc, char * argv[])
 		//data.mv_data = szValue;
 
 		mdb_get(txn, dbi, &key, &data);
-		printf("Get Key:%s Data:%s\n", key.mv_data, data.mv_data);
+		//printf("Get Key:%s Data:%s\n", key.mv_data, data.mv_data);
 	}
 	mdb_txn_commit(txn);
 
