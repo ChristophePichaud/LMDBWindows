@@ -60,8 +60,6 @@ public:
 private:
 	MDB_env * env;
 	MDB_dbi dbi;
-	char szKey[255];
-	char szValue[255];
 	MDB_val key, data;
 	MDB_txn *txn;
 
@@ -81,7 +79,7 @@ public:
 
 		mdb_env_create(&env);
 		mdb_env_set_maxreaders(env, 1);
-		mdb_env_set_mapsize(env, 10485760 * 1000);
+		mdb_env_set_mapsize(env, 10485760 * 100);
 		mdb_env_open(env, sz, MDB_CREATE, 0);
 
 		mdb_txn_begin(env, NULL, 0, &txn);
@@ -103,6 +101,13 @@ public:
 		err = mdb_txn_commit(txn);
 	}
 
+	void AbortTransaction()
+	{
+		int err = 0;
+
+		mdb_txn_abort(txn);
+	}
+
 	void Set(std::wstring k, std::wstring v)
 	{
 		std::string key(k.begin(), k.end());
@@ -114,16 +119,12 @@ public:
 	{
 		int err = 0;
 
-		//err = mdb_txn_begin(env, NULL, 0, &txn);
-
 		key.mv_size = k.length() + 1;
 		key.mv_data = (void *)k.c_str();
 		data.mv_size = v.length() + 1;
 		data.mv_data = (void *)v.c_str();
 		err = mdb_put(txn, dbi, &key, &data, 0); // MDB_NOOVERWRITE);
 		//printf("Set err:%d Key:%s Data:%s\n", err, key.mv_data, data.mv_data);
-
-		//err = mdb_txn_commit(txn);
 	}
 
 	bool Get(std::wstring k, std::wstring & v)
@@ -144,7 +145,6 @@ public:
 		key.mv_size = k.length() + 1;
 		key.mv_data = (void *)k.c_str();
 
-		//err = mdb_txn_begin(env, NULL, 0, &txn);
 		err = mdb_get(txn, dbi, &key, &data);
 
 		if (err != 0)
@@ -153,8 +153,40 @@ public:
 		//printf("Get err:%d Key:%s Data:%s\n", err, key.mv_data, data.mv_data);
 		value = (char *)(data.mv_data);
 
-		//err = mdb_txn_commit(txn);
 		return err == 0 ? true : false;
+	}
+
+	bool GetFromCursor(MDB_cursor  * cursor, std::string & k, std::string & v)
+	{
+		int err = 0;
+
+		err = mdb_cursor_get(cursor, &key, &data, MDB_NEXT); //mdb_get(txn, dbi, &key, &data);
+
+		if (err != 0)
+			return false;
+
+		//printf("Get err:%d Key:%s Data:%s\n", err, key.mv_data, data.mv_data);
+		k = (char *)(key.mv_data);
+		v = (char *)(data.mv_data);
+
+		return err == 0 ? true : false;
+	}
+
+
+	void GetAllData()
+	{
+		int err = 0;
+		err = mdb_txn_begin(env, NULL, MDB_RDONLY, &txn);
+
+		MDB_cursor * cursor;
+		err = mdb_cursor_open(txn, dbi, &cursor);
+		std::string k, value;
+		while (GetFromCursor(cursor, k, value)) 
+		{
+			//std::printf("key: '%s', value: '%s'\n", k.c_str(), value.c_str());
+		}
+		mdb_cursor_close(cursor);
+		mdb_txn_abort(txn);
 	}
 };
 

@@ -45,7 +45,7 @@ bool CLMDBWrapper::Init(LPSTR lpszDatabase)
 
 	mdb_env_create(&_env);
 	mdb_env_set_maxreaders(_env, 1);
-	mdb_env_set_mapsize(_env, 10485760 * 1000);
+	mdb_env_set_mapsize(_env, 10485760 * 100);
 	mdb_env_open(_env, sz, MDB_CREATE, 0);
 	return true;
 }
