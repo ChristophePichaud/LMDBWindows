@@ -231,5 +231,57 @@ namespace LMDBNet
             using (var marshal = new MarshalValueStructure(key))
                 return check(LmdbMethods.mdb_del(txn, dbi, ref marshal.Key, IntPtr.Zero));
         }
+
+        public static int mdb_cursor_open(IntPtr txn, uint dbi, out IntPtr cursor)
+        {
+            return check(LmdbMethods.mdb_cursor_open(txn, dbi, out cursor));
+        }
+
+        public static void mdb_cursor_close(IntPtr cursor)
+        {
+            LmdbMethods.mdb_cursor_close(cursor);
+        }
+
+        public static int mdb_cursor_renew(IntPtr txn, IntPtr cursor)
+        {
+            return check(LmdbMethods.mdb_cursor_renew(txn, cursor));
+        }
+
+        public static int mdb_cursor_get(IntPtr cursor, byte[] key, out ValueStructure keyStructure, out ValueStructure valueStructure, CursorOperation op)
+        {
+            valueStructure = default(ValueStructure);
+            using (var marshal = new MarshalValueStructure(key))
+            {
+                keyStructure = marshal.Key;
+                return checkRead(LmdbMethods.mdb_cursor_get(cursor, ref keyStructure, ref valueStructure, op));
+            }
+        }
+        public static int mdb_cursor_get(IntPtr cursor, byte[] key, byte[] value, CursorOperation op)
+        {
+            using (var marshal = new MarshalValueStructure(key, value))
+                return checkRead(LmdbMethods.mdb_cursor_get(cursor, ref marshal.Key, ref marshal.Value, op));
+        }
+
+        public static int mdb_cursor_get(IntPtr cursor, out ValueStructure key, out ValueStructure value, CursorOperation op)
+        {
+            key = value = default(ValueStructure);
+            return checkRead(LmdbMethods.mdb_cursor_get(cursor, ref key, ref value, op));
+        }
+
+        public static int mdb_cursor_get_multiple(IntPtr cursor, ref ValueStructure key, ref ValueStructure value, CursorOperation op)
+        {
+            return checkRead(LmdbMethods.mdb_cursor_get(cursor, ref key, ref value, op));
+        }
+
+        public static int mdb_cursor_put(IntPtr cursor, byte[] key, byte[] value, CursorPutOptions flags)
+        {
+            using (var marshal = new MarshalValueStructure(key, value))
+                return check(LmdbMethods.mdb_cursor_put(cursor, ref marshal.Key, ref marshal.Value, flags));
+        }
+
+        public static int mdb_cursor_del(IntPtr cursor, CursorDeleteOption flags)
+        {
+            return check(LmdbMethods.mdb_cursor_del(cursor, flags));
+        }
     }
 }

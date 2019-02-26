@@ -95,5 +95,24 @@ namespace LMDBNet
 
         [DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
         public static extern int mdb_del(IntPtr txn, uint dbi, ref ValueStructure key, IntPtr data);
+
+        [DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int mdb_cursor_open(IntPtr txn, uint dbi, out IntPtr cursor);
+
+        [DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void mdb_cursor_close(IntPtr cursor);
+
+        [DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int mdb_cursor_renew(IntPtr txn, IntPtr cursor);
+
+        [DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int mdb_cursor_get(IntPtr cursor, ref ValueStructure key, ref ValueStructure data, CursorOperation op);
+
+        [DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int mdb_cursor_put(IntPtr cursor, ref ValueStructure key, ref ValueStructure value, CursorPutOptions flags);
+
+        [DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int mdb_cursor_del(IntPtr cursor, CursorDeleteOption flags);
+
     }
 }

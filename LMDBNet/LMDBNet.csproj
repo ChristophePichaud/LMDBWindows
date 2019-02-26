@@ -46,12 +46,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompareFunction.cs" />
+    <Compile Include="CursorDeleteOption.cs" />
+    <Compile Include="CursorOperation.cs" />
+    <Compile Include="CursorPutOptions.cs" />
     <Compile Include="DatabaseConfiguration.cs" />
     <Compile Include="DatabaseOpenFlags.cs" />
     <Compile Include="EnvironmentConfiguration.cs" />
     <Compile Include="EnvironmentCopyFlags.cs" />
     <Compile Include="EnvironmentOpenFlags.cs" />
     <Compile Include="HelperExtensions.cs" />
+    <Compile Include="LMDBCursor.cs" />
     <Compile Include="LMDBDatabase.cs" />
     <Compile Include="LMDBEnvironment.cs" />
     <Compile Include="LMDBException.cs" />
