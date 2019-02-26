@@ -56,13 +56,31 @@ namespace LMDBNet_Client
             Logger.LogInfo(str);
 
             LMDBEnvironment _env;
-            string dir = "c:\\temp\\cache_net10A";
+            string dir = "c:\\temp\\mycache"; // cache_net10A";
             _env = new LMDBEnvironment(dir);
             //This is here to assert that previous issues with the way manager
             //classes (since removed) worked don't happen anymore.
             _env.MaxDatabases = 2;
             _env.MapSize = 10485760 * 100;
             _env.Open();
+
+            LMDBTransaction tx3 = _env.BeginTransaction(TransactionBeginFlags.NoSync);
+            LMDBDatabase db3 = tx3.OpenDatabase(null, new DatabaseConfiguration { Flags = DatabaseOpenFlags.Create });
+            var cur = tx3.CreateCursor(db3);
+            //cur.MoveToFirst();
+            while (cur.MoveNext())
+            {
+                var fKey = Encoding.UTF8.GetString(cur.Current.Key);
+                var fValue = Encoding.UTF8.GetString(cur.Current.Value);
+                string str3 = String.Format("key:{0} => value:{1}", fKey, fValue);
+                Logger.LogInfo(str3);
+            }
+            tx3.Commit();
+            db3.Dispose();
+
+            _env.Dispose();
+            return;
+
 
             DateTime dtStart = DateTime.Now;
             for (int i = 0; i < count; i++)

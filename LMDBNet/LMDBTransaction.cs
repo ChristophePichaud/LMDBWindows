@@ -121,6 +121,18 @@ namespace LMDBNet
         }
 
         /// <summary>
+        /// Create a cursor.
+        /// Cursors are associated with a specific transaction and database and may not span threads.
+        /// </summary>
+        /// <param name="db">A database.</param>
+        public LMDBCursor CreateCursor(LMDBDatabase db)
+        {
+            return new LMDBCursor(db, this);
+        }
+
+
+
+        /// <summary>
         /// Get value from a database.
         /// </summary>
         /// <param name="db">Database </param>
