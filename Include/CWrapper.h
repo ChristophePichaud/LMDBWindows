@@ -61,7 +61,8 @@ private:
 	MDB_env * env;
 	MDB_dbi dbi;
 	MDB_val key, data;
-	MDB_txn *txn;
+	MDB_txn * txn;
+	MDB_cursor * cursor;
 
 public:
 
@@ -94,6 +95,13 @@ public:
 		err = mdb_txn_begin(env, NULL, 0, &txn);
 	}
 
+	void BeginTransactionReadOnly()
+	{
+		int err = 0;
+
+		err = mdb_txn_begin(env, NULL, MDB_RDONLY, &txn);
+	}
+
 	void CommitTransaction()
 	{
 		int err = 0;
@@ -106,6 +114,17 @@ public:
 		int err = 0;
 
 		mdb_txn_abort(txn);
+	}
+
+	void OpenCurosr()
+	{
+		int err;
+		err = mdb_cursor_open(txn, dbi, &cursor);
+	}
+	
+	void CloseCursor()
+	{
+		mdb_cursor_close(cursor);
 	}
 
 	void Set(std::wstring k, std::wstring v)
@@ -156,7 +175,7 @@ public:
 		return err == 0 ? true : false;
 	}
 
-	bool GetFromCursor(MDB_cursor  * cursor, std::string & k, std::string & v)
+	bool GetFromCursor(std::string & k, std::string & v)
 	{
 		int err = 0;
 
@@ -175,18 +194,20 @@ public:
 
 	void GetAllData()
 	{
-		int err = 0;
-		err = mdb_txn_begin(env, NULL, MDB_RDONLY, &txn);
+		int err;
+		BeginTransactionReadOnly();
 
-		MDB_cursor * cursor;
-		err = mdb_cursor_open(txn, dbi, &cursor);
+		OpenCurosr();
+		
 		std::string k, value;
-		while (GetFromCursor(cursor, k, value)) 
+		while (GetFromCursor(k, value)) 
 		{
-			//std::printf("key: '%s', value: '%s'\n", k.c_str(), value.c_str());
+			printf("key: '%s', value: '%s'\n", k.c_str(), value.c_str());
 		}
-		mdb_cursor_close(cursor);
-		mdb_txn_abort(txn);
+		
+		CloseCursor();
+		
+		AbortTransaction();
 	}
 };
 
