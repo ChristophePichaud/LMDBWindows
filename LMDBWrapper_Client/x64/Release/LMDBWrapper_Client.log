@@ -1,4 +1,5 @@
-﻿  LMDBWrapper_Client.cpp
+﻿  stdafx.cpp
+  LMDBWrapper_Client.cpp
 d:\dev\lmdbwindows\include\constants.h(23): warning C4251: 'Constants::MasterNodePort': class 'std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>' needs to have dll-interface to be used by clients of class 'Constants'
   c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\xstring(4374): note: see declaration of 'std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>'
 d:\dev\lmdbwindows\include\constants.h(24): warning C4251: 'Constants::Request': class 'std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>' needs to have dll-interface to be used by clients of class 'Constants'
@@ -41,8 +42,6 @@ d:\dev\lmdbwindows\lmdbwrapper_client\lmdbwrapper_client.cpp(12): warning C4101:
 d:\dev\lmdbwindows\lmdbwrapper_client\lmdbwrapper_client.cpp(10): warning C4101: 'rc': unreferenced local variable
 d:\dev\lmdbwindows\lmdbwrapper_client\lmdbwrapper_client.cpp(63): warning C4101: 'err': unreferenced local variable
   Generating code
-  1 of 209 functions ( 0.5%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+  All 209 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   LMDBWrapper_Client.vcxproj -> D:\Dev\LMDBWindows\LMDBWindows\x64\Release\LMDBWrapper_Client.exe

@@ -46,7 +46,7 @@ namespace LMDBNet_Client
         {
             Logger.LogInfo("Main...");
             //Main2()
-            int count = 0;
+            int count = 100000;
             if (args.Length == 1)
             {
                 count = Convert.ToInt32(args[0]);
@@ -55,81 +55,136 @@ namespace LMDBNet_Client
             string str = String.Format("count={0}", count);
             Logger.LogInfo(str);
 
-            LMDBEnvironment _env;
-            string dir = "c:\\temp\\mycache"; // cache_net10A";
-            _env = new LMDBEnvironment(dir);
+            using (LMDBEnvironment env = CreateEnv())
+            {
+                CreateAnEntry(env);
+                CreateSimplesKeyValue(env, count);
+                GetSimplesKeyValue(env, count);
+                EnumData(env);
+                Logger.LogInfo("auto env.Dispose...");
+                //env.Dispose();
+            }
+
+            Logger.LogInfo("exit...");
+        }
+
+        private static LMDBEnvironment CreateEnv()
+        {
+            Logger.LogInfo("CreateEnv");
+
+            DateTime dt = DateTime.Now;
+
+            LMDBEnvironment env;
+            string dir = "c:\\temp\\mycache_" + dt.Hour.ToString() + dt.Minute.ToString() + dt.Second.ToString(); // cache_net10A";
+            env = new LMDBEnvironment(dir);
             //This is here to assert that previous issues with the way manager
             //classes (since removed) worked don't happen anymore.
-            _env.MaxDatabases = 2;
-            _env.MapSize = 10485760 * 100;
-            _env.Open();
+            env.MaxDatabases = 2;
+            env.MapSize = 10485760 * 10;
+            env.Open();
+            return env;
+        }
 
-            LMDBTransaction tx3 = _env.BeginTransaction(TransactionBeginFlags.NoSync);
-            LMDBDatabase db3 = tx3.OpenDatabase(null, new DatabaseConfiguration { Flags = DatabaseOpenFlags.Create });
-            var cur = tx3.CreateCursor(db3);
-            //cur.MoveToFirst();
-            while (cur.MoveNext())
+        private static void CreateAnEntry(LMDBEnvironment env)
+        {
+            Logger.LogInfo("CreateEnv");
+
+            var tx = env.BeginTransaction();
+            using (var db = tx.OpenDatabase(null, new DatabaseConfiguration { Flags = DatabaseOpenFlags.Create }))
             {
-                var fKey = Encoding.UTF8.GetString(cur.Current.Key);
-                var fValue = Encoding.UTF8.GetString(cur.Current.Value);
-                string str3 = String.Format("key:{0} => value:{1}", fKey, fValue);
-                Logger.LogInfo(str3);
+                tx.Put(db, "hello", "world");
+
+                var result = tx.Get(db, "hello");
+                Logger.LogInfo("Value for key hello =>" + result);
+                tx.Commit();
             }
-            tx3.Commit();
-            db3.Dispose();
+        }
 
-            _env.Dispose();
-            return;
-
+        private static void CreateSimplesKeyValue(LMDBEnvironment env, int count)
+        {
+            Logger.LogInfo("CreateSimplesKeyValue");
 
             DateTime dtStart = DateTime.Now;
-            for (int i = 0; i < count; i++)
+            LMDBTransaction tx = env.BeginTransaction(TransactionBeginFlags.NoSync);
+            using (var db = tx.OpenDatabase(null, new DatabaseConfiguration { Flags = DatabaseOpenFlags.Create }))
             {
-                string key = String.Format("key_{0}", i);
-                string value = String.Format("value_{0}", i);
+                Logger.LogInfo("count:" + count);
+                for (int i = 0; i < count; i++)
+                {
+                    string key = String.Format("key_{0}", i);
+                    string value = String.Format("value_{0}", i);
 
-                LMDBTransaction tx2 = _env.BeginTransaction(TransactionBeginFlags.NoSync);
-                LMDBDatabase db2 = tx2.OpenDatabase("DB", new DatabaseConfiguration { Flags = DatabaseOpenFlags.Create });
-                tx2.Put(db2, key, value);
-                tx2.Commit();
+                    tx.Put(db, key, value);
+                }
+                tx.Commit();
             }
-            var tx = _env.BeginTransaction();
-            var db = tx.OpenDatabase("DB", new DatabaseConfiguration { Flags = DatabaseOpenFlags.Create });
-            tx.Put(db, "hello", "world");
-            tx.Commit();
-            db.Dispose();
 
             DateTime dtStop = DateTime.Now;
             TimeSpan ts = dtStop - dtStart;
-            str = String.Format("Time elapsed for set:{0} ms", ts.TotalMilliseconds);
+            string str = String.Format("Time elapsed for set:{0} ms", ts.TotalMilliseconds);
             Logger.LogInfo(str);
+        }
 
-            dtStart = DateTime.Now;
-            tx = _env.BeginTransaction(TransactionBeginFlags.ReadOnly);
-            db = tx.OpenDatabase("DB");
-            for (int i = 0; i < count; i++)
+        private static void GetSimplesKeyValue(LMDBEnvironment env, int count)
+        {
+            Logger.LogInfo("GetSimplesKeyValue");
+
+            DateTime dtStart = DateTime.Now;
+            LMDBTransaction tx = env.BeginTransaction(TransactionBeginFlags.ReadOnly);
+            using (LMDBDatabase db = tx.OpenDatabase(null))
             {
-                string key = String.Format("key_{0}", i);
-                //string value = String.Format("value_{0}", i);
-
-                var value = tx.Get(db, key);
-                if (i % 10000 == 0)
+                Logger.LogInfo("count:" + count);
+                for (int i = 0; i < count; i++)
                 {
-                    string strD = String.Format("key:{0} => value:{1}", key, value);
-                    Logger.LogInfo(strD);
+                    string key = String.Format("key_{0}", i);
+                    //string value = String.Format("value_{0}", i);
+
+                    var value = tx.Get(db, key);
+                    if (i % 1000 == 0)
+                    {
+                        string strD = String.Format("key:{0} => value:{1}", key, value);
+                        Logger.LogInfo(strD);
+                    }
                 }
             }
-            var result = tx.Get(db, "hello");
-            Logger.LogInfo(result);
-            tx.Commit();
-            db.Dispose();
 
-            dtStop = DateTime.Now;
-            ts = dtStop - dtStart;
-            str = String.Format("Time elapsed for get:{0} ms", ts.TotalMilliseconds);
+            DateTime dtStop = DateTime.Now;
+            TimeSpan ts = dtStop - dtStart;
+            string str = String.Format("Time elapsed for get:{0} ms", ts.TotalMilliseconds);
             Logger.LogInfo(str);
+        }
 
-            _env.Dispose();
+    
+        private static void EnumData(LMDBEnvironment env)
+        {
+            Logger.LogInfo("EnumData");
+
+            DateTime dtStart = DateTime.Now;
+            LMDBTransaction tx = env.BeginTransaction(TransactionBeginFlags.NoSync);
+            using (LMDBDatabase db = tx.OpenDatabase(null, new DatabaseConfiguration { Flags = DatabaseOpenFlags.Create }))
+            {
+                var cur = tx.CreateCursor(db);
+                //cur.MoveToFirst();
+                int count1 = 0;
+                while (cur.MoveNext())
+                {
+                    var fKey = Encoding.UTF8.GetString(cur.Current.Key);
+                    var fValue = Encoding.UTF8.GetString(cur.Current.Value);
+                    if (count1 % 1000 == 0)
+                    {
+                        string str3 = String.Format("count:{2} - key:{0} => value:{1}", fKey, fValue, count1);
+                        Logger.LogInfo(str3);
+                    }
+
+                    ++count1;
+                }
+                tx.Commit();
+            }
+
+            DateTime dtStop = DateTime.Now;
+            TimeSpan ts = dtStop - dtStart;
+            string str = String.Format("Time elapsed for enum:{0} ms", ts.TotalMilliseconds);
+            Logger.LogInfo(str);
         }
     }
 }

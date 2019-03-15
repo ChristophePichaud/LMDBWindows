@@ -116,7 +116,7 @@ public:
 		mdb_txn_abort(txn);
 	}
 
-	void OpenCurosr()
+	void OpenCursor()
 	{
 		int err;
 		err = mdb_cursor_open(txn, dbi, &cursor);
@@ -197,7 +197,7 @@ public:
 		int err;
 		BeginTransactionReadOnly();
 
-		OpenCurosr();
+		OpenCursor();
 		
 		std::string k, value;
 		while (GetFromCursor(k, value)) 
