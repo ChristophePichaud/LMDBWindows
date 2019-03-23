@@ -45,10 +45,10 @@ namespace LMDBNet_Client
 
             LMDBEnvironment env;
             string dir = "c:\\temp\\mycache_" 
-                + dt.Hour.ToString() + dt.Minute.ToString() + dt.Second.ToString(); // cache_net10A";
+                + dt.Hour.ToString() + dt.Minute.ToString() + dt.Second.ToString();
+
             env = new LMDBEnvironment(dir);
-            //This is here to assert that previous issues with the way manager
-            //classes (since removed) worked don't happen anymore.
+
             env.MaxDatabases = 2;
             env.MapSize = 10485760 * 10;
             env.Open();
